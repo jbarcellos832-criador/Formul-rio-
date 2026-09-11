@@ -1095,9 +1095,11 @@ async function carregarLinksCheckout(){
       const inEma = document.getElementById('checkout-emagrecimento');
       const inFin = document.getElementById('checkout-financas');
       const inRel = document.getElementById('checkout-relacionamento');
+      const inMkt = document.getElementById('checkout-marketing-digital');
       if(inEma) inEma.value = data.links?.emagrecimento || '';
       if(inFin) inFin.value = data.links?.financas || '';
       if(inRel) inRel.value = data.links?.relacionamento || '';
+      if(inMkt) inMkt.value = data.links?.['marketing-digital'] || '';
     }
   }catch(e){
     console.error('Erro ao carregar links de checkout:', e);
@@ -1192,7 +1194,7 @@ function closeSidebar(){
 let imgsAtivo = null;   // definido em gerarEbook2() com base no nicho escolhido
 let tituloAtivo = null;
 let tagAtivo = null;
-let slugsPaginaPorNicho = { 'Emagrecimento': null, 'Finanças': null, 'Relacionamento': null };
+let slugsPaginaPorNicho = { 'Emagrecimento': null, 'Finanças': null, 'Relacionamento': null, 'Marketing Digital': null };
 
 // ── Contadores do Dashboard (Ebooks criados / Páginas ativas) ──
 // Guardados no localStorage por e-mail, pra cada cliente ter o seu próprio contador.
@@ -2020,7 +2022,8 @@ function aplicarLinkRealNaMensagem(msg) {
   return msg
     .replace('https://slothia.space/pagina-financas', linkReal)
     .replace('https://slothia.space/pagina-emagrecimento', linkReal)
-    .replace('https://slothia.space/pagina-relacionamento', linkReal);
+    .replace('https://slothia.space/pagina-relacionamento', linkReal)
+    .replace('https://slothia.space/pagina-marketing-digital', linkReal);
 }
 
 function copiarMensagemGrupo() {
@@ -2248,14 +2251,16 @@ function abrirEtapa3() {
   if(pvDor) pvDor.value = dorAtivo;
 
   // mostra só o campo de checkout do nicho ativo
-  const nichoEhFinancas = (tagAtivo === 'FINANÇAS' || selN2 === 'Finanças');
-  const nichoEhRelacionamento = (tagAtivo === 'RELACIONAMENTO' || selN2 === 'Relacionamento');
-  const wrapEma = document.getElementById('checkout-emagrecimento-wrap');
-  const wrapFin = document.getElementById('checkout-financas-wrap');
-  const wrapRel = document.getElementById('checkout-relacionamento-wrap');
-  if(wrapEma) wrapEma.style.display = (!nichoEhFinancas && !nichoEhRelacionamento) ? 'block' : 'none';
-  if(wrapFin) wrapFin.style.display = nichoEhFinancas ? 'block' : 'none';
-  if(wrapRel) wrapRel.style.display = nichoEhRelacionamento ? 'block' : 'none';
+  const nichoAtual = nichoAtivoAtual();
+  const wraps = {
+    'Emagrecimento': document.getElementById('checkout-emagrecimento-wrap'),
+    'Finanças': document.getElementById('checkout-financas-wrap'),
+    'Relacionamento': document.getElementById('checkout-relacionamento-wrap'),
+    'Marketing Digital': document.getElementById('checkout-marketing-digital-wrap')
+  };
+  Object.keys(wraps).forEach(nome => {
+    if (wraps[nome]) wraps[nome].style.display = (nome === nichoAtual) ? 'block' : 'none';
+  });
 }
 
 function selCor(el, tipo) {
@@ -2516,9 +2521,15 @@ function getActiveSalesPage() {
 }
 
 function getCheckoutLinkDoNichoAtivo() {
-  const nichoEhFinancas = (tagAtivo === 'FINANÇAS' || selN2 === 'Finanças');
-  const nichoEhRelacionamento = (tagAtivo === 'RELACIONAMENTO' || selN2 === 'Relacionamento');
-  const inputId = nichoEhFinancas ? 'checkout-financas' : (nichoEhRelacionamento ? 'checkout-relacionamento' : 'checkout-emagrecimento');
+  const nicho = nichoAtivoAtual();
+  const idsPorNicho = {
+    'Finanças': 'checkout-financas',
+    'Relacionamento': 'checkout-relacionamento',
+    'Emagrecimento': 'checkout-emagrecimento',
+    'Marketing Digital': 'checkout-marketing-digital'
+  };
+  const inputId = idsPorNicho[nicho];
+  if (!inputId) return '';
   const input = document.getElementById(inputId);
   return input ? (input.value || '').trim() : '';
 }
@@ -2612,9 +2623,7 @@ async function salvarDadosPaginaNoBlobs(){
     return false;
   }
 
-  const nichoEhFinancas = (tagAtivo === 'FINANÇAS' || selN2 === 'Finanças');
-  const nichoEhRelacionamento = (tagAtivo === 'RELACIONAMENTO' || selN2 === 'Relacionamento');
-  const nicho = nichoEhFinancas ? 'Finanças' : (nichoEhRelacionamento ? 'Relacionamento' : 'Emagrecimento');
+  const nicho = nichoAtivoAtual();
   const checkoutLink = getCheckoutLinkDoNichoAtivo();
 
   // Planos com múltiplos preços, todos usando o mesmo link de checkout do nicho
@@ -3639,6 +3648,12 @@ const SALES_PAGE_HTML = `<!DOCTYPE html>
             <input id="checkout-relacionamento" type="url" placeholder="https://pay.cakto.com.br/..." onblur="salvarLinkCheckout('relacionamento', this.value)"
               style="width:100%;background:#141414;border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;color:#fff;font-size:13px;font-family:'Inter',sans-serif;outline:none;">
             <span id="checkout-relacionamento-status" style="font-size:11px;color:#00C853;display:none;">Salvo ✓</span>
+          </div>
+          <div id="checkout-marketing-digital-wrap" style="display:none;">
+            <label style="font-size:12px;color:#888;display:block;margin-bottom:6px;">Marketing Digital</label>
+            <input id="checkout-marketing-digital" type="url" placeholder="https://pay.cakto.com.br/..." onblur="salvarLinkCheckout('marketing-digital', this.value)"
+              style="width:100%;background:#141414;border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:12px 14px;color:#fff;font-size:13px;font-family:'Inter',sans-serif;outline:none;">
+            <span id="checkout-marketing-digital-status" style="font-size:11px;color:#00C853;display:none;">Salvo ✓</span>
           </div>
         </div>
 
