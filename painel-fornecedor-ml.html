@@ -616,6 +616,79 @@
     .product-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Fornecedores ── */
+  .sup-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .sup-stat-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .sup-stat-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .sup-stat-ic {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sup-stat-ic svg { width: 17px; height: 17px; }
+  .sup-stat-ic.green { background: #eafff2; color: #16c784; }
+  .sup-stat-ic.mint { background: #eafff9; color: #16c78e; }
+  .sup-stat-ic.purple { background: #f2eaff; color: #8b5cf6; }
+  .sup-stat-label { font-size: 14px; font-weight: 700; color: #333; }
+  .sup-stat-value { font-size: 28px; font-weight: 800; }
+
+  .sup-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .sup-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .sup-avatar {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: #eafff2;
+    color: #16c784;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sup-avatar svg { width: 22px; height: 22px; }
+  .sup-name { font-size: 16px; font-weight: 800; }
+  .sup-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #eafff2;
+    color: #0f9d63;
+    border-radius: 99px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .sup-badge svg { width: 11px; height: 11px; }
+  .sup-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sup-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #111;
+  }
+  .sup-btn svg { width: 14px; height: 14px; }
+  .sup-btn.primary { background: var(--green); color: #06341f; border-color: var(--green); }
+  .sup-btn:hover { filter: brightness(0.97); }
+
+  @media (max-width: 900px) {
+    .sup-stat-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Importadores ── */
   .imp-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
   .imp-chip {
@@ -799,7 +872,10 @@
   body.dark-mode .imp-check,
   body.dark-mode .imp-card,
   body.dark-mode .imp-avatar,
-  body.dark-mode .imp-link {
+  body.dark-mode .imp-link,
+  body.dark-mode .sup-stat-card,
+  body.dark-mode .sup-card,
+  body.dark-mode .sup-btn {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
@@ -821,6 +897,10 @@
   body.dark-mode .imp-avatar svg { stroke: #fff; }
   body.dark-mode .imp-cat.active { background: #ffde59; color: #111; border-color: #ffde59; }
   body.dark-mode .imp-name { color: #fff; }
+  body.dark-mode .sup-stat-label,
+  body.dark-mode .sup-stat-value,
+  body.dark-mode .sup-name { color: #fff; }
+  body.dark-mode .sup-btn.primary { color: #06341f; }
 </style>
 </head>
 <body>
@@ -1190,6 +1270,70 @@
       <div class="imp-grid" id="importerGrid"></div>
     </div>
 
+    <!-- Fornecedores -->
+    <div class="content" id="page-fornecedores" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Fornecedores</div>
+          <div class="page-sub">Fornecedores ativos nesta plataforma. É deles que você importa o catálogo, integra a loja e paga os pedidos.</div>
+        </div>
+      </div>
+
+      <div class="sup-stat-grid">
+        <div class="sup-stat-card">
+          <div class="sup-stat-top">
+            <div class="sup-stat-ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></div>
+            <div class="sup-stat-label">Fornecedores</div>
+          </div>
+          <div class="sup-stat-value">1</div>
+        </div>
+        <div class="sup-stat-card">
+          <div class="sup-stat-top">
+            <div class="sup-stat-ic mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="sup-stat-label">Ativos</div>
+          </div>
+          <div class="sup-stat-value">1</div>
+        </div>
+        <div class="sup-stat-card">
+          <div class="sup-stat-top">
+            <div class="sup-stat-ic purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+            <div class="sup-stat-label">Produtos no catálogo</div>
+          </div>
+          <div class="sup-stat-value" id="supProductCount">0</div>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></div>
+          <div>
+            <span class="sup-name">Fornecedor Rio de Janeiro</span>
+            <span class="sup-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+              Ativo
+            </span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <a class="sup-btn primary" href="#" data-page="catalogo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            Ver catálogo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="sup-btn" href="#" data-page="integracoes">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg>
+            Integrar minha loja
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="sup-btn" href="#" data-page="financeiro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+            Saldo e pagamentos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -1280,6 +1424,8 @@
     else if (sortMode === 'Maior preço') list.sort((a, b) => b.price - a.price);
     else if (sortMode === 'Nome A-Z') list.sort((a, b) => a.name.localeCompare(b.name));
     document.getElementById('catCount').textContent = list.length + ' produto(s) disponíveis com estoque à pronta entrega';
+    const supCountEl = document.getElementById('supProductCount');
+    if (supCountEl) supCountEl.textContent = products.filter(p => p.cadastrado).length;
     grid.innerHTML = list.map((p, i) => `
       <div class="product-card">
         <img src="${p.img}" alt="${p.name}">
@@ -1502,6 +1648,7 @@
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
   const pageImportadores = document.getElementById('page-importadores');
+  const pageFornecedores = document.getElementById('page-fornecedores');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -1514,6 +1661,7 @@
     pageDashboard.style.display = 'none';
     pageCatalogo.style.display = 'none';
     pageImportadores.style.display = 'none';
+    pageFornecedores.style.display = 'none';
     pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
@@ -1521,6 +1669,10 @@
       pageCatalogo.style.display = '';
     } else if (key === 'importadores') {
       pageImportadores.style.display = '';
+    } else if (key === 'fornecedores') {
+      pageFornecedores.style.display = '';
+      const el = document.getElementById('supProductCount');
+      if (el) el.textContent = products.filter(p => p.cadastrado).length;
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
