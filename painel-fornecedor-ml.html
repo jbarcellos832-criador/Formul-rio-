@@ -691,6 +691,226 @@
   .aff-success.show { display: flex; }
   .aff-success svg { width: 18px; height: 18px; flex-shrink: 0; }
 
+  /* ── Cadastrar produto ── */
+  .pf-breadcrumb {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+  }
+  .pf-back {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pf-back:hover { background: var(--off); }
+  .pf-back svg { width: 16px; height: 16px; }
+  .pf-crumb { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .pf-crumb strong { color: #111; font-weight: 800; }
+
+  .pf-grid { display: grid; grid-template-columns: 460px 1fr; gap: 28px; align-items: start; }
+  .pf-main-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 16px;
+    object-fit: cover;
+    background: var(--off);
+    border: 1px solid var(--card-border);
+    margin-bottom: 14px;
+  }
+  .pf-dropzone {
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    cursor: pointer;
+  }
+  .pf-dropzone:hover { background: var(--off); }
+  .pf-dropzone svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 6px; }
+  .pf-dropzone strong { color: #111; font-weight: 700; }
+  .pf-thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pf-thumb {
+    position: relative;
+    width: 76px; height: 76px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .pf-thumb.active { border-color: var(--blue); }
+  .pf-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pf-thumb .pf-cover-tag {
+    position: absolute; top: 3px; left: 3px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  .pf-thumb .pf-thumb-remove {
+    position: absolute; top: 2px; right: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    border: none;
+  }
+  .pf-hint { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+  .pf-section-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .pf-market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .pf-market-opt {
+    display: flex; align-items: center; gap: 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    cursor: pointer;
+  }
+  .pf-market-opt.selected { border-color: var(--green); background: #eafff2; }
+  .pf-market-opt-logo {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .pf-market-opt-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .pf-market-opt-name { font-size: 14px; font-weight: 800; }
+  .pf-market-opt-sub { font-size: 12px; color: var(--muted); }
+  .pf-market-check {
+    margin-left: auto;
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pf-market-opt.selected .pf-market-check { background: var(--green); border-color: var(--green); color: #fff; }
+  .pf-market-check svg { width: 12px; height: 12px; display: none; }
+  .pf-market-opt.selected .pf-market-check svg { display: block; }
+
+  .pf-fees-note {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .pf-fees-note svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .pf-fees-note strong { color: #111; }
+
+  .pf-field { margin-bottom: 22px; }
+  .pf-field input[type="text"],
+  .pf-field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: inherit;
+    color: #111;
+  }
+  .pf-field textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
+
+  .pf-num-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .pf-num-field input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 14.5px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #111;
+  }
+
+  .pf-summary {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+  }
+  .pf-summary-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+  .pf-summary-row .lbl { color: var(--muted); font-weight: 600; }
+  .pf-summary-row .v { font-weight: 800; }
+  .pf-summary-row .v.negative { color: #c0392b; }
+  .pf-summary-row .v.positive { color: #16c784; }
+  .pf-summary-row.total { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 14px; }
+  .pf-summary-row.total .v { font-size: 19px; }
+
+  .pf-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pf-footer-note { font-size: 13px; color: var(--muted); }
+  .pf-footer-note strong { color: #111; }
+  .pf-footer-actions { display: flex; gap: 12px; margin-left: auto; }
+  .pf-btn-cancel {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .pf-btn-cancel:hover { background: var(--off); }
+  .pf-btn-publish {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: none;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .pf-btn-publish:hover { filter: brightness(0.95); }
+  .pf-btn-publish svg { width: 14px; height: 14px; }
+  .pf-btn-publish:disabled { opacity: 0.5; cursor: default; }
+
+  .pf-toast {
+    position: fixed;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #111;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 200;
+  }
+  .pf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .pf-toast svg { width: 16px; height: 16px; color: #16c784; }
+
+  @media (max-width: 1000px) {
+    .pf-grid { grid-template-columns: 1fr; }
+    .pf-num-grid { grid-template-columns: 1fr 1fr; }
+    .pf-market-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Chamados ── */
   .btn-new-ticket {
     display: inline-flex; align-items: center; gap: 8px;
@@ -1364,12 +1584,26 @@
   body.dark-mode .modal-field textarea,
   body.dark-mode .btn-cancel-modal,
   body.dark-mode .aff-card,
-  body.dark-mode .aff-form input {
+  body.dark-mode .aff-form input,
+  body.dark-mode .pf-back,
+  body.dark-mode .pf-market-opt,
+  body.dark-mode .pf-fees-note,
+  body.dark-mode .pf-field input,
+  body.dark-mode .pf-field textarea,
+  body.dark-mode .pf-num-field input,
+  body.dark-mode .pf-summary,
+  body.dark-mode .pf-btn-cancel {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
   }
   body.dark-mode .aff-title { color: #fff; }
+  body.dark-mode .pf-crumb strong,
+  body.dark-mode .pf-fees-note strong,
+  body.dark-mode .pf-footer-note strong,
+  body.dark-mode .pf-market-opt-name { color: #fff; }
+  body.dark-mode .pf-market-opt.selected { background: #12271c; }
+  body.dark-mode .pf-market-check { background: #1f2024; }
   body.dark-mode .step-num,
   body.dark-mode .stat-ic,
   body.dark-mode .cat-head-ic,
@@ -2096,6 +2330,102 @@
       </div>
     </div>
 
+    <!-- Cadastrar produto -->
+    <div class="content" id="page-product-form" style="display:none;">
+      <div class="pf-breadcrumb">
+        <button class="pf-back" id="pfBackBtn" title="Voltar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="pf-crumb"><strong>Catálogo</strong> / Cadastrar produto</div>
+      </div>
+
+      <div class="pf-grid">
+        <div>
+          <img class="pf-main-img" id="pfMainImage" src="" alt="">
+          <div class="pf-dropzone" id="pfDropzone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Arraste fotos aqui ou <strong>clique para enviar</strong>
+          </div>
+          <input type="file" id="pfFileInput" accept="image/*" multiple style="display:none;">
+          <div class="pf-thumbs" id="pfThumbs"></div>
+          <div class="pf-hint" id="pfPhotoHint">A primeira imagem é a capa do anúncio.</div>
+        </div>
+
+        <div>
+          <div class="pf-section-label">1. Escolha os marketplaces (pode selecionar mais de um)</div>
+          <div class="pf-market-grid" id="pfMarketGrid"></div>
+          <div class="pf-fees-note" id="pfFeesNote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+            <span>Taxas pré-preenchidas para <strong id="pfFeesMarketName">Shopee</strong> — ajuste abaixo se precisar.</span>
+          </div>
+
+          <div class="pf-section-label">2. Título do produto</div>
+          <div class="pf-field">
+            <input type="text" id="pfTitleInput">
+          </div>
+
+          <div class="pf-section-label">3. Descrição</div>
+          <div class="pf-field">
+            <textarea id="pfDescInput"></textarea>
+          </div>
+
+          <div class="pf-num-grid">
+            <div class="pf-num-field">
+              <div class="pf-section-label">Comissão (%)</div>
+              <input type="number" id="pfComissao" value="20" step="1" min="0" max="90">
+            </div>
+            <div class="pf-num-field">
+              <div class="pf-section-label">Taxa fixa (R$)</div>
+              <input type="number" id="pfTaxaFixa" value="0" step="0.5" min="0">
+            </div>
+            <div class="pf-num-field">
+              <div class="pf-section-label">Antecipação (%)</div>
+              <input type="number" id="pfAntecipacao" value="0" step="1" min="0" max="90">
+            </div>
+            <div class="pf-num-field">
+              <div class="pf-section-label">Margem (%)</div>
+              <input type="number" id="pfMargem" value="30" step="1" min="0" max="90">
+            </div>
+          </div>
+
+          <div class="pf-summary">
+            <div class="pf-summary-row">
+              <span class="lbl">Custo do produto (você paga ao fornecedor)</span>
+              <span class="v" id="pfCusto">R$ 0,00</span>
+            </div>
+            <div class="pf-summary-row">
+              <span class="lbl" id="pfComissaoLabel">Comissão (20%)</span>
+              <span class="v negative" id="pfComissaoValor">- R$ 0,00</span>
+            </div>
+            <div class="pf-summary-row">
+              <span class="lbl">Lucro estimado</span>
+              <span class="v positive" id="pfLucro">R$ 0,00</span>
+            </div>
+            <div class="pf-summary-row total">
+              <span class="lbl">Preço de venda (você cobra do comprador)</span>
+              <span class="v" id="pfPreco">R$ 0,00</span>
+            </div>
+          </div>
+
+          <div class="pf-footer">
+            <div class="pf-footer-note">Publicando em <strong id="pfPublishingIn">Shopee</strong></div>
+            <div class="pf-footer-actions">
+              <button class="pf-btn-cancel" id="pfCancelBtn">Cancelar</button>
+              <button class="pf-btn-publish" id="pfPublishBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Publicar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pf-toast" id="pfToast">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span id="pfToastText">Produto publicado com sucesso!</span>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -2215,7 +2545,7 @@
               <div class="supplier">Rio de Janeiro</div>
             </div>
           </div>
-          <button class="btn-list" data-idx="${products.indexOf(p)}">Cadastrar no Marketplace</button>
+          <button class="btn-list" data-idx="${products.indexOf(p)}" ${p.cadastrado ? 'disabled style="opacity:0.6;"' : ''}>${p.cadastrado ? 'Cadastrado ✓' : 'Cadastrar no Marketplace'}</button>
         </div>
       </div>
     `).join('');
@@ -2223,12 +2553,9 @@
 
   document.getElementById('productGrid').addEventListener('click', e => {
     const btn = e.target.closest('.btn-list');
-    if (!btn) return;
+    if (!btn || btn.disabled) return;
     const idx = Number(btn.dataset.idx);
-    products[idx].cadastrado = true;
-    btn.textContent = 'Cadastrado ✓';
-    btn.disabled = true;
-    btn.style.opacity = '0.6';
+    openProductForm(idx);
   });
 
   document.getElementById('catSearchInput').addEventListener('input', e => {
@@ -2257,6 +2584,217 @@
   });
 
   renderProducts('todos', '');
+
+  // ── Cadastrar produto (form) ──
+  const feeDefaults = {
+    shopee: { comissao: 20, taxaFixa: 0 },
+    ml: { comissao: 16, taxaFixa: 5 },
+  };
+  const marketDisplayNames = { shopee: 'Shopee', ml: 'Mercado Livre' };
+
+  const pfState = { productIdx: null, images: [], activeIdx: 0, markets: new Set(['shopee']) };
+
+  function buildDescription(name) {
+    return `Vantagens:\n${name} com qualidade premium e ótimo custo-benefício.\nEnvio rápido, direto do estoque a pronta entrega.\n\nCaracterísticas:\nProduto original, testado e aprovado. Ideal para uso no dia a dia.\n\nGarantia e suporte:\nSuporte direto com o fornecedor em caso de dúvidas ou problemas com o produto.`;
+  }
+
+  function fmtSigned(v) {
+    return (v < 0 ? '- ' : '') + fmtPrice(Math.abs(v));
+  }
+
+  function renderMarketGrid() {
+    const grid = document.getElementById('pfMarketGrid');
+    grid.innerHTML = ['shopee', 'ml'].map(key => {
+      const selected = pfState.markets.has(key);
+      return `
+      <div class="pf-market-opt${selected ? ' selected' : ''}" data-market="${key}">
+        <div class="pf-market-opt-logo">${marketLogos[key]}</div>
+        <div>
+          <div class="pf-market-opt-name">${marketDisplayNames[key]}</div>
+          <div class="pf-market-opt-sub">${marketDisplayNames[key]}</div>
+        </div>
+        <div class="pf-market-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('pfMarketGrid').addEventListener('click', e => {
+    const opt = e.target.closest('.pf-market-opt');
+    if (!opt) return;
+    const key = opt.dataset.market;
+    if (pfState.markets.has(key)) {
+      if (pfState.markets.size > 1) pfState.markets.delete(key);
+    } else {
+      pfState.markets.add(key);
+    }
+    const first = [...pfState.markets][0];
+    const def = feeDefaults[first];
+    document.getElementById('pfComissao').value = def.comissao;
+    document.getElementById('pfTaxaFixa').value = def.taxaFixa;
+    document.getElementById('pfFeesMarketName').textContent = [...pfState.markets].map(k => marketDisplayNames[k]).join(', ');
+    document.getElementById('pfPublishingIn').textContent = [...pfState.markets].map(k => marketDisplayNames[k]).join(' + ');
+    renderMarketGrid();
+    recalcSummary();
+  });
+
+  function renderThumbs() {
+    const wrap = document.getElementById('pfThumbs');
+    wrap.innerHTML = pfState.images.map((src, i) => `
+      <div class="pf-thumb${i === pfState.activeIdx ? ' active' : ''}" data-idx="${i}">
+        <img src="${src}" alt="foto ${i + 1}">
+        ${i === 0 ? '<span class="pf-cover-tag">CAPA</span>' : ''}
+        ${pfState.images.length > 1 ? `<button class="pf-thumb-remove" data-remove="${i}" title="Remover">✕</button>` : ''}
+      </div>
+    `).join('');
+    document.getElementById('pfPhotoHint').textContent = `A primeira imagem é a capa do anúncio. (${pfState.images.length}/9 fotos)`;
+  }
+
+  document.getElementById('pfThumbs').addEventListener('click', e => {
+    const rm = e.target.closest('[data-remove]');
+    if (rm) {
+      const idx = Number(rm.dataset.remove);
+      pfState.images.splice(idx, 1);
+      if (pfState.activeIdx >= pfState.images.length) pfState.activeIdx = pfState.images.length - 1;
+      renderThumbs();
+      updateMainImage();
+      return;
+    }
+    const thumb = e.target.closest('.pf-thumb');
+    if (thumb) {
+      pfState.activeIdx = Number(thumb.dataset.idx);
+      renderThumbs();
+      updateMainImage();
+    }
+  });
+
+  function updateMainImage() {
+    document.getElementById('pfMainImage').src = pfState.images[pfState.activeIdx] || '';
+  }
+
+  function addImagesFromFiles(files) {
+    const remaining = 9 - pfState.images.length;
+    [...files].slice(0, Math.max(0, remaining)).forEach(file => {
+      if (!file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        pfState.images.push(reader.result);
+        renderThumbs();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('pfDropzone').addEventListener('click', () => document.getElementById('pfFileInput').click());
+  document.getElementById('pfFileInput').addEventListener('change', e => addImagesFromFiles(e.target.files));
+  document.getElementById('pfDropzone').addEventListener('dragover', e => { e.preventDefault(); });
+  document.getElementById('pfDropzone').addEventListener('drop', e => {
+    e.preventDefault();
+    addImagesFromFiles(e.dataTransfer.files);
+  });
+
+  function recalcSummary() {
+    const idx = pfState.productIdx;
+    if (idx === null) return;
+    const custo = products[idx].price;
+    const comissaoPct = (parseFloat(document.getElementById('pfComissao').value) || 0) / 100;
+    const taxaFixa = parseFloat(document.getElementById('pfTaxaFixa').value) || 0;
+    const antecipPct = (parseFloat(document.getElementById('pfAntecipacao').value) || 0) / 100;
+    const margemPct = (parseFloat(document.getElementById('pfMargem').value) || 0) / 100;
+
+    document.getElementById('pfCusto').textContent = fmtPrice(custo);
+    document.getElementById('pfComissaoLabel').textContent = `Comissão (${(comissaoPct * 100).toFixed(0)}%)`;
+
+    const denom = 1 - comissaoPct - antecipPct - margemPct;
+    const publishBtn = document.getElementById('pfPublishBtn');
+
+    if (denom <= 0) {
+      document.getElementById('pfComissaoValor').textContent = '—';
+      document.getElementById('pfLucro').textContent = '—';
+      document.getElementById('pfPreco').textContent = 'Ajuste os percentuais';
+      document.getElementById('pfPreco').classList.add('negative');
+      publishBtn.disabled = true;
+      return;
+    }
+    publishBtn.disabled = false;
+    document.getElementById('pfPreco').classList.remove('negative');
+
+    const preco = (custo + taxaFixa) / denom;
+    const comissaoValor = comissaoPct * preco;
+    const antecipValor = antecipPct * preco;
+    const lucro = preco - custo - comissaoValor - taxaFixa - antecipValor;
+
+    document.getElementById('pfComissaoValor').textContent = fmtSigned(-comissaoValor);
+    document.getElementById('pfLucro').textContent = fmtPrice(lucro);
+    document.getElementById('pfPreco').textContent = fmtPrice(preco);
+  }
+
+  ['pfComissao', 'pfTaxaFixa', 'pfAntecipacao', 'pfMargem'].forEach(id => {
+    document.getElementById(id).addEventListener('input', recalcSummary);
+  });
+
+  function hideAllMainPages() {
+    [pageDashboardEl(), pageCatalogoEl(), pageImportadoresEl(), pageFornecedoresEl(), pageIntegracoesEl(), pageChamadosEl(), pageAfiliadosEl(), pageGenericEl(), document.getElementById('page-product-form')].forEach(el => { if (el) el.style.display = 'none'; });
+  }
+  function pageDashboardEl() { return document.getElementById('page-dashboard'); }
+  function pageCatalogoEl() { return document.getElementById('page-catalogo'); }
+  function pageImportadoresEl() { return document.getElementById('page-importadores'); }
+  function pageFornecedoresEl() { return document.getElementById('page-fornecedores'); }
+  function pageIntegracoesEl() { return document.getElementById('page-integracoes'); }
+  function pageChamadosEl() { return document.getElementById('page-chamados'); }
+  function pageAfiliadosEl() { return document.getElementById('page-afiliados'); }
+  function pageGenericEl() { return document.getElementById('page-generic'); }
+
+  function openProductForm(idx) {
+    const p = products[idx];
+    pfState.productIdx = idx;
+    pfState.images = [p.img];
+    pfState.activeIdx = 0;
+    pfState.markets = new Set(['shopee']);
+
+    document.getElementById('pfTitleInput').value = p.name;
+    document.getElementById('pfDescInput').value = buildDescription(p.name);
+    document.getElementById('pfComissao').value = feeDefaults.shopee.comissao;
+    document.getElementById('pfTaxaFixa').value = feeDefaults.shopee.taxaFixa;
+    document.getElementById('pfAntecipacao').value = 0;
+    document.getElementById('pfMargem').value = 30;
+    document.getElementById('pfFeesMarketName').textContent = 'Shopee';
+    document.getElementById('pfPublishingIn').textContent = 'Shopee';
+
+    renderMarketGrid();
+    renderThumbs();
+    updateMainImage();
+    recalcSummary();
+
+    hideAllMainPages();
+    document.getElementById('page-product-form').style.display = '';
+    document.querySelectorAll('.nav-item[data-page]').forEach(el => el.classList.remove('active'));
+    window.scrollTo(0, 0);
+  }
+
+  function closeProductForm() {
+    goToPage('catalogo');
+    renderProducts(document.querySelector('#catTabs button.active').dataset.tab, document.getElementById('catSearchInput').value);
+  }
+
+  document.getElementById('pfBackBtn').addEventListener('click', closeProductForm);
+  document.getElementById('pfCancelBtn').addEventListener('click', closeProductForm);
+
+  let pfToastTimer = null;
+  document.getElementById('pfPublishBtn').addEventListener('click', function () {
+    if (this.disabled) return;
+    products[pfState.productIdx].cadastrado = true;
+    const marketNames = [...pfState.markets].map(k => marketDisplayNames[k]).join(' e ');
+    document.getElementById('pfToastText').textContent = `Produto publicado em ${marketNames} com sucesso!`;
+    const toast = document.getElementById('pfToast');
+    toast.classList.add('show');
+    clearTimeout(pfToastTimer);
+    pfToastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+      closeProductForm();
+    }, 1700);
+  });
 
   const importers = [
     { name: '123util', cat: 'Diversos' },
@@ -2776,6 +3314,8 @@
     pageChamados.style.display = 'none';
     pageAfiliados.style.display = 'none';
     pageGeneric.style.display = 'none';
+    const pfPage = document.getElementById('page-product-form');
+    if (pfPage) pfPage.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
     } else if (key === 'catalogo') {
