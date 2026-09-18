@@ -575,8 +575,10 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
+    object-position: center;
     display: block;
     background: var(--off);
+    transform: scale(1.12);
   }
   .product-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
   .product-name {
@@ -710,14 +712,22 @@
   .pf-crumb strong { color: #111; font-weight: 800; }
 
   .pf-grid { display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 28px; align-items: start; }
-  .pf-main-img {
+  .pf-main-img-wrap {
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 16px;
-    object-fit: cover;
     background: var(--off);
     border: 1px solid var(--card-border);
     margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .pf-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transform: scale(1.12);
   }
   .pf-dropzone {
     border: 1.5px dashed var(--border);
@@ -743,7 +753,7 @@
     flex-shrink: 0;
   }
   .pf-thumb.active { border-color: var(--blue); }
-  .pf-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pf-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transform: scale(1.12); }
   .pf-thumb .pf-cover-tag {
     position: absolute; top: 3px; left: 3px;
     background: rgba(0,0,0,0.7);
@@ -2428,7 +2438,7 @@
 
       <div class="pf-grid">
         <div>
-          <img class="pf-main-img" id="pfMainImage" src="" alt="">
+          <div class="pf-main-img-wrap"><img class="pf-main-img" id="pfMainImage" src="" alt=""></div>
           <div class="pf-dropzone" id="pfDropzone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             Arraste fotos aqui ou <strong>clique para enviar</strong>
