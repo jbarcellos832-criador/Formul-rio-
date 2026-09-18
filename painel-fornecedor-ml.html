@@ -2096,13 +2096,18 @@
 
   const connectedStores = [
     {
-      key: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', logoColor: '#ee4d2d',
+      key: 'shopee', marketKey: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', logoColor: '#ee4d2d',
       lastSync: null,
       type: 'shopee',
     },
     {
-      key: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
+      key: 'ml', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
       lastSync: '16/09/2026, 15:19:50',
+      type: 'ml',
+    },
+    {
+      key: 'ml-2', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
+      lastSync: null,
       type: 'ml',
     },
   ];
@@ -2124,7 +2129,7 @@
           <div class="store-stat-row"><span class="lbl">Penalidade</span><span class="val">Em breve</span></div>
         </div>
       ` : `
-        <div class="store-sync-time">Última sync: ${s.lastSync || 'Nunca'}</div>
+        ${s.lastSync ? `<div class="store-sync-time">Última sync: ${s.lastSync}</div>` : ''}
         <div class="store-box">
           <div class="store-bar-row"><span>Reputação</span><div class="store-bar"></div><span>Sem dados</span></div>
           <div class="store-box-note">Sem reputação ainda — o Mercado Livre só classifica vendedores com vendas nos últimos 60 dias. Faça suas primeiras vendas para começar a aparecer aqui.</div>
@@ -2208,7 +2213,7 @@
   function renderMarketplaces() {
     const grid = document.getElementById('marketGrid');
     grid.innerHTML = marketplaces.map(m => {
-      const connectedCount = connectedStores.filter(s => s.key === m.key).length;
+      const connectedCount = connectedStores.filter(s => s.marketKey === m.key).length;
       return `
       <div class="market-card${m.soon ? ' disabled' : ''}">
         <div class="market-top">
@@ -2232,9 +2237,8 @@
     if (!btn || btn.disabled) return;
     const m = marketplaces.find(x => x.key === btn.dataset.connect);
     if (!m) return;
-    if (!connectedStores.some(s => s.key === m.key)) {
-      connectedStores.push({ key: m.key, name: 'Loja ' + m.name, platform: m.name, logo: m.logo, logoBg: m.logoBg, logoColor: '#333', lastSync: null, type: m.key === 'ml' ? 'ml' : 'shopee' });
-    }
+    const instanceKey = m.key + '-' + Date.now();
+    connectedStores.push({ key: instanceKey, marketKey: m.key, name: (m.key === 'ml' ? 'Mercado Livre' : 'Loja ' + m.name), platform: m.name, logo: m.logo, logoBg: m.logoBg, logoColor: '#333', lastSync: null, type: m.key === 'ml' ? 'ml' : 'shopee' });
     renderConnectedStores();
     renderMarketplaces();
     goToPageSafe('integracoes');
