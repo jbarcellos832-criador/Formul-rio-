@@ -627,6 +627,70 @@
     .product-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Afiliados ── */
+  .aff-wrap { display: flex; justify-content: center; padding-top: 8px; }
+  .aff-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+  }
+  .aff-ic {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    background: #ffe3ea;
+    color: #ff2d6b;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+  }
+  .aff-ic svg { width: 30px; height: 30px; }
+  .aff-title { font-size: 21px; font-weight: 800; margin-bottom: 12px; }
+  .aff-desc { font-size: 14.5px; color: var(--muted); line-height: 1.6; margin-bottom: 26px; }
+  .btn-affiliate {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: #ff2d6b;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .btn-affiliate:hover { filter: brightness(0.95); }
+  .btn-affiliate svg { width: 16px; height: 16px; }
+  .btn-affiliate:disabled { background: var(--off); color: var(--muted); cursor: default; }
+
+  .aff-form { text-align: left; margin-top: 24px; display: none; flex-direction: column; gap: 14px; }
+  .aff-form.open { display: flex; }
+  .aff-form input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: inherit;
+    color: #111;
+  }
+  .aff-success {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: #eafff2;
+    border: 1px solid #bdf0d1;
+    color: #0f9d63;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-top: 18px;
+    text-align: left;
+  }
+  .aff-success.show { display: flex; }
+  .aff-success svg { width: 18px; height: 18px; flex-shrink: 0; }
+
   /* ── Chamados ── */
   .btn-new-ticket {
     display: inline-flex; align-items: center; gap: 8px;
@@ -1298,11 +1362,14 @@
   body.dark-mode .modal-field input,
   body.dark-mode .modal-field select,
   body.dark-mode .modal-field textarea,
-  body.dark-mode .btn-cancel-modal {
+  body.dark-mode .btn-cancel-modal,
+  body.dark-mode .aff-card,
+  body.dark-mode .aff-form input {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
   }
+  body.dark-mode .aff-title { color: #fff; }
   body.dark-mode .step-num,
   body.dark-mode .stat-ic,
   body.dark-mode .cat-head-ic,
@@ -1980,6 +2047,55 @@
       </div>
     </div>
 
+    <!-- Afiliados -->
+    <div class="content" id="page-afiliados" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Afiliados</div>
+          <div class="page-sub">Indique a Suprify e ganhe comissão em cada venda convertida.</div>
+        </div>
+      </div>
+
+      <div class="aff-wrap">
+        <div class="aff-card">
+          <div class="aff-ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="aff-title">Programa de Afiliados Suprify</div>
+          <div class="aff-desc">Indique lojistas e ganhe comissão recorrente em cada assinatura gerada pelo seu link.</div>
+
+          <button class="btn-affiliate" id="affApplyBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            Quero ser afiliado
+          </button>
+
+          <div class="aff-form" id="affForm">
+            <div class="modal-field">
+              <div class="modal-field-label">Nome completo</div>
+              <input type="text" id="affNameInput" placeholder="Seu nome">
+            </div>
+            <div class="modal-field">
+              <div class="modal-field-label">E-mail</div>
+              <input type="email" id="affEmailInput" placeholder="voce@email.com">
+            </div>
+            <div class="modal-field">
+              <div class="modal-field-label">Como pretende divulgar?</div>
+              <input type="text" id="affChannelInput" placeholder="Instagram, WhatsApp, YouTube...">
+            </div>
+            <button class="btn-affiliate" id="affSubmitBtn" style="justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Enviar inscrição
+            </button>
+          </div>
+
+          <div class="aff-success" id="affSuccess">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Inscrição enviada! Nossa equipe vai analisar e entrar em contato em breve.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -2616,6 +2732,25 @@
 
   renderTickets();
 
+  // ── Afiliados ──
+  document.getElementById('affApplyBtn').addEventListener('click', function () {
+    document.getElementById('affForm').classList.add('open');
+    this.style.display = 'none';
+    document.getElementById('affNameInput').focus();
+  });
+
+  document.getElementById('affSubmitBtn').addEventListener('click', () => {
+    const name = document.getElementById('affNameInput').value.trim();
+    const email = document.getElementById('affEmailInput').value.trim();
+    if (!name || !email) {
+      if (!name) document.getElementById('affNameInput').focus();
+      else document.getElementById('affEmailInput').focus();
+      return;
+    }
+    document.getElementById('affForm').classList.remove('open');
+    document.getElementById('affSuccess').classList.add('show');
+  });
+
   const navItems = document.querySelectorAll('[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
@@ -2623,6 +2758,7 @@
   const pageFornecedores = document.getElementById('page-fornecedores');
   const pageIntegracoes = document.getElementById('page-integracoes');
   const pageChamados = document.getElementById('page-chamados');
+  const pageAfiliados = document.getElementById('page-afiliados');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -2638,6 +2774,7 @@
     pageFornecedores.style.display = 'none';
     pageIntegracoes.style.display = 'none';
     pageChamados.style.display = 'none';
+    pageAfiliados.style.display = 'none';
     pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
@@ -2653,6 +2790,8 @@
       pageIntegracoes.style.display = '';
     } else if (key === 'chamados') {
       pageChamados.style.display = '';
+    } else if (key === 'afiliados') {
+      pageAfiliados.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
