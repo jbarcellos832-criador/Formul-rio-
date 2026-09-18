@@ -31,7 +31,18 @@
   }
 
   a { text-decoration: none; color: inherit; }
-  button { font-family: inherit; cursor: pointer; }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-decoration: none;
+    color: inherit;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+  }
 
   .layout {
     display: flex;
@@ -1350,57 +1361,57 @@
     </div>
 
     <nav class="nav" id="navList">
-      <a class="nav-item active" href="#" data-page="dashboard">
+      <button type="button" class="nav-item active" data-page="dashboard">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
         <span>Dashboard</span>
-      </a>
-      <a class="nav-item" href="#" data-page="catalogo">
+      </button>
+      <button type="button" class="nav-item" data-page="catalogo">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
         <span>Catálogo</span>
-      </a>
-      <a class="nav-item" href="#" data-page="importadores">
+      </button>
+      <button type="button" class="nav-item" data-page="importadores">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 13h6"/></svg></span>
         <span>Importadores</span>
-      </a>
-      <a class="nav-item" href="#" data-page="fornecedores">
+      </button>
+      <button type="button" class="nav-item" data-page="fornecedores">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></span>
         <span>Fornecedores</span>
-      </a>
-      <a class="nav-item" href="#" data-page="pedidos">
+      </button>
+      <button type="button" class="nav-item" data-page="pedidos">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>
         <span>Pedidos</span>
-      </a>
-      <a class="nav-item" href="#" data-page="integracoes">
+      </button>
+      <button type="button" class="nav-item" data-page="integracoes">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>
         <span>Integrações</span>
-      </a>
-      <a class="nav-item" href="#" data-page="financeiro">
+      </button>
+      <button type="button" class="nav-item" data-page="financeiro">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></span>
         <span>Financeiro &amp; PIX</span>
-      </a>
-      <a class="nav-item" href="#" id="toolsToggle" data-page="ferramentas">
+      </button>
+      <button type="button" class="nav-item" id="toolsToggle" data-page="ferramentas">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg></span>
         <span>Ferramentas</span>
         <span class="caret" id="toolsCaret">▾</span>
-      </a>
-      <a class="nav-item" href="#" data-page="tutoriais">
+      </button>
+      <button type="button" class="nav-item" data-page="tutoriais">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
         <span>Tutoriais</span>
-      </a>
-      <a class="nav-item" href="#" data-page="chamados">
+      </button>
+      <button type="button" class="nav-item" data-page="chamados">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-8h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-8H3z"/></svg></span>
         <span>Chamados</span>
-      </a>
-      <a class="nav-item" href="#" data-page="afiliados">
+      </button>
+      <button type="button" class="nav-item" data-page="afiliados">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
         <span>Painel de afiliados</span>
-      </a>
+      </button>
 
       <div class="nav-sep"></div>
-      <a class="nav-item logout" href="#" id="logoutBtn">
+      <button type="button" class="nav-item logout" id="logoutBtn">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span>
         <span>Sair</span>
-      </a>
+      </button>
     </nav>
 
     <div class="side-footer">
@@ -1454,9 +1465,9 @@
         </div>
         <div class="dropdown-panel" id="userPanel" style="right:0;">
           <div class="dd-title">Fornecedor · Lojista</div>
-          <a class="nav-item" style="color:#111;" href="#" data-page="conta">Minha conta</a>
-          <a class="nav-item" style="color:#111;" href="#" data-page="financeiro">Financeiro &amp; PIX</a>
-          <a class="nav-item logout" href="#" id="userLogout">Sair</a>
+          <button type="button" class="nav-item" style="color:#111;" data-page="conta">Minha conta</button>
+          <button type="button" class="nav-item" style="color:#111;" data-page="financeiro">Financeiro &amp; PIX</button>
+          <button type="button" class="nav-item logout" id="userLogout">Sair</button>
         </div>
       </div>
     </div>
@@ -1501,7 +1512,7 @@
               </div>
             </div>
             <div class="step-icons"><span>🏪</span><span>📦</span><span>🖥️</span></div>
-            <a class="step-link" href="#" data-page="integracoes">Conectar loja <span>→</span></a>
+            <button type="button" class="step-link" data-page="integracoes">Conectar loja <span>→</span></button>
           </div>
 
           <div class="step-card">
@@ -1512,7 +1523,7 @@
                 <div class="step-text">Explore o catálogo com estoque a pronta entrega e envio imediato.</div>
               </div>
             </div>
-            <a class="step-link" href="#" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></a>
+            <button type="button" class="step-link" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></button>
           </div>
 
           <div class="step-card">
@@ -1523,7 +1534,7 @@
                 <div class="step-text">Escolha um produto no catálogo, defina sua margem de lucro e publique na sua loja conectada.</div>
               </div>
             </div>
-            <a class="step-link" href="#" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></a>
+            <button type="button" class="step-link" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></button>
           </div>
         </div>
       </div>
@@ -1744,21 +1755,21 @@
           </div>
         </div>
         <div class="sup-actions">
-          <a class="sup-btn primary" href="#" data-page="catalogo">
+          <button type="button" class="sup-btn primary" data-page="catalogo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
             Ver catálogo
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a class="sup-btn" href="#" data-page="integracoes">
+          </button>
+          <button type="button" class="sup-btn" data-page="integracoes">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg>
             Integrar minha loja
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a class="sup-btn" href="#" data-page="financeiro">
+          </button>
+          <button type="button" class="sup-btn" data-page="financeiro">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
             Saldo e pagamentos
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
