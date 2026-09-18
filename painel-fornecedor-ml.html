@@ -28,6 +28,8 @@
     font-family: 'Manrope', sans-serif;
     color: #111;
     min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   a { text-decoration: none; color: inherit; }
@@ -992,6 +994,10 @@
     .pf-grid { grid-template-columns: 1fr; }
     .pf-num-grid { grid-template-columns: 1fr 1fr; }
     .pf-market-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .pf-num-grid { grid-template-columns: 1fr; }
+    .pf-summary-row { flex-wrap: wrap; }
   }
 
   /* ── Chamados ── */
