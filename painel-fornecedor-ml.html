@@ -616,6 +616,140 @@
     .product-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Chamados ── */
+  .btn-new-ticket {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green);
+    color: #06341f;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .btn-new-ticket:hover { filter: brightness(0.96); }
+  .btn-new-ticket svg { width: 14px; height: 14px; }
+
+  .ticket-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .ticket-toolbar .cat-search { flex: 1; min-width: 240px; }
+
+  .ticket-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+  .ticket-empty { text-align: center; color: var(--muted); }
+  .ticket-empty svg { width: 34px; height: 34px; margin-bottom: 14px; color: var(--muted); }
+  .ticket-empty-text { font-size: 14.5px; }
+
+  .ticket-list { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .ticket-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    text-align: left;
+  }
+  .ticket-id { font-size: 12px; font-weight: 800; color: var(--muted); flex-shrink: 0; }
+  .ticket-title { font-size: 14.5px; font-weight: 700; flex: 1; }
+  .ticket-cat { font-size: 12px; color: var(--muted); }
+  .ticket-badge {
+    border-radius: 99px;
+    padding: 4px 12px;
+    font-size: 11.5px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .ticket-badge.status-aberto { background: #fff4e0; color: #b8720a; }
+  .ticket-badge.status-andamento { background: #e8f0ff; color: #2f6bff; }
+  .ticket-badge.status-resolvido { background: #eafff2; color: #0f9d63; }
+  .ticket-badge.priority-baixa { background: var(--off); color: var(--muted); }
+  .ticket-badge.priority-media { background: #fff4e0; color: #b8720a; }
+  .ticket-badge.priority-alta { background: #fdeaea; color: #c0392b; }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-title { font-size: 18px; font-weight: 800; }
+  .modal-close { border: none; background: transparent; font-size: 18px; color: var(--muted); }
+  .modal-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; }
+  .modal-field-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .modal-field input,
+  .modal-field select,
+  .modal-field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: inherit;
+    color: #111;
+  }
+  .modal-field textarea { min-height: 130px; resize: vertical; }
+  .modal-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .modal-foot {
+    display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+    padding: 18px 24px;
+    border-top: 1px solid var(--border);
+  }
+  .btn-cancel-modal {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .btn-cancel-modal:hover { background: var(--off); }
+  .btn-create-modal {
+    border: none;
+    background: var(--green);
+    color: #06341f;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .btn-create-modal:hover { filter: brightness(0.96); }
+
+  @media (max-width: 700px) {
+    .modal-row-2 { grid-template-columns: 1fr; }
+    .ticket-row { flex-wrap: wrap; }
+  }
+
   /* ── Integrações ── */
   .int-card {
     background: #fff;
@@ -1146,7 +1280,14 @@
   body.dark-mode .market-badge-soon,
   body.dark-mode .calc-panel,
   body.dark-mode .calc-result,
-  body.dark-mode .calc-field input {
+  body.dark-mode .calc-field input,
+  body.dark-mode .ticket-panel,
+  body.dark-mode .ticket-row,
+  body.dark-mode .modal-box,
+  body.dark-mode .modal-field input,
+  body.dark-mode .modal-field select,
+  body.dark-mode .modal-field textarea,
+  body.dark-mode .btn-cancel-modal {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
@@ -1185,6 +1326,10 @@
   body.dark-mode .store-box { background: #1f2024; border-color: #2a2b30; }
   body.dark-mode .status-pill { background: #12271c; }
   body.dark-mode .btn-copy.copied { background: #12271c; border-color: #1f3a2c; }
+  body.dark-mode .modal-title,
+  body.dark-mode .ticket-title { color: #fff; }
+  body.dark-mode .btn-new-ticket,
+  body.dark-mode .btn-create-modal { color: #06341f; }
 </style>
 </head>
 <body>
@@ -1745,6 +1890,85 @@
       </div>
     </div>
 
+    <!-- Chamados -->
+    <div class="content" id="page-chamados" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Chamados</div>
+          <div class="page-sub">Suporte e atendimento. (modo local)</div>
+        </div>
+        <button class="btn-new-ticket" id="newTicketBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Chamado
+        </button>
+      </div>
+
+      <div class="ticket-toolbar">
+        <div class="cat-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="ticketSearchInput" placeholder="Buscar por título ou #...">
+        </div>
+        <select class="modal-field-select-inline" id="ticketStatusFilter" style="border:1px solid var(--border);border-radius:12px;padding:11px 16px;font-size:13.5px;font-weight:700;font-family:inherit;color:#333;background:var(--off);">
+          <option value="">Todos status</option>
+          <option value="Aberto">Aberto</option>
+          <option value="Em andamento">Em andamento</option>
+          <option value="Resolvido">Resolvido</option>
+        </select>
+        <select id="ticketPriorityFilter" style="border:1px solid var(--border);border-radius:12px;padding:11px 16px;font-size:13.5px;font-weight:700;font-family:inherit;color:#333;background:var(--off);">
+          <option value="">Todas prioridades</option>
+          <option value="Baixa">Baixa</option>
+          <option value="Media">Média</option>
+          <option value="Alta">Alta</option>
+        </select>
+      </div>
+
+      <div class="ticket-panel" id="ticketPanel"></div>
+    </div>
+
+    <!-- Modal: Novo Chamado -->
+    <div class="modal-overlay" id="ticketModalOverlay">
+      <div class="modal-box">
+        <div class="modal-head">
+          <div class="modal-title">Novo Chamado</div>
+          <button class="modal-close" id="ticketModalClose">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-field">
+            <div class="modal-field-label">Título</div>
+            <input type="text" id="ticketTitleInput" placeholder="Resumo do problema">
+          </div>
+          <div class="modal-row-2">
+            <div class="modal-field">
+              <div class="modal-field-label">Categoria</div>
+              <select id="ticketCategoryInput">
+                <option>Produto</option>
+                <option>Pedido</option>
+                <option>Financeiro</option>
+                <option>Integração</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="modal-field">
+              <div class="modal-field-label">Prioridade</div>
+              <select id="ticketPriorityInput">
+                <option>Baixa</option>
+                <option selected>Media</option>
+                <option>Alta</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-field">
+            <div class="modal-field-label">Descrição</div>
+            <textarea id="ticketDescInput" placeholder="Descreva detalhadamente..."></textarea>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn-cancel-modal" id="ticketCancelBtn">Cancelar</button>
+          <button class="btn-create-modal" id="ticketCreateBtn">Criar Chamado</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -2292,12 +2516,102 @@
   });
   updateCalc();
 
+  // ── Chamados ──
+  const tickets = [];
+  let ticketSeq = 1;
+
+  function statusClass(s) {
+    if (s === 'Aberto') return 'status-aberto';
+    if (s === 'Em andamento') return 'status-andamento';
+    return 'status-resolvido';
+  }
+  function priorityClass(p) {
+    if (p === 'Alta') return 'priority-alta';
+    if (p === 'Baixa') return 'priority-baixa';
+    return 'priority-media';
+  }
+
+  function renderTickets() {
+    const panel = document.getElementById('ticketPanel');
+    const term = (document.getElementById('ticketSearchInput').value || '').trim().toLowerCase();
+    const statusF = document.getElementById('ticketStatusFilter').value;
+    const priorityF = document.getElementById('ticketPriorityFilter').value;
+
+    const list = tickets.filter(t => {
+      if (statusF && t.status !== statusF) return false;
+      if (priorityF && t.priority !== priorityF) return false;
+      if (term && !t.title.toLowerCase().includes(term) && !('#' + t.id).includes(term)) return false;
+      return true;
+    });
+
+    if (list.length === 0) {
+      panel.innerHTML = `
+        <div class="ticket-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div class="ticket-empty-text">Nenhum chamado encontrado.</div>
+        </div>`;
+      return;
+    }
+
+    panel.innerHTML = `<div class="ticket-list">${list.slice().reverse().map(t => `
+      <div class="ticket-row">
+        <span class="ticket-id">#${t.id}</span>
+        <div style="flex:1;">
+          <div class="ticket-title">${t.title}</div>
+          <div class="ticket-cat">${t.category}</div>
+        </div>
+        <span class="ticket-badge ${priorityClass(t.priority)}">${t.priority}</span>
+        <span class="ticket-badge ${statusClass(t.status)}">${t.status}</span>
+      </div>
+    `).join('')}</div>`;
+  }
+
+  const ticketModalOverlay = document.getElementById('ticketModalOverlay');
+  function openTicketModal() { ticketModalOverlay.classList.add('open'); }
+  function closeTicketModal() {
+    ticketModalOverlay.classList.remove('open');
+    document.getElementById('ticketTitleInput').value = '';
+    document.getElementById('ticketDescInput').value = '';
+    document.getElementById('ticketCategoryInput').selectedIndex = 0;
+    document.getElementById('ticketPriorityInput').value = 'Media';
+  }
+
+  document.getElementById('newTicketBtn').addEventListener('click', openTicketModal);
+  document.getElementById('ticketModalClose').addEventListener('click', closeTicketModal);
+  document.getElementById('ticketCancelBtn').addEventListener('click', closeTicketModal);
+  ticketModalOverlay.addEventListener('click', e => { if (e.target === ticketModalOverlay) closeTicketModal(); });
+
+  document.getElementById('ticketCreateBtn').addEventListener('click', () => {
+    const title = document.getElementById('ticketTitleInput').value.trim();
+    if (!title) {
+      document.getElementById('ticketTitleInput').focus();
+      return;
+    }
+    tickets.push({
+      id: ticketSeq++,
+      title,
+      category: document.getElementById('ticketCategoryInput').value,
+      priority: document.getElementById('ticketPriorityInput').value,
+      desc: document.getElementById('ticketDescInput').value.trim(),
+      status: 'Aberto',
+    });
+    closeTicketModal();
+    renderTickets();
+  });
+
+  document.getElementById('ticketSearchInput').addEventListener('input', renderTickets);
+  document.getElementById('ticketStatusFilter').addEventListener('change', renderTickets);
+  document.getElementById('ticketPriorityFilter').addEventListener('change', renderTickets);
+
+  renderTickets();
+
   const navItems = document.querySelectorAll('[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
   const pageImportadores = document.getElementById('page-importadores');
   const pageFornecedores = document.getElementById('page-fornecedores');
   const pageIntegracoes = document.getElementById('page-integracoes');
+  const pageChamados = document.getElementById('page-chamados');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -2312,6 +2626,7 @@
     pageImportadores.style.display = 'none';
     pageFornecedores.style.display = 'none';
     pageIntegracoes.style.display = 'none';
+    pageChamados.style.display = 'none';
     pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
@@ -2325,6 +2640,8 @@
       if (el) el.textContent = products.filter(p => p.cadastrado).length;
     } else if (key === 'integracoes') {
       pageIntegracoes.style.display = '';
+    } else if (key === 'chamados') {
+      pageChamados.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
