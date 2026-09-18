@@ -568,7 +568,22 @@
   .product-name { font-size: 14px; font-weight: 700; line-height: 1.35; min-height: 38px; }
   .product-meta { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
   .product-meta-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-  .product-meta .price { font-size: 17px; font-weight: 800; }
+  .price-tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+    background: #eafff2;
+    border: 1px solid #bdf0d1;
+    border-radius: 8px;
+    padding: 4px 9px;
+  }
+  .price-tag .price {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0a0a0a !important;
+    opacity: 1 !important;
+    letter-spacing: -0.01em;
+  }
   .product-meta .supplier { font-size: 12.5px; font-weight: 700; color: var(--green); text-align: right; }
   .btn-list {
     width: 100%;
@@ -1095,7 +1110,7 @@
           <div class="product-meta">
             <div>
               <div class="product-meta-label">Preço de custo</div>
-              <div class="price">${fmtPrice(p.price)}</div>
+              <div class="price-tag"><div class="price">${fmtPrice(p.price)}</div></div>
             </div>
             <div>
               <div class="product-meta-label">Fornecedor</div>
