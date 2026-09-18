@@ -886,24 +886,107 @@
   .pf-btn-publish svg { width: 14px; height: 14px; }
   .pf-btn-publish:disabled { opacity: 0.5; cursor: default; }
 
-  .pf-toast {
-    position: fixed;
-    bottom: 28px; left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: #111;
-    color: #fff;
-    padding: 14px 22px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 700;
-    display: flex; align-items: center; gap: 10px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s, transform 0.25s;
+  /* ── Publish overlay ── */
+  .pub-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.72);
+    display: none;
+    align-items: center;
+    justify-content: center;
     z-index: 200;
+    padding: 24px;
   }
-  .pf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .pf-toast svg { width: 16px; height: 16px; color: #16c784; }
+  .pub-overlay.open { display: flex; }
+  .pub-box {
+    background: #0d0e11;
+    border: 1px solid #24252a;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 560px;
+    padding: 40px;
+    color: #f2f2f2;
+  }
+  .pub-logo-wrap {
+    width: 96px; height: 96px;
+    border-radius: 20px;
+    background: #17181c;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+  }
+  .pub-logo-inner {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .pub-logo-inner img { width: 100%; height: 100%; object-fit: cover; }
+  .pub-eyebrow { text-align: center; font-size: 11.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #8b8d96; margin-bottom: 6px; }
+  .pub-market-name { text-align: center; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 30px; }
+
+  .pub-progress-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 14.5px; font-weight: 700; }
+  .pub-progress-pct { color: #16c784; font-weight: 800; }
+  .pub-progress-track { height: 6px; border-radius: 99px; background: #24252a; overflow: hidden; margin-bottom: 26px; }
+  .pub-progress-bar { height: 100%; background: linear-gradient(90deg, #16c784, #1ee39a); width: 0%; transition: width 0.4s ease; }
+
+  .pub-steps { display: flex; flex-direction: column; gap: 18px; }
+  .pub-step { display: flex; align-items: center; gap: 14px; font-size: 15px; color: #6c6e77; transition: color 0.2s; }
+  .pub-step.active { color: #f2f2f2; }
+  .pub-step.done { color: #f2f2f2; }
+  .pub-step-ic {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid #3a3b42;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pub-step.done .pub-step-ic { border-color: #16c784; color: #16c784; }
+  .pub-step.active .pub-step-ic { border-color: #16c784; color: #16c784; border-top-color: transparent; animation: spin 0.8s linear infinite; }
+  .pub-step-ic svg { width: 12px; height: 12px; }
+
+  .pub-success { display: none; text-align: center; }
+  .pub-success.show { display: block; }
+  .pub-success-ic {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: #0e2a1c;
+    color: #16c784;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+    border: 2px solid #16c784;
+  }
+  .pub-success-ic svg { width: 34px; height: 34px; }
+  .pub-success-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .pub-success-sub { font-size: 14.5px; color: #9a9ca4; margin-bottom: 26px; }
+  .pub-success-sub strong { color: #fff; }
+  .pub-success-logo { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; background: #fff; margin: 0 auto 30px; }
+  .pub-success-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .pub-success-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .pub-btn-view {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: #16c784;
+    color: #06341f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .pub-btn-view:hover { filter: brightness(0.95); }
+  .pub-btn-view svg { width: 15px; height: 15px; }
+  .pub-btn-back {
+    border: 1px solid #33343a;
+    background: transparent;
+    color: #f2f2f2;
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .pub-btn-back:hover { background: #17181c; }
+
+  @media (max-width: 500px) {
+    .pub-box { padding: 28px 22px; }
+  }
 
   @media (max-width: 1000px) {
     .pf-grid { grid-template-columns: 1fr; }
@@ -2421,9 +2504,43 @@
       </div>
     </div>
 
-    <div class="pf-toast" id="pfToast">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <span id="pfToastText">Produto publicado com sucesso!</span>
+    <!-- Publish overlay -->
+    <div class="pub-overlay" id="pubOverlay">
+      <div class="pub-box">
+
+        <div id="pubProgressView">
+          <div class="pub-logo-wrap">
+            <div class="pub-logo-inner" id="pubLogo"></div>
+          </div>
+          <div class="pub-eyebrow">Publicando em</div>
+          <div class="pub-market-name" id="pubMarketName">Mercado Livre</div>
+
+          <div class="pub-progress-head">
+            <span id="pubProgressLabel">Validando dados do produto</span>
+            <span class="pub-progress-pct" id="pubProgressPct">0%</span>
+          </div>
+          <div class="pub-progress-track"><div class="pub-progress-bar" id="pubProgressBar"></div></div>
+
+          <div class="pub-steps" id="pubSteps"></div>
+        </div>
+
+        <div class="pub-success" id="pubSuccessView">
+          <div class="pub-success-ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="pub-success-title">Produto publicado!</div>
+          <div class="pub-success-sub">Seu anúncio está no ar em <strong id="pubSuccessMarketName">Mercado Livre</strong>.</div>
+          <div class="pub-success-logo" id="pubSuccessLogo"></div>
+          <div class="pub-success-actions">
+            <a class="pub-btn-view" id="pubViewListingBtn" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Ver anúncio no marketplace
+            </a>
+            <button class="pub-btn-back" id="pubBackToCatalogBtn">Voltar ao catálogo</button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Placeholder pages (functional nav targets) -->
@@ -2781,19 +2898,73 @@
   document.getElementById('pfBackBtn').addEventListener('click', closeProductForm);
   document.getElementById('pfCancelBtn').addEventListener('click', closeProductForm);
 
-  let pfToastTimer = null;
+  const pubSteps = [
+    'Validando dados do produto',
+    'Otimizando título e descrição',
+    'Calculando preço final e margem',
+    'Conectando ao marketplace',
+    'Enviando anúncio',
+    'Sincronizando com sua loja',
+  ];
+
+  function renderPubSteps(activeIdx) {
+    document.getElementById('pubSteps').innerHTML = pubSteps.map((label, i) => {
+      const cls = i < activeIdx ? 'done' : (i === activeIdx ? 'active' : '');
+      const icon = i < activeIdx
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+        : '';
+      return `<div class="pub-step ${cls}"><div class="pub-step-ic">${icon}</div><span>${label}</span></div>`;
+    }).join('');
+    if (activeIdx < pubSteps.length) {
+      document.getElementById('pubProgressLabel').textContent = pubSteps[activeIdx];
+    }
+  }
+
   document.getElementById('pfPublishBtn').addEventListener('click', function () {
     if (this.disabled) return;
-    products[pfState.productIdx].cadastrado = true;
-    const marketNames = [...pfState.markets].map(k => marketDisplayNames[k]).join(' e ');
-    document.getElementById('pfToastText').textContent = `Produto publicado em ${marketNames} com sucesso!`;
-    const toast = document.getElementById('pfToast');
-    toast.classList.add('show');
-    clearTimeout(pfToastTimer);
-    pfToastTimer = setTimeout(() => {
-      toast.classList.remove('show');
-      closeProductForm();
-    }, 1700);
+    const idx = pfState.productIdx;
+    const marketKeys = [...pfState.markets];
+    const primaryMarket = marketKeys[0];
+    const marketNames = marketKeys.map(k => marketDisplayNames[k]).join(' e ');
+    const productName = products[idx].name;
+
+    document.getElementById('pubLogo').innerHTML = marketLogos[primaryMarket];
+    document.getElementById('pubSuccessLogo').innerHTML = marketLogos[primaryMarket];
+    document.getElementById('pubMarketName').textContent = marketNames;
+    document.getElementById('pubSuccessMarketName').textContent = marketNames;
+    document.getElementById('pubViewListingBtn').href = primaryMarket === 'ml'
+      ? `https://lista.mercadolivre.com.br/${encodeURIComponent(productName)}`
+      : `https://shopee.com.br/search?keyword=${encodeURIComponent(productName)}`;
+
+    document.getElementById('pubProgressView').style.display = '';
+    document.getElementById('pubSuccessView').classList.remove('show');
+    document.getElementById('pubProgressBar').style.width = '0%';
+    document.getElementById('pubProgressPct').textContent = '0%';
+    renderPubSteps(0);
+    document.getElementById('pubOverlay').classList.add('open');
+
+    let step = 0;
+    const stepTimer = setInterval(() => {
+      step++;
+      const pct = Math.round((step / pubSteps.length) * 100);
+      document.getElementById('pubProgressBar').style.width = pct + '%';
+      document.getElementById('pubProgressPct').textContent = pct + '%';
+      if (step >= pubSteps.length) {
+        clearInterval(stepTimer);
+        products[idx].cadastrado = true;
+        setTimeout(() => {
+          document.getElementById('pubProgressView').style.display = 'none';
+          document.getElementById('pubSuccessView').classList.add('show');
+        }, 400);
+      } else {
+        renderPubSteps(step);
+      }
+    }, 480);
+  });
+
+  document.getElementById('pubBackToCatalogBtn').addEventListener('click', () => {
+    document.getElementById('pubOverlay').classList.remove('open');
+    closeProductForm();
   });
 
   const importers = [
