@@ -477,6 +477,118 @@
   .fab-support { background: #fff; color: #111; border: 1px solid var(--border); }
   .fab-guide { background: var(--yellow); color: #111; }
 
+  /* ── Catálogo ── */
+  .cat-head-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .cat-head-ic {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cat-head-ic svg { width: 22px; height: 22px; stroke: #111; }
+  .cat-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .cat-search {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 16px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .cat-search input {
+    border: none; outline: none; background: transparent;
+    font-size: 14px; width: 100%; color: #111; font-family: inherit;
+  }
+  .cat-filter {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #333;
+  }
+  .cat-tabs {
+    display: flex;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+  }
+  .cat-tabs button {
+    border: none; background: transparent;
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .cat-tabs button.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .product-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: var(--off);
+  }
+  .product-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .product-name { font-size: 14px; font-weight: 700; line-height: 1.35; min-height: 38px; }
+  .product-meta { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+  .product-meta-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .product-meta .price { font-size: 17px; font-weight: 800; }
+  .product-meta .supplier { font-size: 12.5px; font-weight: 700; color: var(--green); text-align: right; }
+  .btn-list {
+    width: 100%;
+    border: none;
+    background: var(--green);
+    color: #06341f;
+    font-weight: 800;
+    font-size: 13.5px;
+    padding: 11px;
+    border-radius: 10px;
+  }
+  .btn-list:hover { filter: brightness(0.95); }
+
+  @media (max-width: 1100px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .product-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Placeholder page ── */
   .placeholder-panel {
     background: #fff;
@@ -864,6 +976,37 @@
       </div>
     </div>
 
+    <!-- Catálogo de Produtos -->
+    <div class="content" id="page-catalogo" style="display:none;">
+      <div class="cat-head-row">
+        <div class="cat-head-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <div>
+          <div class="page-title" style="font-size:22px;">Catálogo de Produtos</div>
+          <div class="page-sub" id="catCount">20 produto(s) disponíveis com estoque à pronta entrega</div>
+        </div>
+      </div>
+
+      <div class="cat-toolbar">
+        <div class="cat-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="catSearchInput" placeholder="Buscar por nome de produto">
+        </div>
+        <div class="cat-filter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+          Todas as lojas
+        </div>
+        <div class="cat-tabs" id="catTabs">
+          <button class="active" data-tab="todos">Todos</button>
+          <button data-tab="cadastrado">Cadastrado</button>
+        </div>
+        <div class="cat-filter">Mais recentes</div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -910,8 +1053,89 @@
     conta:         { title: 'Minha conta', sub: 'Dados cadastrais e preferências.' },
   };
 
+  const products = [
+    { img: 'produtos/01-suti.jpg', name: 'Sutiã Fita Levanta Seios Peito Adesivo Discreto Boob Tape 5m', price: 11.99, cadastrado: false },
+    { img: 'produtos/02-kit-elastico.jpg', name: 'Kit Elástico 11 peças Treino Crossfit Adutor Exercícios Casa', price: 25.49, cadastrado: false },
+    { img: 'produtos/03-aquecedor.jpg', name: 'Aquecedor Mamadeira Leite Bebê Portátil Display Usb Portatil', price: 59.00, cadastrado: false },
+    { img: 'produtos/04-protetor.jpg', name: 'Protetor Almofada para Calcanhar Palmilha Adesivo de Sapatos', price: 8.99, cadastrado: false },
+    { img: 'produtos/05-mini-ar.jpg', name: 'Mini Ar Condicionado Arctic Air Ultra-pro Com Refil Para Gelo', price: 60.00, cadastrado: false },
+    { img: 'produtos/06-massageador.jpg', name: 'Aparelho Massageador Abdomen Corporal Orbital Celulite Abs', price: 70.99, cadastrado: false },
+    { img: 'produtos/07-spinner.jpg', name: 'Spinner Capitão América Com Embalagem De Metal', price: 16.00, cadastrado: false },
+    { img: 'produtos/08-depilador.jpg', name: 'Depilador Indolor Cristal Magico Pedra Depiladora', price: 10.00, cadastrado: false },
+    { img: 'produtos/09-capa-moto.jpg', name: 'Capa Impermeável Para Cobrir Moto Proteção Prateado', price: 14.00, cadastrado: false },
+    { img: 'produtos/10-palmilha.jpg', name: 'Palmilha Calcanheira Silicone Ortopédica Dores Esporão Par', price: 8.49, cadastrado: false },
+    { img: 'produtos/11-bomba-ar.jpg', name: 'Bomba De Ar Para Encher Bola Futebol Vôlei Basquete Com Bico', price: 10.99, cadastrado: false },
+    { img: 'produtos/12-kit-serra.jpg', name: 'Kit Jogo Serra Copo 6 Peças Para Madeira Gesso Pvc Plástico', price: 24.00, cadastrado: false },
+    { img: 'produtos/13-lanterna.jpg', name: 'Lanterna De Led Recarregável Luz Negra Uv Resistente A Água', price: 17.00, cadastrado: false },
+    { img: 'produtos/14-bico-torneira.jpg', name: 'Bico Adaptador De Torneira Ponteira Gourmet Arejador Abs', price: 10.00, cadastrado: false },
+    { img: 'produtos/15-kit-escova.jpg', name: 'Kit 6 Escova Manicure Limpa Escovinha Tira Pó Das Unhas Gel', price: 7.99, cadastrado: false },
+    { img: 'produtos/16-andador.jpg', name: 'Andador Portátil Colete Suspenso De Bebê Primeiros Passos', price: 17.99, cadastrado: false },
+    { img: 'produtos/17-maquina-costura.jpg', name: 'Mini Máquina De Costura Portátil Bivolt', price: 68.99, cadastrado: false },
+    { img: 'produtos/18-fita-dupla-face.jpg', name: 'Fita Dupla Face Adesiva Multiuso Mágica Forte Impermeável 5M', price: 15.99, cadastrado: false },
+    { img: 'produtos/19-escorredor.jpg', name: 'Escorredor De Macarrão Arroz Legumes Verduras Multiuso 22cm', price: 18.00, cadastrado: false },
+    { img: 'produtos/20-kit-ferramentas.jpg', name: 'Kit Ferramentas Precisão 31 Peças Chave Alen Torx Fenda Philips', price: 15.49, cadastrado: false },
+  ];
+
+  const fmtPrice = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+
+  function renderProducts(filterTab, term) {
+    const grid = document.getElementById('productGrid');
+    const t = (term || '').trim().toLowerCase();
+    const list = products.filter(p => {
+      if (filterTab === 'cadastrado' && !p.cadastrado) return false;
+      if (t && !p.name.toLowerCase().includes(t)) return false;
+      return true;
+    });
+    document.getElementById('catCount').textContent = list.length + ' produto(s) disponíveis com estoque à pronta entrega';
+    grid.innerHTML = list.map((p, i) => `
+      <div class="product-card">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="product-body">
+          <div class="product-name">${p.name}</div>
+          <div class="product-meta">
+            <div>
+              <div class="product-meta-label">Preço de custo</div>
+              <div class="price">${fmtPrice(p.price)}</div>
+            </div>
+            <div>
+              <div class="product-meta-label">Fornecedor</div>
+              <div class="supplier">Rio de Janeiro</div>
+            </div>
+          </div>
+          <button class="btn-list" data-idx="${products.indexOf(p)}">Cadastrar no Marketplace</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('productGrid').addEventListener('click', e => {
+    const btn = e.target.closest('.btn-list');
+    if (!btn) return;
+    const idx = Number(btn.dataset.idx);
+    products[idx].cadastrado = true;
+    btn.textContent = 'Cadastrado ✓';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  });
+
+  document.getElementById('catSearchInput').addEventListener('input', e => {
+    const activeTab = document.querySelector('#catTabs button.active').dataset.tab;
+    renderProducts(activeTab, e.target.value);
+  });
+
+  document.getElementById('catTabs').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-tab]');
+    if (!btn) return;
+    document.querySelectorAll('#catTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.dataset.tab, document.getElementById('catSearchInput').value);
+  });
+
+  renderProducts('todos', '');
+
   const navItems = document.querySelectorAll('.nav-item[data-page], .dropdown-panel .nav-item[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
+  const pageCatalogo = document.getElementById('page-catalogo');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -921,11 +1145,14 @@
     document.querySelectorAll('.nav-item[data-page]').forEach(el => {
       el.classList.toggle('active', el.dataset.page === key);
     });
+    pageDashboard.style.display = 'none';
+    pageCatalogo.style.display = 'none';
+    pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
-      pageGeneric.style.display = 'none';
+    } else if (key === 'catalogo') {
+      pageCatalogo.style.display = '';
     } else {
-      pageDashboard.style.display = 'none';
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
       genericTitle.textContent = info.title;
