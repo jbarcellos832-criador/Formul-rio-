@@ -102,9 +102,11 @@
     transition: background 0.15s, color 0.15s;
   }
   .nav-item .ic {
-    width: 18px; text-align: center;
-    font-size: 15px;
+    width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
+  .nav-item .ic svg { width: 17px; height: 17px; stroke: currentColor; }
   .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
   .nav-item.active {
     background: rgba(255,204,0,0.12);
@@ -475,6 +477,54 @@
   .fab-support { background: #fff; color: #111; border: 1px solid var(--border); }
   .fab-guide { background: var(--yellow); color: #111; }
 
+  /* ── Placeholder page ── */
+  .placeholder-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .placeholder-panel .ph-ic {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .placeholder-panel .ph-ic svg { width: 26px; height: 26px; stroke: #111; }
+  .placeholder-panel .ph-title { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 6px; }
+
+  /* ── Sidebar collapsed state ── */
+  .sidebar.collapsed { width: 76px; }
+  .sidebar.collapsed .brand span,
+  .sidebar.collapsed .nav-item span:not(.ic),
+  .sidebar.collapsed .side-footer .who > div,
+  .sidebar.collapsed .caret { display: none; }
+  .sidebar.collapsed .nav-item { justify-content: center; }
+  .sidebar.collapsed .side-footer { justify-content: center; }
+
+  /* ── Notification dropdown ── */
+  .dropdown-wrap { position: relative; }
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 280px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    padding: 14px;
+    display: none;
+    z-index: 30;
+  }
+  .dropdown-panel.open { display: block; }
+  .dropdown-panel .dd-title { font-weight: 800; font-size: 13.5px; margin-bottom: 10px; }
+  .dropdown-panel .dd-empty { font-size: 13px; color: var(--muted); padding: 14px 4px; text-align: center; }
+
   @media (max-width: 1100px) {
     .step-grid { grid-template-columns: 1fr; }
     .stat-grid { grid-template-columns: 1fr 1fr; }
@@ -486,6 +536,37 @@
     .content { padding: 20px; }
     .search { display: none; }
   }
+
+  body.dark-mode {
+    background: #111214;
+    color: #f2f2f2;
+  }
+  body.dark-mode .main { background: #111214; }
+  body.dark-mode .topbar { background: #17181b; border-color: #26272b; }
+  body.dark-mode .search,
+  body.dark-mode .wallet,
+  body.dark-mode .range-pill,
+  body.dark-mode .icon-btn,
+  body.dark-mode .btn-refresh,
+  body.dark-mode .onboard-card,
+  body.dark-mode .stat-card,
+  body.dark-mode .panel,
+  body.dark-mode .step-card,
+  body.dark-mode .placeholder-panel,
+  body.dark-mode .dropdown-panel {
+    background: #17181b;
+    border-color: #26272b;
+    color: #f2f2f2;
+  }
+  body.dark-mode .step-num,
+  body.dark-mode .stat-ic,
+  body.dark-mode .onboard-tag { background: #1f2024; }
+  body.dark-mode .page-title,
+  body.dark-mode .stat-value,
+  body.dark-mode .panel-title,
+  body.dark-mode .onboard-title,
+  body.dark-mode .step-name,
+  body.dark-mode .ph-title { color: #fff; }
 </style>
 </head>
 <body>
@@ -493,30 +574,71 @@
 <div class="layout">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand-row">
       <div class="brand">
-        <div class="dot">🛒</div>
+        <div class="dot">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
         <span>ML Fornecedor</span>
       </div>
-      <button class="collapse-btn">⟨⟩</button>
+      <button class="collapse-btn" id="collapseBtn" title="Recolher menu">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+      </button>
     </div>
 
-    <nav class="nav">
-      <a class="nav-item active" href="#"><span class="ic">🏠</span> Dashboard</a>
-      <a class="nav-item" href="#"><span class="ic">📚</span> Catálogo</a>
-      <a class="nav-item" href="#"><span class="ic">🏬</span> Importadores</a>
-      <a class="nav-item" href="#"><span class="ic">📈</span> Fornecedores</a>
-      <a class="nav-item" href="#"><span class="ic">📋</span> Pedidos</a>
-      <a class="nav-item" href="#"><span class="ic">🌐</span> Integrações</a>
-      <a class="nav-item" href="#"><span class="ic">💳</span> Financeiro &amp; PIX</a>
-      <a class="nav-item" href="#"><span class="ic">🛠️</span> Ferramentas <span class="caret">▾</span></a>
-      <a class="nav-item" href="#"><span class="ic">🎓</span> Tutoriais</a>
-      <a class="nav-item" href="#"><span class="ic">🎧</span> Chamados</a>
-      <a class="nav-item" href="#"><span class="ic">📊</span> Painel de afiliados</a>
+    <nav class="nav" id="navList">
+      <a class="nav-item active" href="#" data-page="dashboard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" href="#" data-page="catalogo">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+        <span>Catálogo</span>
+      </a>
+      <a class="nav-item" href="#" data-page="importadores">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 13h6"/></svg></span>
+        <span>Importadores</span>
+      </a>
+      <a class="nav-item" href="#" data-page="fornecedores">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></span>
+        <span>Fornecedores</span>
+      </a>
+      <a class="nav-item" href="#" data-page="pedidos">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>
+        <span>Pedidos</span>
+      </a>
+      <a class="nav-item" href="#" data-page="integracoes">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>
+        <span>Integrações</span>
+      </a>
+      <a class="nav-item" href="#" data-page="financeiro">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></span>
+        <span>Financeiro &amp; PIX</span>
+      </a>
+      <a class="nav-item" href="#" id="toolsToggle" data-page="ferramentas">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg></span>
+        <span>Ferramentas</span>
+        <span class="caret" id="toolsCaret">▾</span>
+      </a>
+      <a class="nav-item" href="#" data-page="tutoriais">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+        <span>Tutoriais</span>
+      </a>
+      <a class="nav-item" href="#" data-page="chamados">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-8h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-8H3z"/></svg></span>
+        <span>Chamados</span>
+      </a>
+      <a class="nav-item" href="#" data-page="afiliados">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+        <span>Painel de afiliados</span>
+      </a>
 
       <div class="nav-sep"></div>
-      <a class="nav-item logout" href="#"><span class="ic">↩️</span> Sair</a>
+      <a class="nav-item logout" href="#" id="logoutBtn">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span>
+        <span>Sair</span>
+      </a>
     </nav>
 
     <div class="side-footer">
@@ -527,7 +649,9 @@
           <div style="font-size:11.5px;color:#9c9c9c;"><span class="status-dot"></span>Online</div>
         </div>
       </div>
-      <span style="color:#9c9c9c;">⏻</span>
+      <span style="color:#9c9c9c;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><path d="M12 2v10"/></svg>
+      </span>
     </div>
   </aside>
 
@@ -535,49 +659,73 @@
   <main class="main">
     <div class="topbar">
       <div class="search">
-        <span>🔍</span>
-        <input type="text" placeholder="Buscar produtos, pedidos...">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar produtos, pedidos...">
         <span>↵</span>
       </div>
       <div class="topbar-spacer"></div>
-      <button class="icon-btn">☀️</button>
-      <button class="icon-btn">🔔</button>
-      <div class="wallet">💳 R$ 0,00</div>
-      <button class="btn-recharge">+ Recarregar</button>
-      <div class="user-chip">
-        <div class="avatar-sm">F</div>
-        <div>
-          <div class="name">Fornecedor</div>
-          <div class="role">Lojista</div>
+      <button class="icon-btn" id="themeBtn" title="Alternar tema">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+      </button>
+      <div class="dropdown-wrap">
+        <button class="icon-btn" id="bellBtn" title="Notificações">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+        <div class="dropdown-panel" id="bellPanel">
+          <div class="dd-title">Notificações</div>
+          <div class="dd-empty">Nenhuma notificação por enquanto.</div>
         </div>
-        <span style="color:#999;">▾</span>
+      </div>
+      <div class="wallet">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        R$ 0,00
+      </div>
+      <button class="btn-recharge" id="rechargeBtn">+ Recarregar</button>
+      <div class="dropdown-wrap">
+        <div class="user-chip" id="userChip">
+          <div class="avatar-sm">F</div>
+          <div>
+            <div class="name">Fornecedor</div>
+            <div class="role">Lojista</div>
+          </div>
+          <span style="color:#999;">▾</span>
+        </div>
+        <div class="dropdown-panel" id="userPanel" style="right:0;">
+          <div class="dd-title">Fornecedor · Lojista</div>
+          <a class="nav-item" style="color:#111;" href="#" data-page="conta">Minha conta</a>
+          <a class="nav-item" style="color:#111;" href="#" data-page="financeiro">Financeiro &amp; PIX</a>
+          <a class="nav-item logout" href="#" id="userLogout">Sair</a>
+        </div>
       </div>
     </div>
 
-    <div class="content">
+    <div class="content" id="page-dashboard">
       <div class="page-head">
         <div>
           <div class="page-title">Boa tarde 👋</div>
           <div class="page-sub">Aqui está o resumo em tempo real da sua operação, pedidos e faturamento.</div>
         </div>
         <div class="range-group">
-          <div class="range-pill">
-            <button>7d</button>
-            <button>30d</button>
-            <button class="active">12m</button>
+          <div class="range-pill" id="rangePill">
+            <button data-range="7d">7d</button>
+            <button data-range="30d">30d</button>
+            <button data-range="12m" class="active">12m</button>
           </div>
-          <button class="btn-refresh">↻ Atualizar</button>
+          <button class="btn-refresh" id="refreshBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Atualizar
+          </button>
         </div>
       </div>
 
       <!-- Primeiros passos -->
-      <div class="onboard-card">
+      <div class="onboard-card" id="onboardCard">
         <div class="onboard-head">
           <div class="onboard-title-row">
             <div class="onboard-title">Primeiros passos</div>
             <span class="onboard-tag">0 de 3 concluídos</span>
           </div>
-          <button class="onboard-close">✕</button>
+          <button class="onboard-close" id="onboardClose" title="Ocultar">✕</button>
         </div>
         <div class="onboard-desc">Complete as etapas básicas para iniciar a operação da sua loja.</div>
 
@@ -715,13 +863,170 @@
         </div>
       </div>
     </div>
+
+    <!-- Placeholder pages (functional nav targets) -->
+    <div class="content" id="page-generic" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" id="genericTitle">Página</div>
+          <div class="page-sub" id="genericSub">Em breve.</div>
+        </div>
+      </div>
+      <div class="placeholder-panel">
+        <div class="ph-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="ph-title" id="genericPhTitle">Em construção</div>
+        <div>Essa seção ainda está sendo preparada. Volte em breve.</div>
+      </div>
+    </div>
   </main>
 </div>
 
 <div class="floating-actions">
-  <button class="fab fab-support">💬 Suporte</button>
-  <button class="fab fab-guide">💬 GUIA</button>
+  <button class="fab fab-support" id="supportBtn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Suporte
+  </button>
+  <button class="fab fab-guide" id="guideBtn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    GUIA
+  </button>
 </div>
+
+<script>
+  const pageLabels = {
+    dashboard:     { title: 'Dashboard' },
+    catalogo:      { title: 'Catálogo', sub: 'Explore produtos com estoque a pronta entrega.' },
+    importadores:  { title: 'Importadores', sub: 'Gerencie seus importadores conectados.' },
+    fornecedores:  { title: 'Fornecedores', sub: 'Acompanhe seus fornecedores e catálogos vinculados.' },
+    pedidos:       { title: 'Pedidos', sub: 'Acompanhe o status de todos os seus pedidos.' },
+    integracoes:   { title: 'Integrações', sub: 'Conecte Mercado Livre, Shopee, Bling e outras plataformas.' },
+    financeiro:    { title: 'Financeiro & PIX', sub: 'Extrato, recargas e movimentações financeiras.' },
+    ferramentas:   { title: 'Ferramentas', sub: 'Utilitários para otimizar sua operação.' },
+    tutoriais:     { title: 'Tutoriais', sub: 'Aprenda a usar a plataforma passo a passo.' },
+    chamados:      { title: 'Chamados', sub: 'Seus tickets de suporte.' },
+    afiliados:     { title: 'Painel de afiliados', sub: 'Acompanhe suas indicações e comissões.' },
+    conta:         { title: 'Minha conta', sub: 'Dados cadastrais e preferências.' },
+  };
+
+  const navItems = document.querySelectorAll('.nav-item[data-page], .dropdown-panel .nav-item[data-page]');
+  const pageDashboard = document.getElementById('page-dashboard');
+  const pageGeneric = document.getElementById('page-generic');
+  const genericTitle = document.getElementById('genericTitle');
+  const genericSub = document.getElementById('genericSub');
+  const genericPhTitle = document.getElementById('genericPhTitle');
+
+  function goToPage(key) {
+    document.querySelectorAll('.nav-item[data-page]').forEach(el => {
+      el.classList.toggle('active', el.dataset.page === key);
+    });
+    if (key === 'dashboard') {
+      pageDashboard.style.display = '';
+      pageGeneric.style.display = 'none';
+    } else {
+      pageDashboard.style.display = 'none';
+      pageGeneric.style.display = '';
+      const info = pageLabels[key] || { title: key };
+      genericTitle.textContent = info.title;
+      genericSub.textContent = info.sub || 'Em breve.';
+      genericPhTitle.textContent = info.title + ' em construção';
+    }
+    closeAllDropdowns();
+  }
+
+  navItems.forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      goToPage(el.dataset.page);
+    });
+  });
+
+  // Period range pills
+  document.getElementById('rangePill').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-range]');
+    if (!btn) return;
+    document.querySelectorAll('#rangePill button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+
+  // Refresh button
+  document.getElementById('refreshBtn').addEventListener('click', function () {
+    this.classList.add('spinning');
+    const icon = this.querySelector('svg');
+    if (icon) icon.style.transition = 'transform 0.6s';
+    if (icon) icon.style.transform = 'rotate(360deg)';
+    setTimeout(() => { if (icon) icon.style.transform = 'rotate(0deg)'; }, 600);
+  });
+
+  // Onboarding close
+  document.getElementById('onboardClose').addEventListener('click', () => {
+    document.getElementById('onboardCard').style.display = 'none';
+  });
+
+  // Collapse sidebar
+  document.getElementById('collapseBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  });
+
+  // Theme toggle (light / dark content area)
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+  });
+
+  // Dropdowns (notifications / user menu)
+  const bellBtn = document.getElementById('bellBtn');
+  const bellPanel = document.getElementById('bellPanel');
+  const userChip = document.getElementById('userChip');
+  const userPanel = document.getElementById('userPanel');
+
+  function closeAllDropdowns() {
+    bellPanel.classList.remove('open');
+    userPanel.classList.remove('open');
+  }
+
+  bellBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const willOpen = !bellPanel.classList.contains('open');
+    closeAllDropdowns();
+    if (willOpen) bellPanel.classList.add('open');
+  });
+
+  userChip.addEventListener('click', e => {
+    e.stopPropagation();
+    const willOpen = !userPanel.classList.contains('open');
+    closeAllDropdowns();
+    if (willOpen) userPanel.classList.add('open');
+  });
+
+  document.addEventListener('click', closeAllDropdowns);
+
+  // Recharge button
+  document.getElementById('rechargeBtn').addEventListener('click', () => {
+    goToPage('financeiro');
+  });
+
+  // Logout
+  function handleLogout(e) {
+    e.preventDefault();
+    if (confirm('Deseja realmente sair da sua conta?')) {
+      alert('Sessão encerrada.');
+    }
+  }
+  document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+  document.getElementById('userLogout').addEventListener('click', handleLogout);
+
+  // Support / Guide FABs
+  document.getElementById('supportBtn').addEventListener('click', () => goToPage('chamados'));
+  document.getElementById('guideBtn').addEventListener('click', () => goToPage('tutoriais'));
+
+  // Search
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.value.trim()) {
+      goToPage('catalogo');
+    }
+  });
+</script>
 
 </body>
 </html>
