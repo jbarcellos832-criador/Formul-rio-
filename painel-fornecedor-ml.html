@@ -613,6 +613,103 @@
     .product-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Importadores ── */
+  .imp-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .imp-chip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+  }
+  .imp-chip svg { width: 14px; height: 14px; }
+
+  .imp-cat-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+  .imp-cat {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 99px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #444;
+  }
+  .imp-cat.active { background: #111; color: #fff; border-color: #111; }
+
+  .imp-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .imp-toolbar .cat-search { flex: 2; min-width: 240px; }
+  .imp-check {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #333;
+  }
+  .imp-check input { width: 15px; height: 15px; accent-color: var(--green); }
+
+  .imp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .imp-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .imp-card-top { display: flex; gap: 12px; align-items: flex-start; }
+  .imp-avatar {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .imp-avatar svg { width: 20px; height: 20px; stroke: #444; }
+  .imp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .imp-name { font-size: 14.5px; font-weight: 800; margin-bottom: 3px; color: #0a0a0a; }
+  .imp-addr { font-size: 12px; color: var(--muted); line-height: 1.4; margin-bottom: 3px; }
+  .imp-cat-label { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+  .imp-link {
+    margin-top: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #111;
+  }
+  .imp-link:hover { background: var(--off); }
+  .imp-link svg { width: 12px; height: 12px; }
+
+  @media (max-width: 1100px) {
+    .imp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .imp-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Placeholder page ── */
   .placeholder-panel {
     background: #fff;
@@ -693,7 +790,13 @@
   body.dark-mode .product-card,
   body.dark-mode .cat-search,
   body.dark-mode .cat-filter,
-  body.dark-mode .cat-tabs {
+  body.dark-mode .cat-tabs,
+  body.dark-mode .imp-chip,
+  body.dark-mode .imp-cat,
+  body.dark-mode .imp-check,
+  body.dark-mode .imp-card,
+  body.dark-mode .imp-avatar,
+  body.dark-mode .imp-link {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
@@ -711,7 +814,10 @@
   body.dark-mode .cat-tabs button.active { background: #26272b; color: #fff; }
   body.dark-mode .price-tag { background: #12271c; border-color: #1f3a2c; }
   body.dark-mode .price-tag .price { color: #ffffff !important; -webkit-text-fill-color: #ffffff; }
-  body.dark-mode .cat-head-ic svg { stroke: #fff; }
+  body.dark-mode .cat-head-ic svg,
+  body.dark-mode .imp-avatar svg { stroke: #fff; }
+  body.dark-mode .imp-cat.active { background: #ffde59; color: #111; border-color: #ffde59; }
+  body.dark-mode .imp-name { color: #fff; }
 </style>
 </head>
 <body>
@@ -1039,6 +1145,48 @@
       <div class="product-grid" id="productGrid"></div>
     </div>
 
+    <!-- Importadores -->
+    <div class="content" id="page-importadores" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Importadores</div>
+          <div class="page-sub" id="impCount">783 importadores — quem tem catálogo aparece primeiro.</div>
+        </div>
+      </div>
+
+      <div class="imp-chip-row">
+        <div class="imp-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          0 com PDF
+        </div>
+        <div class="imp-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          84 com catálogo ou site
+        </div>
+        <div class="imp-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          16 só contato
+        </div>
+      </div>
+
+      <div class="imp-cat-row" id="impCatRow"></div>
+
+      <div class="imp-toolbar">
+        <div class="cat-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="impSearchInput" placeholder="Buscar fornecedor, categoria ou descrição...">
+        </div>
+        <div class="cat-filter">Todos os marketplaces</div>
+        <label class="imp-check">
+          <input type="checkbox" id="impVerified">
+          Verificados
+        </label>
+        <div class="cat-filter" id="impSortBtn" style="cursor:pointer;">A–Z</div>
+      </div>
+
+      <div class="imp-grid" id="importerGrid"></div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -1165,9 +1313,154 @@
 
   renderProducts('todos', '');
 
+  const importers = [
+    { name: '123util', cat: 'Diversos' },
+    { name: '3ud Plastic', cat: 'Utilidades Domesticas' },
+    { name: '99 Toys', cat: 'Queridinhos' },
+    { name: 'A Brincadeira de Criança', cat: 'Feira ABRIN' },
+    { name: 'A Donna Up Jeans', addr: 'R. Vinte e Cinco de Março, 779 - sala 11', cat: 'Moda Feminina' },
+    { name: 'A Estilosa', addr: 'Loja 27 e 28/ Piso Superior - Shopping New Mall', cat: 'Moda Feminina' },
+    { name: 'A3x Distribuidora', cat: 'Motociclismo · Saúde e Cuidado Pessoal' },
+    { name: 'A5 Importadora', cat: 'Utilidades Domesticas' },
+    { name: 'Abela Cosmetics', cat: 'Queridinhos' },
+    { name: 'Abu Brasil', cat: 'Acessórios' },
+    { name: 'Aço Forte', cat: 'Ferramentas' },
+    { name: 'Acrilex', cat: 'Papelaria' },
+    { name: 'Acrylic Line', cat: 'Queridinhos' },
+    { name: 'Adak', cat: 'Fitness' },
+    { name: 'Adjomar', cat: 'Diversos' },
+    { name: 'Adversa', cat: 'Moda Feminina' },
+    { name: 'Afort', cat: 'Queridinhos' },
+    { name: 'Aiker', cat: 'Diversos' },
+    { name: 'Albras', cat: 'Brinquedos' },
+    { name: 'Alcance Feminino', addr: 'Shopping Canindé - Banca 691 - Brás', cat: 'Moda Feminina' },
+    { name: 'Alcance Pro Automotivo', cat: 'Queridinhos' },
+    { name: 'Alella', addr: 'Loja 229/Térreo - Shopping Newmall; R. Silva Teles, 123 - Brás', cat: 'Moda Feminina' },
+    { name: 'Alessi', cat: 'Importadores' },
+    { name: 'Ali Confecções', addr: 'R. Rodrigues Dos Santos, 90 (Hotel Family) Caldeirão, Banca 123,124,414', cat: 'Moda Feminina' },
+    { name: 'Alleva Beauty', cat: 'Maquiagens' },
+    { name: 'Allice Tricot', addr: 'Rua Gasômetro, 740 - Brás', cat: 'Moda Feminina' },
+    { name: 'Alpif Aramados', cat: 'Utilidades Domesticas' },
+    { name: 'Altomex', cat: 'Eletronicos' },
+    { name: 'Alumínio Nacional', addr: 'Rua João Canzi, 625, Ferraz de Vasconcelos 08538-200', cat: 'Utilidades Domesticas' },
+    { name: 'Aluminio Pato Branco', cat: 'Utilidades Domesticas' },
+    { name: 'Alves Plastic', cat: 'Diversos' },
+    { name: 'Alyath Confecções', cat: 'Fitness' },
+    { name: 'Amar É', cat: 'Brinquedos' },
+    { name: 'Amar Make', cat: 'Maquiagens' },
+    { name: 'Amazonia Aromas', cat: 'Queridinhos' },
+    { name: 'Amicus Pet', cat: 'Pet' },
+    { name: 'Amoveri Farma', cat: 'Diversos' },
+    { name: 'Ana & Filó', addr: 'Rua Eliza Whitaker, 106 - Loja 291 e 292 - HD Shopping - Corredor F', cat: 'Moda Feminina' },
+    { name: 'Analeni Utilidades', cat: 'Queridinhos' },
+    { name: 'Anda Luz', cat: 'Diversos' },
+    { name: 'Andrea e Alexandra', addr: 'Shopping Canindé - Loja 165/térreo', cat: 'Moda Feminina' },
+    { name: 'Anitta Modas', addr: 'Rua Tiers, 175 - Brás, São Paulo, Shopping Vautier popular, Banca 215, Box 423', cat: 'Moda Feminina' },
+    { name: 'Anjo Fantasias', cat: 'Brinquedos' },
+    { name: 'Anjo_ok', cat: 'Brinquedos' },
+    { name: 'Ânnima Store', addr: 'Rua joão teodoro, 1122 - Shopping New Mall - 1º Piso - Loja 113 S', cat: 'Moda Feminina' },
+    { name: 'Anylove', cat: 'Diversos' },
+    { name: 'Ar Modas', addr: 'Shopping da Juta - Box J 14 J 13', cat: 'Moda Feminina' },
+    { name: 'Arcobaleno Baby Kids', cat: 'Fitness' },
+    { name: 'Arktoys', cat: 'Brinquedos' },
+    { name: 'Arovida', cat: 'Maquiagens' },
+    { name: 'Arqplast', cat: 'Utilidades Domesticas' },
+    { name: 'Arthi Aramados', cat: 'Utilidades Domesticas' },
+    { name: 'Artoys - Royoplast', cat: 'Brinquedos' },
+    { name: 'Asu Makeup', cat: 'Maquiagens' },
+    { name: 'Ather', cat: 'Moda Feminina' },
+    { name: 'Avipet', cat: 'Queridinhos' },
+    { name: 'B-max', cat: 'Eletronicos · Ferramentas' },
+    { name: 'Babebi', cat: 'Feira ABRIN' },
+    { name: 'Baby Mel Ind', cat: 'Queridinhos' },
+    { name: 'Baby Style', cat: 'Brinquedos' },
+    { name: 'Bambola', cat: 'Brinquedos' },
+    { name: 'Bangtoys', cat: 'Brinquedos · Feira ABRIN · Papelaria' },
+    { name: 'Basi Qin', cat: 'Maquiagens' },
+    { name: 'Basics', cat: 'Moda Feminina' },
+    { name: 'Bbr Toys', cat: 'Brinquedos · Feira ABRIN' },
+    { name: 'Bebê Brincalhão', cat: 'Fitness' },
+    { name: 'Beetoys - Rotobrinq', cat: 'Brinquedos' },
+    { name: 'Bel Fiore', cat: 'Moda Feminina' },
+    { name: 'Bela Flor', cat: 'Importadores' },
+    { name: 'Bela Joli', addr: 'Rua Alexandrino Pedroso, 354; Shopping All Brás - Banca #23 e #24', cat: 'Moda Feminina' },
+    { name: 'Belen', addr: 'Shopping Vautier Premium - Container 612/613', cat: 'Moda Feminina' },
+    { name: 'Bella Mulher', addr: 'Rua Tiers, 588 - Brás / Corredor D - Box 006', cat: 'Moda Feminina' },
+    { name: 'Bellabrum', addr: 'Shopping Total Brás - Loja 131/ Piso Superior S', cat: 'Moda Feminina' },
+    { name: "Bellina&co", addr: 'Rua henrique dias 253, São Paulo', cat: 'Moda Feminina' },
+    { name: 'Bello Charme', cat: 'Maquiagens' },
+    { name: 'Bem Feminina', addr: 'Shopping Vautier, Av. vautier 248, Banca 53,68,Corredor 1', cat: 'Moda Feminina' },
+    { name: 'Bem Vestida', addr: 'Corredor 02/ Banca 36 - Shopping Vautier Popular', cat: 'Moda Feminina' },
+    { name: 'Best Shopee - Jummy Ju', cat: 'Maquiagens' },
+    { name: 'Bestfer', cat: 'Ferramentas' },
+    { name: 'Bettanin', cat: 'Diversos' },
+  ];
+
+  const impCategories = ['Todas', 'Moda Feminina', 'Diversos', 'Brinquedos', 'Utilidades Domesticas', 'Queridinhos', 'Maquiagens', 'Papelaria', 'Acessórios', 'Eletronicos', 'Importadores', 'Pet', 'Fitness', 'Feira ABRIN', 'Dropshipping', 'Ferramentas', 'Moda Infantil', 'Bolsas e Malas', 'Terceirizacao', 'Moda Plus Size', 'Calçados', 'Motociclismo', 'Saúde e Cuidado Pessoal'];
+
+  document.getElementById('impCatRow').innerHTML = impCategories.map((c, i) => {
+    const count = c === 'Todas' ? importers.length : importers.filter(imp => imp.cat.includes(c)).length;
+    return `<button class="imp-cat${i === 0 ? ' active' : ''}" data-cat="${c}">${c} (${count})</button>`;
+  }).join('');
+
+  let impSortAsc = true;
+
+  function renderImporters(cat, term) {
+    const grid = document.getElementById('importerGrid');
+    const t = (term || '').trim().toLowerCase();
+    let list = importers.filter(imp => {
+      if (cat !== 'Todas' && !imp.cat.includes(cat)) return false;
+      if (t && !imp.name.toLowerCase().includes(t) && !imp.cat.toLowerCase().includes(t)) return false;
+      return true;
+    });
+    list = list.slice().sort((a, b) => impSortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+    document.getElementById('impCount').textContent = list.length + ' importadores — quem tem catálogo aparece primeiro.';
+    grid.innerHTML = list.map(imp => `
+      <div class="imp-card">
+        <div class="imp-card-top">
+          <div class="imp-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/></svg>
+          </div>
+          <div>
+            <div class="imp-name">${imp.name}</div>
+            ${imp.addr ? `<div class="imp-addr">${imp.addr}</div>` : ''}
+            <div class="imp-cat-label">${imp.cat}</div>
+          </div>
+        </div>
+        <a class="imp-link" href="#" onclick="return false;">
+          Ver catálogo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('impCatRow').addEventListener('click', e => {
+    const btn = e.target.closest('.imp-cat');
+    if (!btn) return;
+    document.querySelectorAll('.imp-cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderImporters(btn.dataset.cat, document.getElementById('impSearchInput').value);
+  });
+
+  document.getElementById('impSearchInput').addEventListener('input', e => {
+    const activeCat = document.querySelector('.imp-cat.active').dataset.cat;
+    renderImporters(activeCat, e.target.value);
+  });
+
+  document.getElementById('impSortBtn').addEventListener('click', function () {
+    impSortAsc = !impSortAsc;
+    this.textContent = impSortAsc ? 'A–Z' : 'Z–A';
+    const activeCat = document.querySelector('.imp-cat.active').dataset.cat;
+    renderImporters(activeCat, document.getElementById('impSearchInput').value);
+  });
+
+  renderImporters('Todas', '');
+
   const navItems = document.querySelectorAll('.nav-item[data-page], .dropdown-panel .nav-item[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
+  const pageImportadores = document.getElementById('page-importadores');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -1179,11 +1472,14 @@
     });
     pageDashboard.style.display = 'none';
     pageCatalogo.style.display = 'none';
+    pageImportadores.style.display = 'none';
     pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
     } else if (key === 'catalogo') {
       pageCatalogo.style.display = '';
+    } else if (key === 'importadores') {
+      pageImportadores.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
