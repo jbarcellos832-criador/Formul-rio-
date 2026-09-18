@@ -616,6 +616,263 @@
     .product-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Integrações ── */
+  .int-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .int-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .int-card-head-left { display: flex; gap: 14px; align-items: flex-start; }
+  .int-ic {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .int-ic svg { width: 18px; height: 18px; }
+  .int-card-title { font-size: 15.5px; font-weight: 800; margin-bottom: 3px; }
+  .int-card-sub { font-size: 13px; color: var(--muted); }
+  .btn-copy-all {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .btn-copy-all:hover { background: var(--off); }
+  .btn-copy-all svg { width: 14px; height: 14px; }
+
+  .addr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .addr-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+  }
+  .addr-field-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .addr-field-value { font-size: 14.5px; font-weight: 700; }
+  .btn-copy {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .btn-copy:hover { background: var(--off); }
+  .btn-copy svg { width: 12px; height: 12px; }
+  .btn-copy.copied { background: #eafff2; border-color: #bdf0d1; color: #0f9d63; }
+
+  .sync-row { display: flex; align-items: center; gap: 14px; }
+  .sync-ic {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--off);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sync-ic svg { width: 18px; height: 18px; }
+  .sync-ic.spinning svg { animation: spin 0.8s linear; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .int-section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .int-section-title { font-size: 15px; font-weight: 800; }
+  .int-section-count { font-size: 13px; color: var(--muted); font-weight: 700; }
+
+  .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 26px; }
+  .store-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 18px;
+  }
+  .store-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .store-logo {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+  .store-name { font-size: 14.5px; font-weight: 800; }
+  .store-sub { font-size: 12px; color: var(--muted); }
+  .store-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .icon-mini-btn {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    color: #444;
+  }
+  .icon-mini-btn svg { width: 14px; height: 14px; }
+  .status-pill {
+    background: #eafff2; color: #0f9d63;
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .store-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .store-meta-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .store-meta-value { font-size: 14px; font-weight: 700; }
+  .store-meta-value.green { color: #16c784; }
+  .store-sync-time { font-size: 12.5px; color: var(--muted); margin-bottom: 12px; }
+  .store-box {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .store-box-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .store-box-note { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+  .store-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+  .store-stat-row:last-child { margin-bottom: 0; }
+  .store-stat-row .lbl { color: var(--muted); font-weight: 600; }
+  .store-stat-row .val { font-weight: 800; }
+  .store-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; font-weight: 700; }
+  .store-bar { flex: 1; height: 6px; border-radius: 99px; background: linear-gradient(90deg, #ff6b6b, #f5a623, #f5d423, #a3e635, #16c784); }
+  .store-actions-row { display: flex; gap: 10px; }
+  .btn-sync {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--green);
+    color: #06341f;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .btn-sync:hover { filter: brightness(0.96); }
+  .btn-sync svg { width: 14px; height: 14px; }
+  .btn-delete-store {
+    width: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fdeaea;
+    color: #c0392b;
+    border: none;
+    border-radius: 12px;
+  }
+  .btn-delete-store svg { width: 15px; height: 15px; }
+  .btn-delete-store:hover { background: #fbd7d7; }
+
+  .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
+  .market-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .market-card.disabled { opacity: 0.55; }
+  .market-top { display: flex; align-items: center; gap: 12px; }
+  .market-logo {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: var(--off);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+  .market-name { font-size: 14.5px; font-weight: 800; }
+  .market-sub { font-size: 12px; color: var(--muted); }
+  .market-badge-soon {
+    margin-left: auto;
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--muted);
+  }
+  .market-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .btn-connect {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--green);
+    color: #06341f;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13.5px;
+    font-weight: 800;
+    margin-top: auto;
+  }
+  .btn-connect:hover { filter: brightness(0.96); }
+  .btn-connect:disabled { background: var(--off); color: var(--muted); cursor: not-allowed; }
+
+  .calc-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .calc-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+  .calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+  .calc-field-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .calc-field input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14.5px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #111;
+  }
+  .calc-result {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .calc-result-title { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 800; margin-bottom: 16px; }
+  .calc-result-title svg { width: 16px; height: 16px; }
+  .calc-result-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-size: 13.5px; font-weight: 700; color: var(--muted); }
+  .calc-result-row:last-child { margin-bottom: 0; }
+  .calc-result-row .v { font-size: 15px; font-weight: 800; color: #111; }
+  .calc-result-row .v.big { font-size: 22px; color: #16c784; }
+
+  @media (max-width: 1100px) {
+    .addr-grid, .store-grid, .store-meta-grid { grid-template-columns: 1fr; }
+    .market-grid { grid-template-columns: 1fr 1fr; }
+    .calc-grid, .calc-fields { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .market-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Fornecedores ── */
   .sup-stat-grid {
     display: grid;
@@ -875,7 +1132,19 @@
   body.dark-mode .imp-link,
   body.dark-mode .sup-stat-card,
   body.dark-mode .sup-card,
-  body.dark-mode .sup-btn {
+  body.dark-mode .sup-btn,
+  body.dark-mode .int-card,
+  body.dark-mode .addr-field,
+  body.dark-mode .btn-copy,
+  body.dark-mode .btn-copy-all,
+  body.dark-mode .store-card,
+  body.dark-mode .icon-mini-btn,
+  body.dark-mode .store-box,
+  body.dark-mode .market-card,
+  body.dark-mode .market-badge-soon,
+  body.dark-mode .calc-panel,
+  body.dark-mode .calc-result,
+  body.dark-mode .calc-field input {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
@@ -883,6 +1152,9 @@
   body.dark-mode .step-num,
   body.dark-mode .stat-ic,
   body.dark-mode .cat-head-ic,
+  body.dark-mode .int-ic,
+  body.dark-mode .sync-ic,
+  body.dark-mode .market-logo,
   body.dark-mode .onboard-tag { background: #1f2024; }
   body.dark-mode .page-title,
   body.dark-mode .stat-value,
@@ -901,6 +1173,16 @@
   body.dark-mode .sup-stat-value,
   body.dark-mode .sup-name { color: #fff; }
   body.dark-mode .sup-btn.primary { color: #06341f; }
+  body.dark-mode .int-card-title,
+  body.dark-mode .addr-field-value,
+  body.dark-mode .store-name,
+  body.dark-mode .market-name,
+  body.dark-mode .calc-result-row .v { color: #fff; }
+  body.dark-mode .btn-sync,
+  body.dark-mode .btn-connect { color: #06341f; }
+  body.dark-mode .store-box { background: #1f2024; border-color: #2a2b30; }
+  body.dark-mode .status-pill { background: #12271c; }
+  body.dark-mode .btn-copy.copied { background: #12271c; border-color: #1f3a2c; }
 </style>
 </head>
 <body>
@@ -1334,6 +1616,133 @@
       </div>
     </div>
 
+    <!-- Integrações -->
+    <div class="content" id="page-integracoes" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Integrações</div>
+          <div class="page-sub">Conecte marketplaces e gerencie suas lojas.</div>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-card-head">
+          <div class="int-card-head-left">
+            <div class="int-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div>
+              <div class="int-card-title">Endereço do fornecedor (use na sua loja)</div>
+              <div class="int-card-sub">Cadastre este endereço como endereço de retirada/origem na sua loja do marketplace.</div>
+            </div>
+          </div>
+          <button class="btn-copy-all" id="copyAllBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar tudo
+          </button>
+        </div>
+
+        <div class="addr-grid">
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">CEP</div>
+              <div class="addr-field-value" data-addr="cep">20050-902</div>
+            </div>
+            <button class="btn-copy" data-copy="cep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">Rua / Número</div>
+              <div class="addr-field-value" data-addr="rua">R. Uruguaiana, 10</div>
+            </div>
+            <button class="btn-copy" data-copy="rua"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">Complemento</div>
+              <div class="addr-field-value" data-addr="complemento">Sala 1304</div>
+            </div>
+            <button class="btn-copy" data-copy="complemento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">Bairro</div>
+              <div class="addr-field-value" data-addr="bairro">Centro</div>
+            </div>
+            <button class="btn-copy" data-copy="bairro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">Cidade</div>
+              <div class="addr-field-value" data-addr="cidade">Rio de Janeiro</div>
+            </div>
+            <button class="btn-copy" data-copy="cidade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+          <div class="addr-field">
+            <div>
+              <div class="addr-field-label">UF</div>
+              <div class="addr-field-value" data-addr="uf">RJ</div>
+            </div>
+            <button class="btn-copy" data-copy="uf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="sync-row">
+          <div class="sync-ic" id="syncStatusIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+          <div>
+            <div class="int-card-title">Status de sincronização</div>
+            <div class="int-card-sub" id="syncStatusSub">Última sync: Nunca</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="int-section-head">
+        <div class="int-section-title">Lojas conectadas</div>
+        <div class="int-section-count" id="connectedCount">2 conectada(s)</div>
+      </div>
+      <div class="store-grid" id="connectedStoresGrid"></div>
+
+      <div class="int-section-head">
+        <div class="int-section-title">Marketplaces disponíveis</div>
+      </div>
+      <div class="market-grid" id="marketGrid"></div>
+
+      <div class="int-section-head">
+        <div class="int-section-title">Calculadora de vendas</div>
+      </div>
+      <div class="calc-panel">
+        <div class="calc-grid">
+          <div class="calc-fields">
+            <div class="calc-field">
+              <div class="calc-field-label">Custo do produto (R$)</div>
+              <input type="number" id="calcCusto" step="0.01" min="0" value="0">
+            </div>
+            <div class="calc-field">
+              <div class="calc-field-label">Preço de venda (R$)</div>
+              <input type="number" id="calcVenda" step="0.01" min="0" value="0">
+            </div>
+            <div class="calc-field">
+              <div class="calc-field-label">Taxas marketplace (R$)</div>
+              <input type="number" id="calcTaxas" step="0.01" min="0" value="0">
+            </div>
+            <div class="calc-field">
+              <div class="calc-field-label">Frete (R$)</div>
+              <input type="number" id="calcFrete" step="0.01" min="0" value="0">
+            </div>
+          </div>
+          <div class="calc-result">
+            <div class="calc-result-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="9" y2="10"/><line x1="12" y1="10" x2="13" y2="10"/><line x1="16" y1="10" x2="17" y2="10"/><line x1="8" y1="14" x2="9" y2="14"/><line x1="12" y1="14" x2="13" y2="14"/><line x1="16" y1="14" x2="17" y2="14"/></svg>
+              Resultado
+            </div>
+            <div class="calc-result-row"><span>Lucro</span><span class="v big" id="calcLucro">R$ 0.00</span></div>
+            <div class="calc-result-row"><span>Margem</span><span class="v" id="calcMargem">0.0%</span></div>
+            <div class="calc-result-row"><span>Markup</span><span class="v" id="calcMarkup">0.0%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -1644,11 +2053,225 @@
 
   renderImporters('Todas', '');
 
+  // ── Integrações ──
+  const addrValues = {
+    cep: '20050-902',
+    rua: 'R. Uruguaiana, 10',
+    complemento: 'Sala 1304',
+    bairro: 'Centro',
+    cidade: 'Rio de Janeiro',
+    uf: 'RJ',
+  };
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      copyText(addrValues[btn.dataset.copy]);
+      const original = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.textContent = 'Copiado ✓';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1500);
+    });
+  });
+
+  document.getElementById('copyAllBtn').addEventListener('click', function () {
+    const full = `${addrValues.rua} - ${addrValues.complemento}\n${addrValues.bairro}, ${addrValues.cidade} - ${addrValues.uf}\nCEP: ${addrValues.cep}`;
+    copyText(full);
+    const original = this.innerHTML;
+    this.textContent = 'Copiado ✓';
+    setTimeout(() => { this.innerHTML = original; }, 1500);
+  });
+
+  const connectedStores = [
+    {
+      key: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', logoColor: '#ee4d2d',
+      lastSync: null,
+      type: 'shopee',
+    },
+    {
+      key: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
+      lastSync: '16/09/2026, 15:19:50',
+      type: 'ml',
+    },
+  ];
+
+  function renderConnectedStores() {
+    const grid = document.getElementById('connectedStoresGrid');
+    document.getElementById('connectedCount').textContent = connectedStores.length + ' conectada(s)';
+    grid.innerHTML = connectedStores.map(s => {
+      const body = s.type === 'shopee' ? `
+        <div class="store-box">
+          <div class="store-box-label">Loja</div>
+          <div class="store-bar-row"><span>Avaliação</span><div class="store-bar"></div><span>Em breve</span> · <span>Seguidores: Em breve</span></div>
+          <div class="store-box-label" style="margin-top:12px;">Performance</div>
+          <div class="store-stat-row"><span class="lbl">Taxa de resposta</span><span class="val">Em breve</span></div>
+          <div class="store-stat-row"><span class="lbl">Envios atrasados</span><span class="val">Em breve</span></div>
+          <div class="store-stat-row"><span class="lbl">Não-cumprimento</span><span class="val">Em breve</span></div>
+          <div class="store-stat-row"><span class="lbl">Cancelamentos</span><span class="val">Em breve</span></div>
+          <div class="store-stat-row"><span class="lbl">Devoluções</span><span class="val">Em breve</span></div>
+          <div class="store-stat-row"><span class="lbl">Penalidade</span><span class="val">Em breve</span></div>
+        </div>
+      ` : `
+        <div class="store-sync-time">Última sync: ${s.lastSync || 'Nunca'}</div>
+        <div class="store-box">
+          <div class="store-bar-row"><span>Reputação</span><div class="store-bar"></div><span>Sem dados</span></div>
+          <div class="store-box-note">Sem reputação ainda — o Mercado Livre só classifica vendedores com vendas nos últimos 60 dias. Faça suas primeiras vendas para começar a aparecer aqui.</div>
+          <div class="store-box-label" style="margin-top:12px;">Operação (60 dias)</div>
+          <div class="store-stat-row"><span class="lbl">Transações</span><span class="val">0</span></div>
+          <div class="store-stat-row"><span class="lbl">Cancelamentos</span><span class="val">0.00%</span></div>
+          <div class="store-stat-row"><span class="lbl">Atrasos</span><span class="val">0.00%</span></div>
+          <div class="store-stat-row"><span class="lbl">Reclamações</span><span class="val">0.00%</span></div>
+        </div>
+      `;
+      return `
+      <div class="store-card">
+        <div class="store-top">
+          <div class="store-logo" style="background:${s.logoBg};color:${s.logoColor};">${s.logo}</div>
+          <div>
+            <div class="store-name">${s.name}</div>
+            <div class="store-sub">${s.platform}</div>
+          </div>
+          <div class="store-actions">
+            <button class="icon-mini-btn" title="Configurações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+            <button class="icon-mini-btn" title="Editar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></button>
+            <span class="status-pill">Conectada</span>
+          </div>
+        </div>
+        <div class="store-meta-grid">
+          <div>
+            <div class="store-meta-label">Marketplace</div>
+            <div class="store-meta-value">${s.platform}</div>
+          </div>
+          <div>
+            <div class="store-meta-label">Status</div>
+            <div class="store-meta-value green">Conectada</div>
+          </div>
+        </div>
+        ${body}
+        <div class="store-actions-row">
+          <button class="btn-sync" data-store="${s.key}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Sincronizar
+          </button>
+          <button class="btn-delete-store" data-remove="${s.key}" title="Remover">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function nowStamp() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}, ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  }
+
+  document.getElementById('connectedStoresGrid').addEventListener('click', e => {
+    const syncBtn = e.target.closest('.btn-sync');
+    const delBtn = e.target.closest('[data-remove]');
+    if (syncBtn) {
+      const store = connectedStores.find(s => s.key === syncBtn.dataset.store);
+      if (store) store.lastSync = nowStamp();
+      document.getElementById('syncStatusSub').textContent = 'Última sync: ' + nowStamp();
+      renderConnectedStores();
+    } else if (delBtn) {
+      const idx = connectedStores.findIndex(s => s.key === delBtn.dataset.remove);
+      if (idx > -1 && confirm('Remover esta loja conectada?')) {
+        connectedStores.splice(idx, 1);
+        renderConnectedStores();
+        renderMarketplaces();
+      }
+    }
+  });
+
+  const marketplaces = [
+    { key: 'ml', name: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', desc: 'Conecte sua conta do Mercado Livre e sincronize anúncios.', soon: false },
+    { key: 'shopee', name: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', desc: 'Integre sua loja Shopee para gerenciar pedidos.', soon: false },
+    { key: 'bling', name: 'Bling', logo: '📦', logoBg: '#e3f6e8', desc: 'Conecte sua conta Bling para gestão de estoque e NF-e.', soon: false },
+    { key: 'shopify', name: 'Shopify', logo: '🛒', logoBg: '#e8f3ff', desc: 'Sincronize produtos com sua loja Shopify.', soon: true },
+    { key: 'amazon', name: 'Amazon', logo: '📦', logoBg: '#fff2e0', desc: 'Integração com Amazon Seller Central.', soon: true },
+  ];
+
+  function renderMarketplaces() {
+    const grid = document.getElementById('marketGrid');
+    grid.innerHTML = marketplaces.map(m => {
+      const connectedCount = connectedStores.filter(s => s.key === m.key).length;
+      return `
+      <div class="market-card${m.soon ? ' disabled' : ''}">
+        <div class="market-top">
+          <div class="market-logo" style="background:${m.logoBg};">${m.logo}</div>
+          <div>
+            <div class="market-name">${m.name}</div>
+            <div class="market-sub">${m.soon ? 'Marketplace' : connectedCount + ' loja(s) conectada(s)'}</div>
+          </div>
+          ${m.soon ? '<span class="market-badge-soon">Em breve</span>' : ''}
+        </div>
+        <div class="market-desc">${m.desc}</div>
+        <button class="btn-connect" data-connect="${m.key}" ${m.soon ? 'disabled' : ''}>
+          ${m.soon ? '🔌 Em breve' : (m.logo + ' Conectar ' + m.name)}
+        </button>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('marketGrid').addEventListener('click', e => {
+    const btn = e.target.closest('[data-connect]');
+    if (!btn || btn.disabled) return;
+    const m = marketplaces.find(x => x.key === btn.dataset.connect);
+    if (!m) return;
+    if (!connectedStores.some(s => s.key === m.key)) {
+      connectedStores.push({ key: m.key, name: 'Loja ' + m.name, platform: m.name, logo: m.logo, logoBg: m.logoBg, logoColor: '#333', lastSync: null, type: m.key === 'ml' ? 'ml' : 'shopee' });
+    }
+    renderConnectedStores();
+    renderMarketplaces();
+    goToPageSafe('integracoes');
+  });
+
+  function goToPageSafe(key) {
+    if (typeof goToPage === 'function') goToPage(key);
+  }
+
+  renderConnectedStores();
+  renderMarketplaces();
+
+  // ── Calculadora de vendas ──
+  function updateCalc() {
+    const custo = parseFloat(document.getElementById('calcCusto').value) || 0;
+    const venda = parseFloat(document.getElementById('calcVenda').value) || 0;
+    const taxas = parseFloat(document.getElementById('calcTaxas').value) || 0;
+    const frete = parseFloat(document.getElementById('calcFrete').value) || 0;
+    const lucro = venda - custo - taxas - frete;
+    const margem = venda > 0 ? (lucro / venda) * 100 : 0;
+    const markup = custo > 0 ? (lucro / custo) * 100 : 0;
+    document.getElementById('calcLucro').textContent = 'R$ ' + lucro.toFixed(2);
+    document.getElementById('calcMargem').textContent = margem.toFixed(1) + '%';
+    document.getElementById('calcMarkup').textContent = markup.toFixed(1) + '%';
+    document.getElementById('calcLucro').style.color = lucro >= 0 ? '#16c784' : '#ff4d4f';
+  }
+  ['calcCusto', 'calcVenda', 'calcTaxas', 'calcFrete'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateCalc);
+  });
+  updateCalc();
+
   const navItems = document.querySelectorAll('[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
   const pageImportadores = document.getElementById('page-importadores');
   const pageFornecedores = document.getElementById('page-fornecedores');
+  const pageIntegracoes = document.getElementById('page-integracoes');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -1662,6 +2285,7 @@
     pageCatalogo.style.display = 'none';
     pageImportadores.style.display = 'none';
     pageFornecedores.style.display = 'none';
+    pageIntegracoes.style.display = 'none';
     pageGeneric.style.display = 'none';
     if (key === 'dashboard') {
       pageDashboard.style.display = '';
@@ -1673,6 +2297,8 @@
       pageFornecedores.style.display = '';
       const el = document.getElementById('supProductCount');
       if (el) el.textContent = products.filter(p => p.cadastrado).length;
+    } else if (key === 'integracoes') {
+      pageIntegracoes.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
