@@ -1005,6 +1005,193 @@
     .pf-summary-row { flex-wrap: wrap; }
   }
 
+  /* ── Financeiro & PIX ── */
+  .fin-header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .btn-autopay {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 12px;
+    padding: 11px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .btn-autopay:hover { background: var(--off); }
+  .btn-autopay svg { width: 15px; height: 15px; }
+  .btn-autopay.on { background: #eafff2; border-color: #bdf0d1; color: #0f9d63; }
+
+  .btn-add-balance {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: none;
+    background: var(--green);
+    color: #06341f;
+    border-radius: 12px;
+    padding: 11px 18px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .btn-add-balance:hover { filter: brightness(0.96); }
+  .btn-add-balance svg { width: 14px; height: 14px; }
+
+  .fin-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .fin-stat-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .fin-stat-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .fin-stat-ic {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .fin-stat-ic svg { width: 16px; height: 16px; }
+  .fin-stat-ic.green { background: #eafff2; color: #16c784; }
+  .fin-stat-ic.teal { background: #e6fff7; color: #0fae8c; }
+  .fin-stat-ic.red { background: #fdeaea; color: #d0453a; }
+  .fin-stat-ic.purple { background: #f2eaff; color: #8b5cf6; }
+  .fin-stat-ic.blue { background: #e8f0ff; color: var(--blue); }
+  .fin-stat-label { font-size: 14px; font-weight: 700; color: #333; }
+  .fin-stat-value { font-size: 26px; font-weight: 800; }
+
+  .fin-chart-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .fin-chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .fin-chart-title { font-size: 15.5px; font-weight: 800; }
+  .fin-chart-sub { font-size: 12.5px; color: var(--muted); }
+  .fin-chart-wrap { position: relative; overflow-x: auto; }
+  .fin-chart-svg { display: block; }
+  .fin-chart-svg .grid-line { stroke: var(--border); stroke-dasharray: 3 4; }
+  .fin-chart-svg .axis-label { fill: var(--muted); font-size: 10.5px; font-family: 'Manrope', sans-serif; }
+  .fin-chart-svg .dot { fill: #fff; stroke: #c9cdd6; stroke-width: 1.5; cursor: pointer; }
+  .fin-chart-svg .dot.active { fill: #111; stroke: #111; }
+  .fin-chart-svg .guide-line { stroke: #111; stroke-width: 1; display: none; }
+  .fin-tooltip {
+    position: absolute;
+    background: #111;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    pointer-events: none;
+    display: none;
+    white-space: nowrap;
+    transform: translate(-50%, -110%);
+    z-index: 10;
+  }
+  .fin-tooltip .fin-tooltip-date { font-weight: 700; margin-bottom: 3px; }
+  .fin-tooltip .fin-tooltip-val { color: #b7f5d5; font-weight: 700; }
+
+  .fin-tx-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 20px 24px;
+  }
+  .fin-tx-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+  .fin-tx-toolbar .cat-search { flex: 1; min-width: 220px; }
+  .fin-tx-count { font-size: 13px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+  .btn-export-csv {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .btn-export-csv:hover { background: var(--off); }
+  .btn-export-csv svg { width: 14px; height: 14px; }
+  .fin-tx-empty { text-align: center; color: var(--muted); font-size: 14px; padding: 48px 12px; }
+  .fin-tx-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .fin-tx-row:last-child { border-bottom: none; }
+  .fin-tx-row .desc { font-weight: 700; }
+  .fin-tx-row .date { font-size: 12.5px; color: var(--muted); }
+  .fin-tx-row .amt.positive { color: #16c784; font-weight: 800; }
+  .fin-tx-row .amt.negative { color: #d0453a; font-weight: 800; }
+
+  @media (max-width: 900px) {
+    .fin-stat-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .fin-stat-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Adicionar Saldo via PIX modal ── */
+  .pix-modal-body { padding: 22px 24px; }
+  .pix-modal-desc { font-size: 13.5px; color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
+  .pix-amount-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: inherit;
+    color: #111;
+  }
+  .pix-minmax { font-size: 12.5px; color: var(--muted); margin: 8px 0 16px; }
+  .pix-presets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 20px; }
+  .pix-preset-btn {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 6px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .pix-preset-btn:hover { background: var(--off); }
+  .pix-preset-btn.active { background: #111; color: #fff; border-color: #111; }
+  .btn-generate-pix {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    background: var(--green);
+    color: #06341f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 14.5px;
+    font-weight: 800;
+  }
+  .btn-generate-pix:hover { filter: brightness(0.96); }
+  .btn-generate-pix svg { width: 16px; height: 16px; }
+  .pix-qr-view { display: none; text-align: center; }
+  .pix-qr-view.show { display: block; }
+  .pix-qr-box {
+    width: 180px; height: 180px;
+    margin: 0 auto 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+  }
+  .pix-qr-amount { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .pix-qr-note { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .pix-confirm-btn {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .pix-confirm-btn:hover { background: #222; }
+
   /* ── Chamados ── */
   .btn-new-ticket {
     display: inline-flex; align-items: center; gap: 8px;
@@ -1686,7 +1873,14 @@
   body.dark-mode .pf-field textarea,
   body.dark-mode .pf-num-field input,
   body.dark-mode .pf-summary,
-  body.dark-mode .pf-btn-cancel {
+  body.dark-mode .pf-btn-cancel,
+  body.dark-mode .btn-autopay,
+  body.dark-mode .fin-stat-card,
+  body.dark-mode .fin-chart-panel,
+  body.dark-mode .fin-tx-panel,
+  body.dark-mode .btn-export-csv,
+  body.dark-mode .pix-amount-input,
+  body.dark-mode .pix-preset-btn {
     background: #17181b;
     border-color: #26272b;
     color: #f2f2f2;
@@ -1736,6 +1930,17 @@
   body.dark-mode .ticket-title { color: #fff; }
   body.dark-mode .btn-new-ticket,
   body.dark-mode .btn-create-modal { color: #06341f; }
+  body.dark-mode .fin-stat-value,
+  body.dark-mode .fin-chart-title,
+  body.dark-mode .pix-qr-amount { color: #fff; }
+  body.dark-mode .btn-add-balance,
+  body.dark-mode .btn-generate-pix { color: #06341f; }
+  body.dark-mode .btn-autopay.on { background: #12271c; border-color: #1f3a2c; }
+  body.dark-mode .fin-chart-svg .dot { fill: #17181b; stroke: #3a3b42; }
+  body.dark-mode .fin-chart-svg .dot.active { fill: #fff; stroke: #fff; }
+  body.dark-mode .fin-chart-svg .guide-line { stroke: #fff; }
+  body.dark-mode .pix-preset-btn.active { background: #fff; color: #111; border-color: #fff; }
+  body.dark-mode .pix-qr-box { background: #fff; }
 </style>
 </head>
 <body>
@@ -1846,7 +2051,7 @@
       </div>
       <div class="wallet">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
-        R$ 0,00
+        <span id="walletBalance">R$ 0,00</span>
       </div>
       <button class="btn-recharge" id="rechargeBtn">+ Recarregar</button>
       <div class="dropdown-wrap">
@@ -2551,6 +2756,125 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Financeiro & PIX -->
+    <div class="content" id="page-financeiro" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Financeiro</div>
+          <div class="page-sub">Pagamentos a fornecedores, reembolsos e saldo.</div>
+        </div>
+        <div class="fin-header-actions">
+          <button class="btn-autopay" id="autopayBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="22" height="14" rx="7"/><circle cx="8" cy="12" r="3"/></svg>
+            Auto-pagar
+          </button>
+          <button class="btn-add-balance" id="addBalanceBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar Saldo
+          </button>
+        </div>
+      </div>
+
+      <div class="fin-stat-grid">
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></div>
+            <div class="fin-stat-label">Saldo Atual</div>
+          </div>
+          <div class="fin-stat-value" id="finSaldoAtual">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+            <div class="fin-stat-label">Entradas</div>
+          </div>
+          <div class="fin-stat-value" id="finEntradas">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+            <div class="fin-stat-label">Pagamentos a fornecedores</div>
+          </div>
+          <div class="fin-stat-value" id="finPagamentos">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+            <div class="fin-stat-label">Reembolsos (página)</div>
+          </div>
+          <div class="fin-stat-value" id="finReembolsos">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="fin-stat-label">Movimento no período</div>
+          </div>
+          <div class="fin-stat-value" id="finMovimento">R$ 0,00</div>
+        </div>
+      </div>
+
+      <div class="fin-chart-panel">
+        <div class="fin-chart-head">
+          <div class="fin-chart-title">Saldo acumulado</div>
+          <div class="fin-chart-sub">Saldo dos últimos 90 dias</div>
+        </div>
+        <div class="fin-chart-wrap" id="finChartWrap"></div>
+      </div>
+
+      <div class="fin-tx-panel">
+        <div class="fin-tx-toolbar">
+          <div class="cat-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="finSearchInput" placeholder="Buscar por descrição...">
+          </div>
+          <div class="cat-filter" id="finTypeFilter" style="cursor:pointer;">Todos os tipos</div>
+          <div class="fin-tx-count" id="finTxCount">0 transações</div>
+          <button class="btn-export-csv" id="finExportBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar CSV
+          </button>
+        </div>
+        <div id="finTxList"></div>
+      </div>
+    </div>
+
+    <!-- Modal: Adicionar Saldo via PIX -->
+    <div class="modal-overlay" id="pixModalOverlay">
+      <div class="modal-box">
+        <div class="modal-head">
+          <div class="modal-title" style="display:flex;align-items:center;gap:10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+            Adicionar Saldo via PIX
+          </div>
+          <button class="modal-close" id="pixModalClose">✕</button>
+        </div>
+        <div class="pix-modal-body">
+          <div id="pixFormView">
+            <div class="pix-modal-desc">Informe o valor para gerar um QR Code PIX. O saldo será creditado automaticamente após o pagamento.</div>
+            <div class="modal-field-label">Valor (R$)</div>
+            <input type="number" class="pix-amount-input" id="pixAmountInput" value="100.00" step="0.01" min="5" max="10000">
+            <div class="pix-minmax">Min: R$ 5,00 · Max: R$ 10.000,00</div>
+            <div class="pix-presets" id="pixPresets">
+              <button class="pix-preset-btn" data-amount="50">R$ 50</button>
+              <button class="pix-preset-btn active" data-amount="100">R$ 100</button>
+              <button class="pix-preset-btn" data-amount="200">R$ 200</button>
+              <button class="pix-preset-btn" data-amount="500">R$ 500</button>
+            </div>
+            <button class="btn-generate-pix" id="generatePixBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Gerar QR Code PIX
+            </button>
+          </div>
+          <div class="pix-qr-view" id="pixQrView">
+            <div class="pix-qr-box" id="pixQrBox"></div>
+            <div class="pix-qr-amount" id="pixQrAmount">R$ 100,00</div>
+            <div class="pix-qr-note">Escaneie o QR Code com o app do seu banco. Assim que o pagamento for confirmado, o saldo é creditado automaticamente.</div>
+            <button class="pix-confirm-btn" id="pixConfirmBtn">Já paguei, confirmar</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3471,6 +3795,257 @@
     document.getElementById('affSuccess').classList.add('show');
   });
 
+  // ── Financeiro & PIX ──
+  const finState = {
+    saldoAtual: 0,
+    entradas: 0,
+    pagamentos: 0,
+    reembolsos: 0,
+    transactions: [],
+  };
+
+  function genFinSeries() {
+    const days = 90;
+    const series = [];
+    const today = new Date();
+    for (let i = days; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      series.push({ date: d, saldo: 0 });
+    }
+    return series;
+  }
+  let finSeries = genFinSeries();
+
+  function fmtDateShort(d) {
+    const pad = n => String(n).padStart(2, '0');
+    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+  }
+
+  function updateFinStats() {
+    document.getElementById('finSaldoAtual').textContent = fmtPrice(finState.saldoAtual);
+    document.getElementById('finEntradas').textContent = fmtPrice(finState.entradas);
+    document.getElementById('finPagamentos').textContent = fmtPrice(finState.pagamentos);
+    document.getElementById('finReembolsos').textContent = fmtPrice(finState.reembolsos);
+    document.getElementById('finMovimento').textContent = fmtPrice(finState.entradas - finState.pagamentos);
+    const walletEl = document.getElementById('walletBalance');
+    if (walletEl) walletEl.textContent = fmtPrice(finState.saldoAtual);
+  }
+
+  function renderFinChart() {
+    const wrap = document.getElementById('finChartWrap');
+    const maxVal = Math.max(4, ...finSeries.map(p => p.saldo));
+    const W = Math.max(900, finSeries.length * 14);
+    const H = 240;
+    const padL = 46, padB = 24, padT = 10, padR = 10;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+    const stepX = plotW / (finSeries.length - 1);
+
+    const yFor = v => padT + plotH - (v / maxVal) * plotH;
+    const xFor = i => padL + i * stepX;
+
+    let gridLines = '';
+    let axisLabels = '';
+    const ySteps = 4;
+    for (let s = 0; s <= ySteps; s++) {
+      const val = (maxVal / ySteps) * s;
+      const y = yFor(val);
+      gridLines += `<line class="grid-line" x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}"/>`;
+      axisLabels += `<text class="axis-label" x="0" y="${y + 4}">${fmtPrice(val).replace(',00', '')}</text>`;
+    }
+
+    let xLabels = '';
+    const labelEvery = Math.ceil(finSeries.length / 20);
+    finSeries.forEach((p, i) => {
+      if (i % labelEvery === 0) {
+        xLabels += `<text class="axis-label" x="${xFor(i)}" y="${H - 4}" text-anchor="middle">${fmtDateShort(p.date)}</text>`;
+      }
+    });
+
+    let pathD = '';
+    finSeries.forEach((p, i) => {
+      const x = xFor(i), y = yFor(p.saldo);
+      pathD += (i === 0 ? 'M' : 'L') + x + ',' + y + ' ';
+    });
+
+    let dots = '';
+    finSeries.forEach((p, i) => {
+      dots += `<circle class="dot" data-idx="${i}" cx="${xFor(i)}" cy="${yFor(p.saldo)}" r="4"></circle>`;
+    });
+
+    wrap.innerHTML = `
+      <svg class="fin-chart-svg" id="finChartSvg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        ${gridLines}
+        ${axisLabels}
+        ${xLabels}
+        <path d="${pathD}" fill="none" stroke="#c9cdd6" stroke-width="1.5"></path>
+        <line class="guide-line" id="finGuideLine" x1="0" y1="${padT}" x2="0" y2="${H - padB}"></line>
+        ${dots}
+      </svg>
+      <div class="fin-tooltip" id="finTooltip">
+        <div class="fin-tooltip-date" id="finTooltipDate"></div>
+        <div class="fin-tooltip-val" id="finTooltipVal"></div>
+      </div>
+    `;
+
+    const svg = document.getElementById('finChartSvg');
+    const tooltip = document.getElementById('finTooltip');
+    const guideLine = document.getElementById('finGuideLine');
+
+    svg.querySelectorAll('.dot').forEach(dot => {
+      dot.addEventListener('mouseenter', () => {
+        svg.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        const idx = Number(dot.dataset.idx);
+        const p = finSeries[idx];
+        const cx = dot.getAttribute('cx');
+        guideLine.setAttribute('x1', cx);
+        guideLine.setAttribute('x2', cx);
+        guideLine.style.display = '';
+        tooltip.style.display = 'block';
+        tooltip.style.left = cx + 'px';
+        tooltip.style.top = dot.getAttribute('cy') + 'px';
+        document.getElementById('finTooltipDate').textContent = fmtDateShort(p.date) + (p.date.getFullYear() !== new Date().getFullYear() ? '/' + p.date.getFullYear() : '');
+        document.getElementById('finTooltipVal').textContent = 'Saldo: ' + fmtPrice(p.saldo);
+      });
+    });
+    wrap.addEventListener('mouseleave', () => {
+      svg.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+      guideLine.style.display = 'none';
+      tooltip.style.display = 'none';
+    });
+  }
+
+  const finTypeOptions = ['Todos os tipos', 'Entrada', 'Pagamento', 'Reembolso'];
+  let finTypeIdx = 0;
+
+  function renderFinTransactions() {
+    const term = (document.getElementById('finSearchInput').value || '').trim().toLowerCase();
+    const typeF = finTypeOptions[finTypeIdx];
+    const list = finState.transactions.filter(t => {
+      if (typeF !== 'Todos os tipos' && t.type !== typeF) return false;
+      if (term && !t.desc.toLowerCase().includes(term)) return false;
+      return true;
+    });
+    document.getElementById('finTxCount').textContent = list.length + (list.length === 1 ? ' transação' : ' transações');
+    const container = document.getElementById('finTxList');
+    if (list.length === 0) {
+      container.innerHTML = '<div class="fin-tx-empty">Nenhuma transação encontrada.</div>';
+      return;
+    }
+    container.innerHTML = list.slice().reverse().map(t => `
+      <div class="fin-tx-row">
+        <div>
+          <div class="desc">${t.desc}</div>
+          <div class="date">${fmtDateShort(t.date)}</div>
+        </div>
+        <div class="amt ${t.amount >= 0 ? 'positive' : 'negative'}">${t.amount >= 0 ? '+ ' : '- '}${fmtPrice(Math.abs(t.amount))}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('finSearchInput').addEventListener('input', renderFinTransactions);
+  document.getElementById('finTypeFilter').addEventListener('click', function () {
+    finTypeIdx = (finTypeIdx + 1) % finTypeOptions.length;
+    this.textContent = finTypeOptions[finTypeIdx];
+    renderFinTransactions();
+  });
+
+  document.getElementById('finExportBtn').addEventListener('click', () => {
+    const rows = [['Data', 'Descrição', 'Tipo', 'Valor']];
+    finState.transactions.forEach(t => {
+      rows.push([fmtDateShort(t.date), t.desc, t.type, t.amount.toFixed(2)]);
+    });
+    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'financeiro.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('autopayBtn').addEventListener('click', function () {
+    this.classList.toggle('on');
+  });
+
+  // ── Adicionar Saldo via PIX modal ──
+  const pixModalOverlay = document.getElementById('pixModalOverlay');
+  const pixAmountInput = document.getElementById('pixAmountInput');
+
+  function openPixModal() {
+    document.getElementById('pixFormView').style.display = '';
+    document.getElementById('pixQrView').classList.remove('show');
+    pixModalOverlay.classList.add('open');
+  }
+  function closePixModal() {
+    pixModalOverlay.classList.remove('open');
+  }
+
+  document.getElementById('addBalanceBtn').addEventListener('click', openPixModal);
+  document.getElementById('pixModalClose').addEventListener('click', closePixModal);
+  pixModalOverlay.addEventListener('click', e => { if (e.target === pixModalOverlay) closePixModal(); });
+
+  document.getElementById('pixPresets').addEventListener('click', e => {
+    const btn = e.target.closest('.pix-preset-btn');
+    if (!btn) return;
+    document.querySelectorAll('.pix-preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pixAmountInput.value = btn.dataset.amount + '.00';
+  });
+
+  pixAmountInput.addEventListener('input', () => {
+    document.querySelectorAll('.pix-preset-btn').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.amount) === Number(pixAmountInput.value));
+    });
+  });
+
+  function qrPatternSvg() {
+    let cells = '';
+    const size = 12;
+    const cell = 160 / size;
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        const isFinder = (x < 3 && y < 3) || (x > size - 4 && y < 3) || (x < 3 && y > size - 4);
+        const on = isFinder ? ((x + y) % 3 !== 1) : Math.random() > 0.5;
+        if (on) cells += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#111"/>`;
+      }
+    }
+    return `<svg width="160" height="160" viewBox="0 0 160 160">${cells}</svg>`;
+  }
+
+  document.getElementById('generatePixBtn').addEventListener('click', () => {
+    const amount = parseFloat(pixAmountInput.value) || 0;
+    if (amount < 5 || amount > 10000) {
+      pixAmountInput.focus();
+      return;
+    }
+    document.getElementById('pixQrBox').innerHTML = qrPatternSvg();
+    document.getElementById('pixQrAmount').textContent = fmtPrice(amount);
+    document.getElementById('pixFormView').style.display = 'none';
+    document.getElementById('pixQrView').classList.add('show');
+  });
+
+  document.getElementById('pixConfirmBtn').addEventListener('click', () => {
+    const amount = parseFloat(pixAmountInput.value) || 0;
+    finState.saldoAtual += amount;
+    finState.entradas += amount;
+    finState.transactions.push({ date: new Date(), desc: 'Adição de saldo via PIX', type: 'Entrada', amount: amount });
+    if (finSeries.length) finSeries[finSeries.length - 1].saldo = finState.saldoAtual;
+    updateFinStats();
+    renderFinChart();
+    renderFinTransactions();
+    closePixModal();
+  });
+
+  updateFinStats();
+  renderFinChart();
+  renderFinTransactions();
+
   const navItems = document.querySelectorAll('[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
@@ -3479,6 +4054,7 @@
   const pageIntegracoes = document.getElementById('page-integracoes');
   const pageChamados = document.getElementById('page-chamados');
   const pageAfiliados = document.getElementById('page-afiliados');
+  const pageFinanceiro = document.getElementById('page-financeiro');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -3495,6 +4071,7 @@
     pageIntegracoes.style.display = 'none';
     pageChamados.style.display = 'none';
     pageAfiliados.style.display = 'none';
+    pageFinanceiro.style.display = 'none';
     pageGeneric.style.display = 'none';
     const pfPage = document.getElementById('page-product-form');
     if (pfPage) pfPage.style.display = 'none';
@@ -3514,6 +4091,8 @@
       pageChamados.style.display = '';
     } else if (key === 'afiliados') {
       pageAfiliados.style.display = '';
+    } else if (key === 'financeiro') {
+      pageFinanceiro.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
