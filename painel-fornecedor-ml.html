@@ -327,7 +327,7 @@
 
   .step-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
   }
   .step-card {
@@ -375,7 +375,7 @@
   /* ── Stat cards ── */
   .stat-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 24px;
   }
@@ -410,7 +410,7 @@
   /* ── Chart + status ── */
   .grid-2 {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 16px;
   }
   .panel {
@@ -562,7 +562,7 @@
 
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
   }
   .product-card {
@@ -623,10 +623,10 @@
   .btn-list:hover { filter: brightness(0.95); }
 
   @media (max-width: 1100px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 560px) {
-    .product-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: minmax(0, 1fr); }
   }
 
   /* ── Afiliados ── */
@@ -711,7 +711,7 @@
   .pf-crumb { font-size: 15px; font-weight: 700; color: var(--muted); }
   .pf-crumb strong { color: #111; font-weight: 800; }
 
-  .pf-grid { display: grid; grid-template-columns: 460px 1fr; gap: 28px; align-items: start; }
+  .pf-grid { display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 28px; align-items: start; }
   .pf-main-img {
     width: 100%;
     aspect-ratio: 1/1;
@@ -771,7 +771,7 @@
     font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--muted); margin-bottom: 12px;
   }
-  .pf-market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .pf-market-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 14px; }
   .pf-market-opt {
     display: flex; align-items: center; gap: 12px;
     border: 1.5px solid var(--border);
@@ -828,7 +828,7 @@
   }
   .pf-field textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
 
-  .pf-num-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .pf-num-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px; }
   .pf-num-field input {
     width: 100%;
     border: 1px solid var(--border);
@@ -991,12 +991,12 @@
   }
 
   @media (max-width: 1000px) {
-    .pf-grid { grid-template-columns: 1fr; }
-    .pf-num-grid { grid-template-columns: 1fr 1fr; }
-    .pf-market-grid { grid-template-columns: 1fr; }
+    .pf-grid { grid-template-columns: minmax(0, 1fr); }
+    .pf-num-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .pf-market-grid { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 480px) {
-    .pf-num-grid { grid-template-columns: 1fr; }
+    .pf-num-grid { grid-template-columns: minmax(0, 1fr); }
     .pf-summary-row { flex-wrap: wrap; }
   }
 
@@ -1103,7 +1103,7 @@
     color: #111;
   }
   .modal-field textarea { min-height: 130px; resize: vertical; }
-  .modal-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .modal-row-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
   .modal-foot {
     display: flex; align-items: center; justify-content: flex-end; gap: 12px;
     padding: 18px 24px;
@@ -1130,7 +1130,7 @@
   .btn-create-modal:hover { filter: brightness(0.96); }
 
   @media (max-width: 700px) {
-    .modal-row-2 { grid-template-columns: 1fr; }
+    .modal-row-2 { grid-template-columns: minmax(0, 1fr); }
     .ticket-row { flex-wrap: wrap; }
   }
 
@@ -1176,7 +1176,7 @@
 
   .addr-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 14px;
   }
   .addr-field {
@@ -1224,7 +1224,7 @@
   .int-section-title { font-size: 15px; font-weight: 800; }
   .int-section-count { font-size: 13px; color: var(--muted); font-weight: 700; }
 
-  .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 26px; }
+  .store-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-bottom: 26px; }
   .store-card {
     background: #fff;
     border: 1px solid var(--card-border);
@@ -1259,7 +1259,7 @@
     font-size: 12px;
     font-weight: 800;
   }
-  .store-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .store-meta-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin-bottom: 12px; }
   .store-meta-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
   .store-meta-value { font-size: 14px; font-weight: 700; }
   .store-meta-value.green { color: #16c784; }
@@ -1304,7 +1304,7 @@
   .btn-delete-store svg { width: 15px; height: 15px; }
   .btn-delete-store:hover { background: #fbd7d7; }
 
-  .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
+  .market-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 30px; }
   .market-card {
     background: #fff;
     border: 1px solid var(--card-border);
@@ -1358,8 +1358,8 @@
     border-radius: 18px;
     padding: 22px;
   }
-  .calc-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-  .calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+  .calc-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; }
+  .calc-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-content: start; }
   .calc-field-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .calc-field input {
     width: 100%;
@@ -1385,18 +1385,18 @@
   .calc-result-row .v.big { font-size: 22px; color: #16c784; }
 
   @media (max-width: 1100px) {
-    .addr-grid, .store-grid, .store-meta-grid { grid-template-columns: 1fr; }
-    .market-grid { grid-template-columns: 1fr 1fr; }
-    .calc-grid, .calc-fields { grid-template-columns: 1fr; }
+    .addr-grid, .store-grid, .store-meta-grid { grid-template-columns: minmax(0, 1fr); }
+    .market-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .calc-grid, .calc-fields { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 600px) {
-    .market-grid { grid-template-columns: 1fr; }
+    .market-grid { grid-template-columns: minmax(0, 1fr); }
   }
 
   /* ── Fornecedores ── */
   .sup-stat-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 22px;
   }
@@ -1463,7 +1463,7 @@
   .sup-btn:hover { filter: brightness(0.97); }
 
   @media (max-width: 900px) {
-    .sup-stat-grid { grid-template-columns: 1fr; }
+    .sup-stat-grid { grid-template-columns: minmax(0, 1fr); }
   }
 
   /* ── Importadores ── */
@@ -1514,7 +1514,7 @@
 
   .imp-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
   }
   .imp-card {
@@ -1557,10 +1557,10 @@
   .imp-link svg { width: 12px; height: 12px; }
 
   @media (max-width: 1100px) {
-    .imp-grid { grid-template-columns: repeat(2, 1fr); }
+    .imp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 560px) {
-    .imp-grid { grid-template-columns: 1fr; }
+    .imp-grid { grid-template-columns: minmax(0, 1fr); }
   }
 
   /* ── Placeholder page ── */
@@ -1612,13 +1612,13 @@
   .dropdown-panel .dd-empty { font-size: 13px; color: var(--muted); padding: 14px 4px; text-align: center; }
 
   @media (max-width: 1100px) {
-    .step-grid { grid-template-columns: 1fr; }
-    .stat-grid { grid-template-columns: 1fr 1fr; }
-    .grid-2 { grid-template-columns: 1fr; }
+    .step-grid { grid-template-columns: minmax(0, 1fr); }
+    .stat-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .grid-2 { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 720px) {
     .sidebar { display: none; }
-    .stat-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: minmax(0, 1fr); }
     .content { padding: 20px; }
     .search { display: none; }
   }
