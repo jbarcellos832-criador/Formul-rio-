@@ -354,7 +354,10 @@
     font-size: 13px;
     font-weight: 700;
     color: #111;
+    cursor: pointer;
   }
+  .step-link:hover { color: var(--blue, #2f6bff); }
+  .cat-filter, .imp-link, .imp-cat { cursor: pointer; }
 
   /* ── Stat cards ── */
   .stat-grid {
@@ -989,7 +992,7 @@
               </div>
             </div>
             <div class="step-icons"><span>🏪</span><span>📦</span><span>🖥️</span></div>
-            <div class="step-link">Conectar loja <span>→</span></div>
+            <a class="step-link" href="#" data-page="integracoes">Conectar loja <span>→</span></a>
           </div>
 
           <div class="step-card">
@@ -1000,7 +1003,7 @@
                 <div class="step-text">Explore o catálogo com estoque a pronta entrega e envio imediato.</div>
               </div>
             </div>
-            <div class="step-link" style="margin-top:auto;">Ver catálogo <span>→</span></div>
+            <a class="step-link" href="#" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></a>
           </div>
 
           <div class="step-card">
@@ -1011,7 +1014,7 @@
                 <div class="step-text">Escolha um produto no catálogo, defina sua margem de lucro e publique na sua loja conectada.</div>
               </div>
             </div>
-            <div class="step-link" style="margin-top:auto;">Ver catálogo <span>→</span></div>
+            <a class="step-link" href="#" data-page="catalogo" style="margin-top:auto;">Ver catálogo <span>→</span></a>
           </div>
         </div>
       </div>
@@ -1131,15 +1134,15 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           <input type="text" id="catSearchInput" placeholder="Buscar por nome de produto">
         </div>
-        <div class="cat-filter">
+        <div class="cat-filter" id="catStoreFilter">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
-          Todas as lojas
+          <span id="catStoreFilterLabel">Todas as lojas</span>
         </div>
         <div class="cat-tabs" id="catTabs">
           <button class="active" data-tab="todos">Todos</button>
           <button data-tab="cadastrado">Cadastrado</button>
         </div>
-        <div class="cat-filter">Mais recentes</div>
+        <div class="cat-filter" id="catSortFilter">Mais recentes</div>
       </div>
 
       <div class="product-grid" id="productGrid"></div>
@@ -1176,7 +1179,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           <input type="text" id="impSearchInput" placeholder="Buscar fornecedor, categoria ou descrição...">
         </div>
-        <div class="cat-filter">Todos os marketplaces</div>
+        <div class="cat-filter" id="impMarketFilter">Todos os marketplaces</div>
         <label class="imp-check">
           <input type="checkbox" id="impVerified">
           Verificados
@@ -1258,14 +1261,24 @@
 
   const fmtPrice = v => 'R$ ' + v.toFixed(2).replace('.', ',');
 
+  const productSortOptions = ['Mais recentes', 'Menor preço', 'Maior preço', 'Nome A-Z'];
+  let productSortIdx = 0;
+  const storeOptions = ['Todas as lojas', 'Mercado Livre', 'Shopee', 'Bling'];
+  let storeIdx = 0;
+
   function renderProducts(filterTab, term) {
     const grid = document.getElementById('productGrid');
     const t = (term || '').trim().toLowerCase();
-    const list = products.filter(p => {
+    let list = products.filter(p => {
       if (filterTab === 'cadastrado' && !p.cadastrado) return false;
       if (t && !p.name.toLowerCase().includes(t)) return false;
       return true;
     });
+    const sortMode = productSortOptions[productSortIdx];
+    list = list.slice();
+    if (sortMode === 'Menor preço') list.sort((a, b) => a.price - b.price);
+    else if (sortMode === 'Maior preço') list.sort((a, b) => b.price - a.price);
+    else if (sortMode === 'Nome A-Z') list.sort((a, b) => a.name.localeCompare(b.name));
     document.getElementById('catCount').textContent = list.length + ' produto(s) disponíveis com estoque à pronta entrega';
     grid.innerHTML = list.map((p, i) => `
       <div class="product-card">
@@ -1309,6 +1322,18 @@
     document.querySelectorAll('#catTabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderProducts(btn.dataset.tab, document.getElementById('catSearchInput').value);
+  });
+
+  document.getElementById('catSortFilter').addEventListener('click', function () {
+    productSortIdx = (productSortIdx + 1) % productSortOptions.length;
+    this.textContent = productSortOptions[productSortIdx];
+    const activeTab = document.querySelector('#catTabs button.active').dataset.tab;
+    renderProducts(activeTab, document.getElementById('catSearchInput').value);
+  });
+
+  document.getElementById('catStoreFilter').addEventListener('click', function () {
+    storeIdx = (storeIdx + 1) % storeOptions.length;
+    document.getElementById('catStoreFilterLabel').textContent = storeOptions[storeIdx];
   });
 
   renderProducts('todos', '');
@@ -1396,6 +1421,8 @@
     { name: 'Bettanin', cat: 'Diversos' },
   ];
 
+  importers.forEach((imp, i) => { imp.verified = i % 3 === 0; });
+
   const impCategories = ['Todas', 'Moda Feminina', 'Diversos', 'Brinquedos', 'Utilidades Domesticas', 'Queridinhos', 'Maquiagens', 'Papelaria', 'Acessórios', 'Eletronicos', 'Importadores', 'Pet', 'Fitness', 'Feira ABRIN', 'Dropshipping', 'Ferramentas', 'Moda Infantil', 'Bolsas e Malas', 'Terceirizacao', 'Moda Plus Size', 'Calçados', 'Motociclismo', 'Saúde e Cuidado Pessoal'];
 
   document.getElementById('impCatRow').innerHTML = impCategories.map((c, i) => {
@@ -1403,13 +1430,17 @@
     return `<button class="imp-cat${i === 0 ? ' active' : ''}" data-cat="${c}">${c} (${count})</button>`;
   }).join('');
 
+  const impMarketOptions = ['Todos os marketplaces', 'Mercado Livre', 'Shopee', 'Amazon'];
+  let impMarketIdx = 0;
   let impSortAsc = true;
 
   function renderImporters(cat, term) {
     const grid = document.getElementById('importerGrid');
     const t = (term || '').trim().toLowerCase();
+    const verifiedOnly = document.getElementById('impVerified').checked;
     let list = importers.filter(imp => {
       if (cat !== 'Todas' && !imp.cat.includes(cat)) return false;
+      if (verifiedOnly && !imp.verified) return false;
       if (t && !imp.name.toLowerCase().includes(t) && !imp.cat.toLowerCase().includes(t)) return false;
       return true;
     });
@@ -1422,18 +1453,28 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/></svg>
           </div>
           <div>
-            <div class="imp-name">${imp.name}</div>
+            <div class="imp-name">${imp.name}${imp.verified ? ' ✓' : ''}</div>
             ${imp.addr ? `<div class="imp-addr">${imp.addr}</div>` : ''}
             <div class="imp-cat-label">${imp.cat}</div>
           </div>
         </div>
-        <a class="imp-link" href="#" onclick="return false;">
+        <a class="imp-link" href="https://lista.mercadolivre.com.br/${encodeURIComponent(imp.name)}" target="_blank" rel="noopener">
           Ver catálogo
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
       </div>
     `).join('');
   }
+
+  document.getElementById('impVerified').addEventListener('change', () => {
+    const activeCat = document.querySelector('.imp-cat.active').dataset.cat;
+    renderImporters(activeCat, document.getElementById('impSearchInput').value);
+  });
+
+  document.getElementById('impMarketFilter').addEventListener('click', function () {
+    impMarketIdx = (impMarketIdx + 1) % impMarketOptions.length;
+    this.textContent = impMarketOptions[impMarketIdx];
+  });
 
   document.getElementById('impCatRow').addEventListener('click', e => {
     const btn = e.target.closest('.imp-cat');
@@ -1457,7 +1498,7 @@
 
   renderImporters('Todas', '');
 
-  const navItems = document.querySelectorAll('.nav-item[data-page], .dropdown-panel .nav-item[data-page]');
+  const navItems = document.querySelectorAll('[data-page]');
   const pageDashboard = document.getElementById('page-dashboard');
   const pageCatalogo = document.getElementById('page-catalogo');
   const pageImportadores = document.getElementById('page-importadores');
