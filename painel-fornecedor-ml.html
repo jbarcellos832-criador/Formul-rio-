@@ -472,25 +472,6 @@
   .dot-green { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
   .dot-blue { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
 
-  .floating-actions {
-    position: fixed;
-    right: 28px; bottom: 24px;
-    display: flex; flex-direction: column; gap: 12px;
-    align-items: flex-end;
-    z-index: 20;
-  }
-  .fab {
-    display: flex; align-items: center; gap: 8px;
-    border-radius: 99px;
-    padding: 12px 18px;
-    font-weight: 800;
-    font-size: 13.5px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    border: none;
-  }
-  .fab-support { background: #fff; color: #111; border: 1px solid var(--border); }
-  .fab-guide { background: var(--yellow); color: #111; }
-
   /* ── Catálogo ── */
   .cat-head-row {
     display: flex;
@@ -2897,16 +2878,6 @@
   </main>
 </div>
 
-<div class="floating-actions">
-  <button class="fab fab-support" id="supportBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    Suporte
-  </button>
-  <button class="fab fab-guide" id="guideBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    GUIA
-  </button>
-</div>
 
 <script>
   const pageLabels = {
@@ -4185,8 +4156,6 @@
   document.getElementById('userLogout').addEventListener('click', handleLogout);
 
   // Support / Guide FABs
-  document.getElementById('supportBtn').addEventListener('click', () => goToPage('chamados'));
-  document.getElementById('guideBtn').addEventListener('click', () => goToPage('tutoriais'));
 
   // Search
   document.getElementById('searchInput').addEventListener('keydown', e => {
