@@ -565,7 +565,16 @@
     background: var(--off);
   }
   .product-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .product-name { font-size: 14px; font-weight: 700; line-height: 1.35; min-height: 38px; }
+  .product-name {
+    font-size: 14.5px;
+    font-weight: 800;
+    line-height: 1.35;
+    min-height: 38px;
+    color: #0a0a0a !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #0a0a0a;
+  }
+  body.dark-mode .product-name { color: #ffffff !important; -webkit-text-fill-color: #ffffff; }
   .product-meta { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
   .product-meta-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
   .price-tag {
@@ -1104,7 +1113,7 @@
     document.getElementById('catCount').textContent = list.length + ' produto(s) disponíveis com estoque à pronta entrega';
     grid.innerHTML = list.map((p, i) => `
       <div class="product-card">
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <img src="${p.img}" alt="${p.name}">
         <div class="product-body">
           <div class="product-name">${p.name}</div>
           <div class="product-meta">
