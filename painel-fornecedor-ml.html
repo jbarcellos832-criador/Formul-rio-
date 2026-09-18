@@ -720,6 +720,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 19px;
     flex-shrink: 0;
+    overflow: hidden;
   }
   .store-name { font-size: 14.5px; font-weight: 800; }
   .store-sub { font-size: 12px; color: var(--muted); }
@@ -804,6 +805,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 19px;
     flex-shrink: 0;
+    overflow: hidden;
   }
   .market-name { font-size: 14.5px; font-weight: 800; }
   .market-sub { font-size: 12px; color: var(--muted); }
@@ -2094,19 +2096,27 @@
     setTimeout(() => { this.innerHTML = original; }, 1500);
   });
 
+  const marketLogos = {
+    ml: `<svg viewBox="0 0 48 48" width="100%" height="100%"><rect width="48" height="48" rx="10" fill="#FFE600"/><path d="M24 12c-6 0-10 4.2-10 9 0 3 1.6 5.3 4 6.8-.4 1-.9 1.8-1.6 2.6-.3.3-.1.9.4.8 2.1-.4 3.8-1.2 5-2 .7.1 1.4.2 2.2.2 6 0 10-4.2 10-9s-4-9-10-9.4z" fill="#2D3277"/><circle cx="19.5" cy="21" r="1.6" fill="#FFE600"/><circle cx="28.5" cy="21" r="1.6" fill="#FFE600"/></svg>`,
+    shopee: `<svg viewBox="0 0 48 48" width="100%" height="100%"><rect width="48" height="48" rx="10" fill="#EE4D2D"/><path d="M15 19l1.4-4.6a8 8 0 0 1 15.2 0L33 19" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M14 19h20l-1.6 15.2a2 2 0 0 1-2 1.8H17.6a2 2 0 0 1-2-1.8L14 19z" fill="#fff"/><text x="24" y="30" font-family="Arial, sans-serif" font-size="11" font-weight="800" fill="#EE4D2D" text-anchor="middle">S</text></svg>`,
+    bling: `<svg viewBox="0 0 48 48" width="100%" height="100%"><rect width="48" height="48" rx="10" fill="#00C48C"/><text x="24" y="30" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#ffffff" text-anchor="middle">B</text></svg>`,
+    shopify: `<svg viewBox="0 0 48 48" width="100%" height="100%"><rect width="48" height="48" rx="10" fill="#95BF47"/><path d="M15 18l1-3.4c.2-.6.7-1 1.3-1.1l13-2.3c.9-.2 1.7.5 1.7 1.4l.9 24.1a1.5 1.5 0 0 1-1.3 1.5l-14.9 2.7a1.5 1.5 0 0 1-1.7-1.3L12.6 20a1.5 1.5 0 0 1 1.3-1.7L15 18z" fill="#fff"/><text x="23" y="29" font-family="Arial, sans-serif" font-size="10" font-weight="800" fill="#95BF47" text-anchor="middle">S</text></svg>`,
+    amazon: `<svg viewBox="0 0 48 48" width="100%" height="100%"><rect width="48" height="48" rx="10" fill="#131921"/><text x="24" y="27" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">amazon</text><path d="M14 32c6 4 14 4 20 0" stroke="#FF9900" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M31 31.4l2.6-.6-.9 2.6z" fill="#FF9900"/></svg>`,
+  };
+
   const connectedStores = [
     {
-      key: 'shopee', marketKey: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', logoColor: '#ee4d2d',
+      key: 'shopee', marketKey: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: marketLogos.shopee, logoBg: 'transparent', logoColor: '#ee4d2d',
       lastSync: null,
       type: 'shopee',
     },
     {
-      key: 'ml', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
+      key: 'ml', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: marketLogos.ml, logoBg: 'transparent', logoColor: '#c9a300',
       lastSync: '16/09/2026, 15:19:50',
       type: 'ml',
     },
     {
-      key: 'ml-2', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', logoColor: '#c9a300',
+      key: 'ml-2', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: marketLogos.ml, logoBg: 'transparent', logoColor: '#c9a300',
       lastSync: null,
       type: 'ml',
     },
@@ -2203,11 +2213,11 @@
   });
 
   const marketplaces = [
-    { key: 'ml', name: 'Mercado Livre', logo: '🤝', logoBg: '#fff6d9', desc: 'Conecte sua conta do Mercado Livre e sincronize anúncios.', soon: false },
-    { key: 'shopee', name: 'Shopee', logo: '🛍️', logoBg: '#ffe8e0', desc: 'Integre sua loja Shopee para gerenciar pedidos.', soon: false },
-    { key: 'bling', name: 'Bling', logo: '📦', logoBg: '#e3f6e8', desc: 'Conecte sua conta Bling para gestão de estoque e NF-e.', soon: false },
-    { key: 'shopify', name: 'Shopify', logo: '🛒', logoBg: '#e8f3ff', desc: 'Sincronize produtos com sua loja Shopify.', soon: true },
-    { key: 'amazon', name: 'Amazon', logo: '📦', logoBg: '#fff2e0', desc: 'Integração com Amazon Seller Central.', soon: true },
+    { key: 'ml', name: 'Mercado Livre', logo: marketLogos.ml, logoBg: 'transparent', desc: 'Conecte sua conta do Mercado Livre e sincronize anúncios.', soon: false },
+    { key: 'shopee', name: 'Shopee', logo: marketLogos.shopee, logoBg: 'transparent', desc: 'Integre sua loja Shopee para gerenciar pedidos.', soon: false },
+    { key: 'bling', name: 'Bling', logo: marketLogos.bling, logoBg: 'transparent', desc: 'Conecte sua conta Bling para gestão de estoque e NF-e.', soon: false },
+    { key: 'shopify', name: 'Shopify', logo: marketLogos.shopify, logoBg: 'transparent', desc: 'Sincronize produtos com sua loja Shopify.', soon: true },
+    { key: 'amazon', name: 'Amazon', logo: marketLogos.amazon, logoBg: 'transparent', desc: 'Integração com Amazon Seller Central.', soon: true },
   ];
 
   function renderMarketplaces() {
@@ -2226,7 +2236,7 @@
         </div>
         <div class="market-desc">${m.desc}</div>
         <button class="btn-connect" data-connect="${m.key}" ${m.soon ? 'disabled' : ''}>
-          ${m.soon ? '🔌 Em breve' : (m.logo + ' Conectar ' + m.name)}
+          ${m.soon ? '🔌 Em breve' : ('Conectar ' + m.name)}
         </button>
       </div>`;
     }).join('');
