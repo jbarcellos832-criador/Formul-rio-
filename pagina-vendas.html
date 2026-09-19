@@ -351,6 +351,42 @@
   .price-amount .rs { font-size: 18px; font-weight: 700; color: var(--muted); }
   .price-amount .num { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
   .price-amount .per { font-size: 13.5px; color: var(--muted); }
+  /* ── Testimonials ── */
+  .testi-stars { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 18px; margin-bottom: 46px; }
+  .testi-stars svg { width: 20px; height: 20px; color: #f5b942; }
+  .testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1000px; margin: 0 auto; }
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 28px 30px;
+  }
+  .testi-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .testi-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+    color: #fff;
+  }
+  .testi-who { flex: 1; }
+  .testi-tag {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--blue);
+    background: var(--blue-glow);
+    border: 1px solid var(--blue-border);
+    border-radius: 99px;
+    padding: 3px 11px;
+    margin-bottom: 8px;
+  }
+  .testi-name { font-size: 16px; font-weight: 800; line-height: 1.3; }
+  .testi-role { font-size: 13px; color: var(--muted2); }
+  .testi-quote { font-size: 14.5px; color: var(--muted); line-height: 1.7; }
+
   .price-features-label {
     font-size: 11.5px;
     font-weight: 800;
@@ -621,6 +657,73 @@
       <div class="faq-item">
         <button class="faq-q">E se eu não gostar?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="faq-a"><div class="faq-a-inner">Você tem 7 dias de garantia a partir da assinatura. Se não for pra você, devolvemos o valor inteiro — basta pedir dentro do prazo.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="interface-label">Depoimentos de usuários</div>
+      <h2>O que dizem quem usa o <span class="highlight">Split</span></h2>
+      <p>Resultados reais de afiliados que usam o Split no dia a dia. Resultados individuais podem variar.</p>
+      <div class="testi-stars">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9L12 17l-6.3 3.8 1.7-6.9L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9L12 17l-6.3 3.8 1.7-6.9L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9L12 17l-6.3 3.8 1.7-6.9L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9L12 17l-6.3 3.8 1.7-6.9L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9L12 17l-6.3 3.8 1.7-6.9L2 9.2l7.1-.6z"/></svg>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-head">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, #5b8def, #2f5fd6);">RM</div>
+          <div class="testi-who">
+            <span class="testi-tag">Renda extra consistente</span>
+            <div class="testi-name">Rafael Mendes</div>
+            <div class="testi-role">Afiliado · Fortaleza CE</div>
+          </div>
+        </div>
+        <div class="testi-quote">"Comecei como afiliado do Mercado Livre sem saber por onde começar. O Split me ajudou a encontrar produtos com boa comissão e gerar links rapidamente. Hoje tenho uma renda extra consistente divulgando no Instagram e YouTube."</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-head">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, #e0679b, #b83f74);">GS</div>
+          <div class="testi-who">
+            <span class="testi-tag">Mais organização</span>
+            <div class="testi-name">Gabriela Souza</div>
+            <div class="testi-role">Criadora de Conteúdo · São Paulo SP</div>
+          </div>
+        </div>
+        <div class="testi-quote">"Eu divulgo produtos do Mercado Livre no meu canal do YouTube e antes era uma bagunça controlar cliques e comissões. Agora com o Split eu vejo tudo organizado: qual vídeo vendeu mais, qual produto converte melhor."</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-head">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, #f0a94e, #c9781f);">LO</div>
+          <div class="testi-who">
+            <span class="testi-tag">Escalou meus ganhos</span>
+            <div class="testi-name">Larissa Oliveira</div>
+            <div class="testi-role">Afiliada Profissional · BH MG</div>
+          </div>
+        </div>
+        <div class="testi-quote">"Já era afiliada há 2 anos mas não tinha controle de nada. Com o Split consegui escalar meus ganhos porque agora sei exatamente quais produtos e canais trazem mais resultado. O painel de comissões é o que mais uso."</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-head">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, #4CAF6B, #2f7a48);">MF</div>
+          <div class="testi-who">
+            <span class="testi-tag">Simples e direto</span>
+            <div class="testi-name">Marcos Ferreira</div>
+            <div class="testi-role">Afiliado · Curitiba PR</div>
+          </div>
+        </div>
+        <div class="testi-quote">"O que mais gosto é a simplicidade: colo a URL do produto no Mercado Livre, ele gera o link de afiliado na hora. Depois acompanho os cliques e comissões tudo no mesmo lugar. Sem mistério, funciona."</div>
       </div>
     </div>
   </div>
