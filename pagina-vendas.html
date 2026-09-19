@@ -16,9 +16,9 @@
     --text: #f2f3f5;
     --muted: #9a9ea8;
     --muted2: #6b6f78;
-    --blue: #4CAF6B;
-    --blue-glow: rgba(76,175,107,0.18);
-    --blue-border: rgba(76,175,107,0.28);
+    --blue: #5b8def;
+    --blue-glow: rgba(91,141,239,0.18);
+    --blue-border: rgba(91,141,239,0.28);
   }
 
   html, body {
@@ -62,7 +62,19 @@
   .btn-nav-cta:hover { background: #e6e6e6; }
 
   /* ── Hero ── */
-  .hero { padding: 100px 0 70px; text-align: center; }
+  .hero-section { position: relative; overflow: hidden; }
+  .hero-waves {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+  .hero-waves path { fill: none; }
+  .hero-waves .wave-dim { stroke: rgba(91,141,239,0.10); stroke-width: 1; }
+  .hero-waves .wave-glow { stroke: url(#waveGlowGradient); stroke-width: 2.4; filter: drop-shadow(0 0 14px rgba(91,141,239,0.55)); }
+  .hero { position: relative; z-index: 1; padding: 100px 0 70px; text-align: center; }
   .hero h1 {
     font-size: clamp(38px, 6vw, 64px);
     font-weight: 800;
@@ -399,8 +411,8 @@
 <div class="wrap">
   <nav class="nav">
     <div class="brand">
-      <div class="brand-mark">M</div>
-      <span>MELI IAA</span>
+      <div class="brand-mark">S</div>
+      <span>Split</span>
     </div>
     <div class="nav-actions">
       <a class="link-btn" href="#">Entrar</a>
@@ -409,16 +421,30 @@
   </nav>
 </div>
 
-<section style="border-bottom:none;">
+<section class="hero-section" style="border-bottom:none;">
+  <svg class="hero-waves" viewBox="0 0 1180 760" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="waveGlowGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#5b8def" stop-opacity="0"/>
+        <stop offset="45%" stop-color="#8fb4ff" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#5b8def" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path class="wave-dim" d="M-50,120 C250,40 450,220 750,140 C950,90 1050,180 1230,60"/>
+    <path class="wave-dim" d="M-50,260 C220,180 480,340 760,260 C980,200 1080,300 1230,200"/>
+    <path class="wave-glow" d="M-50,470 C200,380 380,560 620,480 C860,400 980,520 1230,400"/>
+    <path class="wave-dim" d="M-50,560 C260,500 420,640 700,580 C930,530 1050,600 1230,540"/>
+    <path class="wave-dim" d="M-50,660 C240,610 460,700 740,650 C960,610 1070,660 1230,630"/>
+  </svg>
   <div class="wrap hero">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
       Plataforma de Afiliados do Mercado Livre — gere links, acompanhe comissões
     </div>
     <h1>Transforme produtos do Mercado Livre em <span class="highlight">comissões recorrentes</span></h1>
-    <p>A MELI IAA gera links de afiliado, rastreia cliques, acompanha conversões e organiza suas comissões do Mercado Livre em um só lugar. Divulgue, monetize e escale seus ganhos.</p>
+    <p>O Split gera links de afiliado, rastreia cliques, acompanha conversões e organiza suas comissões do Mercado Livre em um só lugar. Divulgue, monetize e escale seus ganhos.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#planos">Quero conhecer a MELI IAA
+      <a class="btn-primary" href="#planos">Quero conhecer o Split
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -471,7 +497,7 @@
     <div class="mock-window">
       <div class="mock-bar">
         <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-        <span class="mock-url">app.meliiaa.com.br/dashboard</span>
+        <span class="mock-url">app.split.com.br/dashboard</span>
       </div>
       <div class="mock-stats">
         <div class="mock-stat">
@@ -640,7 +666,7 @@
 
 <div class="wrap">
   <footer>
-    <span>© 2026 MELI IAA</span>
+    <span>© 2026 Split</span>
     <span>Pagamento processado em ambiente criptografado.</span>
   </footer>
 </div>
