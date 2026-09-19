@@ -419,6 +419,76 @@
   }
   .price-guarantee svg { width: 16px; height: 16px; color: var(--blue); flex-shrink: 0; margin-top: 2px; }
 
+  .link-inline {
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .link-inline:hover { color: var(--text); }
+
+  /* ── Refund modal ── */
+  .refund-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .refund-overlay.open { display: flex; }
+  .refund-modal {
+    width: 100%; max-width: 440px;
+    background: #111318;
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 30px;
+    position: relative;
+  }
+  .refund-close {
+    position: absolute; top: 18px; right: 18px;
+    color: var(--muted);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+  }
+  .refund-close:hover { background: var(--card); color: var(--text); }
+  .refund-close svg { width: 18px; height: 18px; }
+  .refund-modal h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .refund-modal p.refund-sub { color: var(--muted); font-size: 13.5px; margin-bottom: 22px; line-height: 1.55; }
+  .refund-field { margin-bottom: 14px; }
+  .refund-field label { display: block; font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .refund-field input,
+  .refund-field textarea {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 11px 13px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .refund-field textarea { resize: vertical; min-height: 70px; }
+  .refund-field input:focus, .refund-field textarea:focus { outline: none; border-color: var(--blue-border); }
+  .refund-submit {
+    width: 100%;
+    background: var(--blue);
+    color: #fff;
+    font-weight: 800;
+    padding: 13px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+  .refund-submit:hover { background: #3f7ee0; }
+  .refund-success { display: none; text-align: center; padding: 10px 0 4px; }
+  .refund-success.show { display: block; }
+  .refund-success svg { width: 44px; height: 44px; color: var(--blue); margin-bottom: 14px; }
+  .refund-success h3 { margin-bottom: 8px; }
+  .refund-success p { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+
   /* ── Footer ── */
   .footer-main {
     display: flex;
@@ -692,7 +762,7 @@
 
     <div class="price-guarantee">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg>
-      <span>Sete dias de garantia. Se não for pra você, devolvemos o valor inteiro — basta pedir dentro do prazo.</span>
+      <span>Sete dias de garantia. Se não for pra você, devolvemos o valor inteiro. <button class="link-inline" id="openRefundFromPricing">Solicitar reembolso</button></span>
     </div>
   </div>
 </section>
@@ -802,7 +872,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Como funciona a garantia de 7 dias?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Você tem 7 dias a partir da assinatura para testar o Split. Se não for pra você, devolvemos o valor inteiro — basta pedir dentro do prazo.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Você tem 7 dias a partir da assinatura para testar o Split. Se não for pra você, devolvemos o valor inteiro. <button class="link-inline" id="openRefundFromFaq">Solicitar reembolso</button></div></div>
       </div>
     </div>
   </div>
@@ -850,6 +920,38 @@
   </div>
 </footer>
 
+<div class="refund-overlay" id="refundOverlay">
+  <div class="refund-modal">
+    <button class="refund-close" id="refundClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+
+    <div id="refundFormWrap">
+      <h3>Solicitar reembolso</h3>
+      <p class="refund-sub">Assinou há menos de 7 dias? Preencha abaixo e devolvemos o valor inteiro, sem perguntas.</p>
+      <form id="refundForm">
+        <div class="refund-field">
+          <label for="refundEmail">E-mail usado na assinatura</label>
+          <input type="email" id="refundEmail" required placeholder="voce@email.com">
+        </div>
+        <div class="refund-field">
+          <label for="refundPlan">Plano</label>
+          <input type="text" id="refundPlan" required placeholder="Mensal ou Vitalício">
+        </div>
+        <div class="refund-field">
+          <label for="refundReason">Motivo (opcional)</label>
+          <textarea id="refundReason" placeholder="Conta pra gente o que rolou"></textarea>
+        </div>
+        <button type="submit" class="refund-submit">Confirmar solicitação</button>
+      </form>
+    </div>
+
+    <div class="refund-success" id="refundSuccess">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <h3>Solicitação enviada</h3>
+      <p>Recebemos seu pedido de reembolso. O valor cai de volta no seu método de pagamento em até 5 dias úteis.</p>
+    </div>
+  </div>
+</div>
+
 <script>
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -894,6 +996,33 @@ setInterval(() => {
   renderHeroCarousel();
 }, 3200);
 
+const refundOverlay = document.getElementById('refundOverlay');
+const refundFormWrap = document.getElementById('refundFormWrap');
+const refundSuccess = document.getElementById('refundSuccess');
+const refundForm = document.getElementById('refundForm');
+
+function openRefundModal() {
+  refundFormWrap.style.display = 'block';
+  refundSuccess.classList.remove('show');
+  refundForm.reset();
+  refundOverlay.classList.add('open');
+}
+function closeRefundModal() {
+  refundOverlay.classList.remove('open');
+}
+
+document.getElementById('openRefundFromFaq').addEventListener('click', openRefundModal);
+document.getElementById('openRefundFromPricing').addEventListener('click', openRefundModal);
+document.getElementById('refundClose').addEventListener('click', closeRefundModal);
+refundOverlay.addEventListener('click', e => {
+  if (e.target === refundOverlay) closeRefundModal();
+});
+
+refundForm.addEventListener('submit', e => {
+  e.preventDefault();
+  refundFormWrap.style.display = 'none';
+  refundSuccess.classList.add('show');
+});
 </script>
 
 </body>
