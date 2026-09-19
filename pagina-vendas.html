@@ -16,9 +16,9 @@
     --text: #f2f3f5;
     --muted: #9a9ea8;
     --muted2: #6b6f78;
-    --blue: #6e9bff;
-    --blue-glow: rgba(110,155,255,0.18);
-    --blue-border: rgba(110,155,255,0.28);
+    --blue: #4CAF6B;
+    --blue-glow: rgba(76,175,107,0.18);
+    --blue-border: rgba(76,175,107,0.28);
   }
 
   html, body {
@@ -97,13 +97,37 @@
   }
   .hero-ctas { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 64px; }
   .btn-primary {
-    background: #fff; color: #0a0a0c;
-    padding: 15px 26px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 15px;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--blue); color: #fff;
+    padding: 17px 30px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    box-shadow: 0 20px 40px -18px var(--blue-glow);
   }
-  .btn-primary:hover { background: #e6e6e6; }
+  .btn-primary:hover { background: #3f9a5a; }
+  .hero-guarantees {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-top: 22px;
+    margin-bottom: 56px;
+  }
+  .hero-guarantees span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-guarantees svg { width: 14px; height: 14px; color: var(--blue); }
+  .hero-guarantees .dot-sep { color: var(--muted2); }
+  .interface-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--muted2);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
   .btn-secondary {
     background: transparent;
     border: 1px solid var(--card-border);
@@ -375,8 +399,8 @@
 <div class="wrap">
   <nav class="nav">
     <div class="brand">
-      <div class="brand-mark">S</div>
-      <span>Split</span>
+      <div class="brand-mark">M</div>
+      <span>MELI IAA</span>
     </div>
     <div class="nav-actions">
       <a class="link-btn" href="#">Entrar</a>
@@ -392,11 +416,20 @@
       Plataforma de Afiliados do Mercado Livre — gere links, acompanhe comissões
     </div>
     <h1>Transforme produtos do Mercado Livre em <span class="highlight">comissões recorrentes</span></h1>
-    <p>O Split gera links de afiliado, rastreia cliques, acompanha conversões e organiza suas comissões do Mercado Livre em um só lugar. Divulgue, monetize e escale seus ganhos.</p>
+    <p>A MELI IAA gera links de afiliado, rastreia cliques, acompanha conversões e organiza suas comissões do Mercado Livre em um só lugar. Divulgue, monetize e escale seus ganhos.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#planos">Ver os planos</a>
-      <a class="btn-secondary" href="#como-funciona">Como funciona</a>
+      <a class="btn-primary" href="#planos">Quero conhecer a MELI IAA
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
+    <div class="hero-guarantees">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>7 dias de garantia</span>
+      <span class="dot-sep">•</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Acesso imediato</span>
+      <span class="dot-sep">•</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Sem fidelidade</span>
+    </div>
+    <div class="interface-label">Interface demonstrativa</div>
     <div class="hero-visual">
       <div class="hero-carousel">
         <div class="hero-carousel-photo">
@@ -438,7 +471,7 @@
     <div class="mock-window">
       <div class="mock-bar">
         <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-        <span class="mock-url">app.split.com.br/dashboard</span>
+        <span class="mock-url">app.meliiaa.com.br/dashboard</span>
       </div>
       <div class="mock-stats">
         <div class="mock-stat">
@@ -607,7 +640,7 @@
 
 <div class="wrap">
   <footer>
-    <span>© 2026 Split</span>
+    <span>© 2026 MELI IAA</span>
     <span>Pagamento processado em ambiente criptografado.</span>
   </footer>
 </div>
