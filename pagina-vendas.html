@@ -72,6 +72,22 @@
     margin: 0 auto 26px;
   }
   .hero h1 .fade { color: var(--muted2); }
+  .hero h1 .highlight { color: var(--blue); }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    border-radius: 99px;
+    padding: 9px 20px;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 30px;
+  }
+  .hero-badge-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue-glow);
+  }
   .hero p {
     max-width: 620px;
     margin: 0 auto 38px;
@@ -308,7 +324,7 @@
   <nav class="nav">
     <div class="brand">
       <div class="brand-mark">S</div>
-      <span>suprilink<span style="color:var(--muted2)">.app</span></span>
+      <span>Split</span>
     </div>
     <div class="nav-actions">
       <a class="link-btn" href="#">Entrar</a>
@@ -319,8 +335,12 @@
 
 <section style="border-bottom:none;">
   <div class="wrap hero">
-    <h1>Você não guarda estoque. <span class="fade">Só vende.</span></h1>
-    <p>Mais de 380 produtos prontos pra anunciar, com preço de custo fixo e despacho em até 24 horas. Você publica na Shopee e no Mercado Livre — o fornecedor separa, embala e envia.</p>
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Plataforma de Afiliados do Mercado Livre — gere links, acompanhe comissões
+    </div>
+    <h1>Transforme produtos do Mercado Livre em <span class="highlight">comissões recorrentes</span></h1>
+    <p>O Split gera links de afiliado, rastreia cliques, acompanha conversões e organiza suas comissões do Mercado Livre em um só lugar. Divulgue, monetize e escale seus ganhos.</p>
     <div class="hero-ctas">
       <a class="btn-primary" href="#planos">Ver os planos</a>
       <a class="btn-secondary" href="#como-funciona">Como funciona</a>
@@ -351,7 +371,7 @@
     <div class="mock-window">
       <div class="mock-bar">
         <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-        <span class="mock-url">painel.suprilink.app/dashboard</span>
+        <span class="mock-url">app.split.com.br/dashboard</span>
       </div>
       <div class="mock-stats">
         <div class="mock-stat">
@@ -520,7 +540,7 @@
 
 <div class="wrap">
   <footer>
-    <span>© 2026 suprilink.app</span>
+    <span>© 2026 Split</span>
     <span>Pagamento processado em ambiente criptografado.</span>
   </footer>
 </div>
