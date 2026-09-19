@@ -243,6 +243,13 @@
     background: var(--bg2);
     overflow: hidden;
     box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    will-change: transform;
+  }
+  .mock-window:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 50px 100px -25px rgba(0,0,0,0.75), 0 0 0 1px var(--blue-border);
+    border-color: var(--blue-border);
   }
   .mock-bar {
     display: flex; align-items: center; gap: 10px;
