@@ -420,13 +420,48 @@
   .price-guarantee svg { width: 16px; height: 16px; color: var(--blue); flex-shrink: 0; margin-top: 2px; }
 
   /* ── Footer ── */
+  .footer-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 60px 0 40px;
+  }
+  .footer-brand { max-width: 320px; }
+  .footer-brand .brand { margin-bottom: 16px; }
+  .footer-brand .brand-mark { color: var(--blue); }
+  .footer-brand p { color: var(--muted2); font-size: 13.5px; line-height: 1.65; }
+  .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-col-title {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--muted2);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .footer-col a {
+    display: block;
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-bottom: 14px;
+  }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom {
+    border-top: 1px solid var(--card-border);
+    padding: 26px 0;
+    text-align: center;
+  }
+  .footer-support {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-bottom: 10px;
+  }
+  .footer-support svg { width: 15px; height: 15px; }
   footer {
-    padding: 30px 0;
-    display: flex; align-items: center; justify-content: space-between;
     color: var(--muted2);
     font-size: 13px;
-    flex-wrap: wrap;
-    gap: 10px;
   }
 
   @media (max-width: 900px) {
@@ -612,32 +647,42 @@
 <section>
   <div class="wrap">
     <div class="section-head">
+      <div class="interface-label">FAQ</div>
       <h2>Perguntas frequentes</h2>
+      <p>Ainda com dúvida? A resposta provavelmente está aqui.</p>
     </div>
     <div class="faq-list" id="faqList">
       <div class="faq-item">
-        <button class="faq-q">Preciso comprar os produtos antes de vender?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Não. Você só paga o preço de custo depois que a venda já aconteceu, usando o saldo do painel. Não existe compra antecipada de estoque.</div></div>
+        <button class="faq-q">O que é o programa de afiliados do Mercado Livre?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">É um programa do próprio Mercado Livre que paga uma comissão pra você quando alguém compra um produto através do seu link de divulgação. Você não precisa ter estoque nem vender diretamente — só indicar produtos.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Como minha loja fica conectada?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Você autoriza o acesso da sua conta Shopee ou Mercado Livre direto na página de Integrações. A partir daí os pedidos chegam automaticamente no painel.</div></div>
+        <button class="faq-q">Preciso de CNPJ para ser afiliado do Mercado Livre?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Não necessariamente. O programa de afiliados do Mercado Livre aceita tanto pessoas físicas quanto jurídicas. Você só precisa se cadastrar na plataforma de afiliados deles e obter seu código.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Como pago o envio de cada pedido?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">O custo do produto e do envio sai do saldo que você mantém no painel, abastecido via PIX. Assim que um pedido é aprovado, o valor é debitado automaticamente.</div></div>
+        <button class="faq-q">Como funciona a comissão de afiliado do Mercado Livre?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">A comissão varia por categoria de produto e é paga pelo próprio Mercado Livre sempre que uma venda é confirmada através do seu link. O Split mostra essa comissão estimada antes mesmo de você gerar o link.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Serve pra quem nunca vendeu online?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Sim. O catálogo já vem com título, fotos e descrição prontos — você escolhe a margem e publica. Os tutoriais mostram passo a passo como criar o primeiro anúncio.</div></div>
+        <button class="faq-q">O Split gera links de afiliado automaticamente?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. Basta colar a URL do produto do Mercado Livre e o Split gera o link de afiliado na hora, já pronto pra divulgar.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Quando meu acesso é liberado?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Imediatamente após a confirmação do pagamento. Você recebe o acesso ao painel por e-mail e já pode explorar o catálogo.</div></div>
+        <button class="faq-q">Posso divulgar os links em quais canais?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Em qualquer canal: Instagram, TikTok, YouTube, WhatsApp, grupos, blog. O Split rastreia os cliques independente de onde o link foi compartilhado.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">E se eu não gostar?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Você tem 7 dias de garantia a partir da assinatura. Se não for pra você, devolvemos o valor inteiro — basta pedir dentro do prazo.</div></div>
+        <button class="faq-q">Como acompanho minhas comissões?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Direto no painel do Split: cliques, conversões e comissões por link, tudo atualizado em tempo real, sem precisar abrir relatório nenhum do Mercado Livre.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Existe suporte?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim, por e-mail para todos os planos. Assinantes do plano Vitalício têm suporte prioritário.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como funciona a garantia de 7 dias?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Você tem 7 dias a partir da assinatura para testar o Split. Se não for pra você, devolvemos o valor inteiro — basta pedir dentro do prazo.</div></div>
       </div>
     </div>
   </div>
@@ -763,12 +808,47 @@
   </div>
 </section>
 
-<div class="wrap">
-  <footer>
-    <span>© 2026 Split</span>
-    <span>Pagamento processado em ambiente criptografado.</span>
-  </footer>
-</div>
+<footer>
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <span>Split</span>
+        </div>
+        <p>Plataforma de afiliados do Mercado Livre: gere links, acompanhe cliques, rastreie conversões e organize suas comissões em um só lugar.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Plataforma</div>
+          <a href="#">Gerador de Links</a>
+          <a href="#">Rastreamento de Cliques</a>
+          <a href="#">Painel de Comissões</a>
+          <a href="#">Catálogo de Produtos</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Empresa</div>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Uso</a>
+          <a href="#">Política de Reembolso</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        split@gmail.com
+      </div>
+      <span>© 2026 Split. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
 
 <script>
   document.querySelectorAll('.faq-q').forEach(btn => {
