@@ -489,6 +489,21 @@
   .refund-success h3 { margin-bottom: 8px; }
   .refund-success p { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
 
+  /* ── Login modal ── */
+  .login-modal h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .login-sub { color: var(--muted); font-size: 13.5px; margin-bottom: 22px; line-height: 1.55; }
+  .login-error {
+    display: none;
+    background: rgba(230,80,80,0.12);
+    border: 1px solid rgba(230,80,80,0.35);
+    color: #ff9c9c;
+    font-size: 13px;
+    border-radius: 10px;
+    padding: 10px 13px;
+    margin-bottom: 16px;
+  }
+  .login-error.show { display: block; }
+
   /* ── Footer ── */
   .footer-main {
     display: flex;
@@ -559,7 +574,7 @@
       <span>Split</span>
     </div>
     <div class="nav-actions">
-      <a class="link-btn" href="#">Entrar</a>
+      <button class="link-btn" id="openLogin">Entrar</button>
       <a class="btn-nav-cta" href="#planos">Assinar</a>
     </div>
   </nav>
@@ -952,6 +967,27 @@
   </div>
 </div>
 
+<div class="refund-overlay" id="loginOverlay">
+  <div class="refund-modal login-modal">
+    <button class="refund-close" id="loginClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+
+    <h3>Entrar no Split</h3>
+    <p class="login-sub">Acesse com o e-mail e senha da sua assinatura.</p>
+    <div class="login-error" id="loginError">E-mail ou senha incorretos.</div>
+    <form id="loginForm">
+      <div class="refund-field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" required placeholder="voce@email.com">
+      </div>
+      <div class="refund-field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="refund-submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
 <script>
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1022,6 +1058,39 @@ refundForm.addEventListener('submit', e => {
   e.preventDefault();
   refundFormWrap.style.display = 'none';
   refundSuccess.classList.add('show');
+});
+
+const VALID_EMAIL = 'split@gmail.com';
+const VALID_PASSWORD = 'familia123';
+
+const loginOverlay = document.getElementById('loginOverlay');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+
+function openLoginModal() {
+  loginError.classList.remove('show');
+  loginForm.reset();
+  loginOverlay.classList.add('open');
+}
+function closeLoginModal() {
+  loginOverlay.classList.remove('open');
+}
+
+document.getElementById('openLogin').addEventListener('click', openLoginModal);
+document.getElementById('loginClose').addEventListener('click', closeLoginModal);
+loginOverlay.addEventListener('click', e => {
+  if (e.target === loginOverlay) closeLoginModal();
+});
+
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+    window.location.href = 'painel-fornecedor-ml.html';
+  } else {
+    loginError.classList.add('show');
+  }
 });
 </script>
 
