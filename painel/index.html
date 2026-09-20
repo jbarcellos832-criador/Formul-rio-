@@ -1621,6 +1621,17 @@
   }
   .sup-badge svg { width: 11px; height: 11px; }
   .sup-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sup-card + .sup-card { margin-top: 16px; }
+  .script-text {
+    background: var(--off);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 16px;
+  }
   .sup-btn {
     display: inline-flex; align-items: center; gap: 8px;
     border-radius: 12px;
@@ -1950,42 +1961,17 @@
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
         <span>Catálogo</span>
       </button>
-      <button type="button" class="nav-item" data-page="importadores">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 13h6"/></svg></span>
-        <span>Importadores</span>
+      <button type="button" class="nav-item" data-page="grupos-facebook">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+        <span>Grupos Facebook</span>
       </button>
-      <button type="button" class="nav-item" data-page="fornecedores">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></span>
-        <span>Fornecedores</span>
+      <button type="button" class="nav-item" data-page="grupos-whatsapp">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <span>Grupos WhatsApp</span>
       </button>
-      <button type="button" class="nav-item" data-page="pedidos">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>
-        <span>Pedidos</span>
-      </button>
-      <button type="button" class="nav-item" data-page="integracoes">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>
-        <span>Integrações</span>
-      </button>
-      <button type="button" class="nav-item" data-page="financeiro">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></span>
-        <span>Financeiro &amp; PIX</span>
-      </button>
-      <button type="button" class="nav-item" id="toolsToggle" data-page="ferramentas">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg></span>
-        <span>Ferramentas</span>
-        <span class="caret" id="toolsCaret">▾</span>
-      </button>
-      <button type="button" class="nav-item" data-page="tutoriais">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
-        <span>Tutoriais</span>
-      </button>
-      <button type="button" class="nav-item" data-page="chamados">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-8h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-8H3z"/></svg></span>
-        <span>Chamados</span>
-      </button>
-      <button type="button" class="nav-item" data-page="afiliados">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-        <span>Painel de afiliados</span>
+      <button type="button" class="nav-item" data-page="scripts">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h3"/></svg></span>
+        <span>Scripts de divulgação</span>
       </button>
 
       <div class="nav-sep"></div>
@@ -2047,7 +2033,6 @@
         <div class="dropdown-panel" id="userPanel" style="right:0;">
           <div class="dd-title">Fornecedor · Lojista</div>
           <button type="button" class="nav-item" style="color:#111;" data-page="conta">Minha conta</button>
-          <button type="button" class="nav-item" style="color:#111;" data-page="financeiro">Financeiro &amp; PIX</button>
           <button type="button" class="nav-item logout" id="userLogout">Sair</button>
         </div>
       </div>
@@ -2855,6 +2840,154 @@
             <div class="pix-qr-note">Escaneie o QR Code com o app do seu banco. Assim que o pagamento for confirmado, o saldo é creditado automaticamente.</div>
             <button class="pix-confirm-btn" id="pixConfirmBtn">Já paguei, confirmar</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupos Facebook -->
+    <div class="content" id="page-grupos-facebook" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Grupos Facebook</div>
+          <div class="page-sub">Comunidades de compra e venda pra divulgar seus links de afiliado.</div>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div>
+            <span class="sup-name">Ofertas e Promoções Brasil</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>128 mil membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://facebook.com/groups','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div>
+            <span class="sup-name">Achadinhos do Mercado Livre</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>94 mil membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://facebook.com/groups','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div>
+            <span class="sup-name">Renda Extra e Afiliados</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>41 mil membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://facebook.com/groups','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupos WhatsApp -->
+    <div class="content" id="page-grupos-whatsapp" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Grupos WhatsApp</div>
+          <div class="page-sub">Grupos ativos pra compartilhar seus links e alcançar mais compradores.</div>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div>
+            <span class="sup-name">Ofertas Relâmpago SP</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>987 membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://chat.whatsapp.com','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div>
+            <span class="sup-name">Promoções Mercado Livre</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>1.020 membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://chat.whatsapp.com','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div class="sup-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div>
+            <span class="sup-name">Divulgadores Split</span>
+            <span class="sup-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>612 membros</span>
+          </div>
+        </div>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" onclick="window.open('https://chat.whatsapp.com','_blank')">Entrar no grupo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts de divulgação -->
+    <div class="content" id="page-scripts" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title" style="font-size:22px;">Scripts de divulgação</div>
+          <div class="page-sub">Textos prontos pra colar nos grupos e redes sociais. É só copiar.</div>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div><span class="sup-name">Oferta relâmpago</span></div>
+        </div>
+        <p class="script-text" id="scriptText1">🔥 OFERTA RELÂMPAGO! Esse produto tá com o menor preço que eu já vi no Mercado Livre. Corre que é por tempo limitado 👉 [SEU LINK AQUI]</p>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" data-copy-target="scriptText1">Copiar texto</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div><span class="sup-name">Indicação pessoal</span></div>
+        </div>
+        <p class="script-text" id="scriptText2">Gente, comprei esse produto semana passada e amei o resultado. Deixo o link aqui pra quem quiser aproveitar o mesmo preço que eu paguei 👉 [SEU LINK AQUI]</p>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" data-copy-target="scriptText2">Copiar texto</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div><span class="sup-name">Comparação de preço</span></div>
+        </div>
+        <p class="script-text" id="scriptText3">Fui pesquisar esse item em várias lojas e achei o melhor preço aqui. Vale muito a pena garantir antes que suba 👉 [SEU LINK AQUI]</p>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" data-copy-target="scriptText3">Copiar texto</button>
+        </div>
+      </div>
+
+      <div class="sup-card">
+        <div class="sup-card-top">
+          <div><span class="sup-name">Urgência de estoque</span></div>
+        </div>
+        <p class="script-text" id="scriptText4">Últimas unidades com esse preço! Já vi gente comentando que tá acabando o estoque, não deixa pra depois 👉 [SEU LINK AQUI]</p>
+        <div class="sup-actions">
+          <button type="button" class="sup-btn primary" data-copy-target="scriptText4">Copiar texto</button>
         </div>
       </div>
     </div>
@@ -4026,6 +4159,9 @@
   const pageChamados = document.getElementById('page-chamados');
   const pageAfiliados = document.getElementById('page-afiliados');
   const pageFinanceiro = document.getElementById('page-financeiro');
+  const pageGruposFacebook = document.getElementById('page-grupos-facebook');
+  const pageGruposWhatsapp = document.getElementById('page-grupos-whatsapp');
+  const pageScripts = document.getElementById('page-scripts');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -4043,6 +4179,9 @@
     pageChamados.style.display = 'none';
     pageAfiliados.style.display = 'none';
     pageFinanceiro.style.display = 'none';
+    pageGruposFacebook.style.display = 'none';
+    pageGruposWhatsapp.style.display = 'none';
+    pageScripts.style.display = 'none';
     pageGeneric.style.display = 'none';
     const pfPage = document.getElementById('page-product-form');
     if (pfPage) pfPage.style.display = 'none';
@@ -4064,6 +4203,12 @@
       pageAfiliados.style.display = '';
     } else if (key === 'financeiro') {
       pageFinanceiro.style.display = '';
+    } else if (key === 'grupos-facebook') {
+      pageGruposFacebook.style.display = '';
+    } else if (key === 'grupos-whatsapp') {
+      pageGruposWhatsapp.style.display = '';
+    } else if (key === 'scripts') {
+      pageScripts.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
@@ -4162,6 +4307,18 @@
     if (e.key === 'Enter' && e.target.value.trim()) {
       goToPage('catalogo');
     }
+  });
+
+  // Copy script text buttons
+  document.querySelectorAll('[data-copy-target]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById(btn.dataset.copyTarget);
+      if (!el) return;
+      copyText(el.textContent.trim());
+      const original = btn.textContent;
+      btn.textContent = 'Copiado!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
   });
 </script>
 
