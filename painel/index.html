@@ -4149,7 +4149,7 @@
   function handleLogout(e) {
     e.preventDefault();
     if (confirm('Deseja realmente sair da sua conta?')) {
-      alert('Sessão encerrada.');
+      window.location.href = '../';
     }
   }
   document.getElementById('logoutBtn').addEventListener('click', handleLogout);

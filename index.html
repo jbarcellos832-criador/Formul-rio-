@@ -1087,7 +1087,7 @@ loginForm.addEventListener('submit', e => {
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
   if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-    window.location.href = 'painel-fornecedor-ml.html';
+    window.location.href = 'painel/';
   } else {
     loginError.classList.add('show');
   }
