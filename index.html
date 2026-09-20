@@ -1060,8 +1060,13 @@ refundForm.addEventListener('submit', e => {
   refundSuccess.classList.add('show');
 });
 
-const VALID_EMAIL = 'split@gmail.com';
-const VALID_PASSWORD = 'familia123';
+const VALID_CREDENTIAL_HASH = '7781a5ab0ffb4f18032a3c93bbb6ba45603b57aeca71601817ae4b4e23af09a8';
+
+async function sha256Hex(text) {
+  const data = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 const loginOverlay = document.getElementById('loginOverlay');
 const loginForm = document.getElementById('loginForm');
@@ -1082,11 +1087,12 @@ loginOverlay.addEventListener('click', e => {
   if (e.target === loginOverlay) closeLoginModal();
 });
 
-loginForm.addEventListener('submit', e => {
+loginForm.addEventListener('submit', async e => {
   e.preventDefault();
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
-  if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+  const hash = await sha256Hex(email + ':' + password);
+  if (hash === VALID_CREDENTIAL_HASH) {
     window.location.href = 'painel/';
   } else {
     loginError.classList.add('show');
