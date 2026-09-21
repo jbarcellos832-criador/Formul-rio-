@@ -33,7 +33,11 @@ const APPROVED_STATUSES = new Set([
   "paid",
   "completed",
   "aprovada",
+  "aprovado",
   "pago",
+  "paga",
+  "venda aprovada",
+  "compra aprovada",
 ]);
 
 function randomPassword(length = 12): string {
@@ -115,25 +119,39 @@ Deno.serve(async (req) => {
   // TODO: confirm these field names against a real Perfect Pay payload.
   // Perfect Pay's field names vary by product/integration version, so this
   // reads a few common shapes defensively.
+  // Perfect Pay's own postback format uses these field names (in Portuguese);
+  // the English names are kept as a fallback for other gateways/formats.
   const status = String(
-    payload.sale_status_enum_key ?? payload.status ?? payload.event ?? "",
+    payload.statusPagamento ??
+      payload.sale_status_enum_key ??
+      payload.status ??
+      payload.event ??
+      "",
   ).toLowerCase();
   const email = String(
-    (payload.customer as Record<string, unknown> | undefined)?.email ??
+    payload.clienteEmail ??
+      (payload.customer as Record<string, unknown> | undefined)?.email ??
       payload.customer_email ??
       payload.email ??
       "",
   ).trim().toLowerCase();
   const name = String(
-    (payload.customer as Record<string, unknown> | undefined)?.full_name ??
+    payload.clienteNome ??
+      (payload.customer as Record<string, unknown> | undefined)?.full_name ??
       payload.customer_name ??
       payload.name ??
       "",
   ).trim();
   const orderId = String(
-    payload.sale_code ?? payload.order_id ?? payload.id ?? crypto.randomUUID(),
+    payload.transacao ??
+      payload.sale_code ??
+      payload.order_id ??
+      payload.id ??
+      crypto.randomUUID(),
   );
-  const plan = String(payload.product_name ?? payload.plan ?? "");
+  const plan = String(
+    payload.produto ?? payload.product_name ?? payload.plan ?? "",
+  );
 
   if (!email) {
     return new Response("Missing customer email", { status: 400 });
