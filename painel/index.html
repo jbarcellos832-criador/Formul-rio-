@@ -670,6 +670,107 @@
   .aff-success.show { display: flex; }
   .aff-success svg { width: 18px; height: 18px; flex-shrink: 0; }
 
+  /* ── Painel de afiliados (link de indicação) ── */
+  .aff-ref-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .aff-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .aff-panel-title { font-size: 14.5px; font-weight: 800; margin-bottom: 14px; }
+  .aff-link-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .aff-link-input {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    font-family: inherit;
+    background: var(--off);
+    color: #111;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .aff-copy-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue, #2f6fed);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .aff-copy-btn svg { width: 15px; height: 15px; }
+  .aff-qr-row { display: flex; gap: 18px; align-items: flex-start; }
+  .aff-qr-img { width: 96px; height: 96px; border-radius: 10px; border: 1px solid var(--card-border); flex-shrink: 0; }
+  .aff-qr-meta { font-size: 13px; color: var(--muted); line-height: 1.9; }
+  .aff-qr-meta strong { color: #111; }
+  .aff-qr-meta a { color: var(--blue, #2f6fed); text-decoration: none; font-weight: 700; }
+  .aff-saldo-ic {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: #eafff2;
+    color: #16c784;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+  .aff-saldo-ic svg { width: 17px; height: 17px; }
+  .aff-saldo-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .aff-saldo-value { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .aff-saldo-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .aff-btn-resgate {
+    width: 100%;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--green);
+    color: #06341f;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+  .aff-btn-resgate svg { width: 15px; height: 15px; }
+  .aff-live-panel {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .aff-live-title { display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 800; margin-bottom: 4px; }
+  .aff-live-title svg { width: 15px; height: 15px; color: var(--blue, #2f6fed); }
+  .aff-live-sub { font-size: 13px; color: var(--muted); }
+  .btn-aff-config {
+    background: var(--off);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+  }
+  .aff-empty-panel {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-bottom: 16px;
+  }
+  .aff-empty-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px 0; }
+  .aff-empty-head .aff-panel-title { margin-bottom: 0; }
+  @media (max-width: 900px) {
+    .aff-ref-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Cadastrar produto ── */
   .pf-breadcrumb {
     display: flex; align-items: center; gap: 14px;
@@ -2566,47 +2667,106 @@
       <div class="page-head">
         <div>
           <div class="page-title" style="font-size:22px;">Afiliados</div>
-          <div class="page-sub">Indique a Suprify e ganhe comissão em cada venda convertida.</div>
+          <div class="page-sub">Indique a Split e ganhe comissão em cada venda convertida.</div>
         </div>
       </div>
 
-      <div class="aff-wrap">
-        <div class="aff-card">
-          <div class="aff-ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="aff-title">Programa de Afiliados Suprify</div>
-          <div class="aff-desc">Indique lojistas e ganhe comissão recorrente em cada assinatura gerada pelo seu link.</div>
-
-          <button class="btn-affiliate" id="affApplyBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-            Quero ser afiliado
-          </button>
-
-          <div class="aff-form" id="affForm">
-            <div class="modal-field">
-              <div class="modal-field-label">Nome completo</div>
-              <input type="text" id="affNameInput" placeholder="Seu nome">
-            </div>
-            <div class="modal-field">
-              <div class="modal-field-label">E-mail</div>
-              <input type="email" id="affEmailInput" placeholder="voce@email.com">
-            </div>
-            <div class="modal-field">
-              <div class="modal-field-label">Como pretende divulgar?</div>
-              <input type="text" id="affChannelInput" placeholder="Instagram, WhatsApp, YouTube...">
-            </div>
-            <button class="btn-affiliate" id="affSubmitBtn" style="justify-content:center;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              Enviar inscrição
+      <div class="aff-ref-grid">
+        <div class="aff-panel">
+          <div class="aff-panel-title">Seu link de indicação</div>
+          <div class="aff-link-row">
+            <input type="text" class="aff-link-input" id="affRefLink" readonly value="https://splitia.space/r/carregando...">
+            <button type="button" class="aff-copy-btn" id="affCopyLinkBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar
             </button>
           </div>
-
-          <div class="aff-success" id="affSuccess">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <span>Inscrição enviada! Nossa equipe vai analisar e entrar em contato em breve.</span>
+          <div class="aff-qr-row">
+            <img class="aff-qr-img" id="affQrImg" src="" alt="QR Code do link de indicação">
+            <div class="aff-qr-meta">
+              Código: <strong id="affRefCode">—</strong><br>
+              Comissão: <strong>10% por venda</strong><br>
+              Status: <strong style="color:#16c784;">Ativo</strong><br>
+              <a href="#" id="affLiveDashboardLink">↗ Abrir dashboard de venda ao vivo</a>
+            </div>
           </div>
         </div>
+
+        <div class="aff-panel">
+          <div class="aff-saldo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></div>
+          <div class="aff-saldo-label">Saldo disponível</div>
+          <div class="aff-saldo-value">R$ 0,00</div>
+          <div class="aff-saldo-sub">Total ganho: R$ 0,00 · Sacado: R$ 0,00</div>
+          <button type="button" class="aff-btn-resgate" id="affResgateBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            Solicitar Resgate
+          </button>
+        </div>
+      </div>
+
+      <div class="aff-live-panel">
+        <div>
+          <div class="aff-live-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Dashboard de Venda ao Vivo
+          </div>
+          <div class="aff-live-sub">Depois de configurar os produtos e a meta, abra a tela cheia pra usar na sua live.</div>
+        </div>
+        <button type="button" class="btn-aff-config" id="affConfigBtn">Configurar produtos e meta</button>
+      </div>
+
+      <div class="fin-stat-grid">
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="fin-stat-label">Comissões totais</div>
+          </div>
+          <div class="fin-stat-value">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="19 12 12 19 5 12"/><line x1="12" y1="19" x2="12" y2="5"/></svg></div>
+            <div class="fin-stat-label">Saques realizados</div>
+          </div>
+          <div class="fin-stat-value">R$ 0,00</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+            <div class="fin-stat-label">Indicados ativos</div>
+          </div>
+          <div class="fin-stat-value">0</div>
+        </div>
+        <div class="fin-stat-card">
+          <div class="fin-stat-top">
+            <div class="fin-stat-ic purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div class="fin-stat-label">Taxa de conversão</div>
+          </div>
+          <div class="fin-stat-value">0.0%</div>
+        </div>
+      </div>
+
+      <div class="fin-chart-panel">
+        <div class="fin-chart-head">
+          <div class="fin-chart-title">Comissões por mês</div>
+        </div>
+        <div class="fin-chart-wrap" id="affChartWrap"></div>
+      </div>
+
+      <div class="aff-empty-panel" style="padding:0;text-align:left;">
+        <div class="aff-empty-head"><div class="aff-panel-title">Histórico de comissões</div></div>
+        <div style="padding:36px 20px;text-align:center;color:var(--muted);">Nenhuma comissão ainda.</div>
+      </div>
+
+      <div class="aff-empty-panel" style="padding:0;text-align:left;">
+        <div class="aff-empty-head">
+          <div class="aff-panel-title">Saques</div>
+          <button type="button" class="aff-btn-resgate" style="width:auto;margin:14px 22px;" id="affResgateBtn2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Solicitar Resgate
+          </button>
+        </div>
+        <div style="padding:36px 20px;text-align:center;color:var(--muted);">Nenhum saque solicitado ainda.</div>
       </div>
     </div>
 
@@ -3747,24 +3907,67 @@
 
   renderTickets();
 
-  // ── Afiliados ──
-  document.getElementById('affApplyBtn').addEventListener('click', function () {
-    document.getElementById('affForm').classList.add('open');
-    this.style.display = 'none';
-    document.getElementById('affNameInput').focus();
-  });
-
-  document.getElementById('affSubmitBtn').addEventListener('click', () => {
-    const name = document.getElementById('affNameInput').value.trim();
-    const email = document.getElementById('affEmailInput').value.trim();
-    if (!name || !email) {
-      if (!name) document.getElementById('affNameInput').focus();
-      else document.getElementById('affEmailInput').focus();
-      return;
+  // ── Afiliados (dashboard de indicação) ──
+  function affGetCode() {
+    let code = localStorage.getItem('splitAffCode');
+    if (!code) {
+      code = Array.from({ length: 8 }, () => '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.floor(Math.random() * 35)]).join('');
+      localStorage.setItem('splitAffCode', code);
     }
-    document.getElementById('affForm').classList.remove('open');
-    document.getElementById('affSuccess').classList.add('show');
-  });
+    return code;
+  }
+
+  (function initAffiliateDashboard() {
+    const code = affGetCode();
+    const link = 'https://splitia.space/r/' + code;
+    document.getElementById('affRefLink').value = link;
+    document.getElementById('affRefCode').textContent = code;
+    document.getElementById('affQrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(link);
+
+    document.getElementById('affCopyLinkBtn').addEventListener('click', function () {
+      copyText(link);
+      const original = this.innerHTML;
+      this.innerHTML = 'Copiado!';
+      setTimeout(() => { this.innerHTML = original; }, 1500);
+    });
+
+    document.getElementById('affLiveDashboardLink').addEventListener('click', e => {
+      e.preventDefault();
+      alert('O dashboard de venda ao vivo ainda está em preparação.');
+    });
+    document.getElementById('affConfigBtn').addEventListener('click', () => {
+      alert('Configuração de produtos e meta em breve.');
+    });
+    ['affResgateBtn', 'affResgateBtn2'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => {
+        alert('Você ainda não tem saldo disponível para resgate.');
+      });
+    });
+
+    const wrap = document.getElementById('affChartWrap');
+    const months = ['abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.'];
+    const W = 900, H = 240, padL = 46, padB = 24, padT = 10, padR = 10;
+    const plotW = W - padL - padR;
+    const stepX = plotW / (months.length - 1);
+    const yZero = H - padB;
+    let gridLines = '', axisLabels = '', xLabels = '', dots = '', pathD = '';
+    for (let s = 0; s <= 4; s++) {
+      const y = padT + ((H - padT - padB) / 4) * s;
+      gridLines += `<line class="grid-line" x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}"/>`;
+      axisLabels += `<text class="axis-label" x="0" y="${y + 4}">R$${4 - s}</text>`;
+    }
+    months.forEach((m, i) => {
+      const x = padL + i * stepX;
+      xLabels += `<text class="axis-label" x="${x}" y="${H - 4}" text-anchor="middle">${m}</text>`;
+      dots += `<circle class="dot" cx="${x}" cy="${yZero}" r="4"></circle>`;
+      pathD += (i === 0 ? 'M' : 'L') + x + ',' + yZero + ' ';
+    });
+    wrap.innerHTML = `<svg class="fin-chart-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+      ${gridLines}${axisLabels}${xLabels}
+      <path d="${pathD}" fill="none" stroke="#ff2d55" stroke-width="1.5"></path>
+      ${dots}
+    </svg>`;
+  })();
 
   // ── Financeiro & PIX ──
   const finState = {
