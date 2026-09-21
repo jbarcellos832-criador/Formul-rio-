@@ -564,6 +564,7 @@
     .steps-line, .steps-line-active { display: none; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -1060,13 +1061,9 @@ refundForm.addEventListener('submit', e => {
   refundSuccess.classList.add('show');
 });
 
-const VALID_CREDENTIAL_HASH = '7781a5ab0ffb4f18032a3c93bbb6ba45603b57aeca71601817ae4b4e23af09a8';
-
-async function sha256Hex(text) {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+const SUPABASE_URL = 'https://ftnhslgtlvdrvaseyczi.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publicavel_LaOl_e8lqm7OGBMQ8zW4Dg_LUrYfZ';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const loginOverlay = document.getElementById('loginOverlay');
 const loginForm = document.getElementById('loginForm');
