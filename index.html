@@ -1088,8 +1088,8 @@ loginForm.addEventListener('submit', async e => {
   e.preventDefault();
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
-  const hash = await sha256Hex(email + ':' + password);
-  if (hash === VALID_CREDENTIAL_HASH) {
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if (!error) {
     window.location.href = 'painel/';
   } else {
     loginError.classList.add('show');
