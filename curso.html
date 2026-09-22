@@ -245,6 +245,33 @@
   .lesson-detail-video { width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin-bottom: 18px; }
   .lesson-detail-video iframe { width: 100%; aspect-ratio: 16/9; border: 0; display: block; }
   .lesson-detail-video video { width: 100%; display: block; }
+
+  .lesson-watch-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(160deg, #1c1c1c, #0a0a0a);
+  }
+  .lesson-watch-link img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lesson-watch-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .lesson-watch-label {
+    position: absolute; bottom: 14px; left: 14px;
+    background: rgba(10,10,10,0.85);
+    color: #ffd400;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 8px;
+  }
   .lesson-detail-empty {
     background: #141414;
     border: 1px dashed #2a2a2a;
@@ -507,7 +534,7 @@ function renderModules() {
     const id = mi + '-' + li;
     const isDone = done.has(id);
     const thumbHtml = lesson.youtube
-      ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="">`
+      ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="" onerror="this.style.display='none'">`
       : lesson.video
       ? `<video src="${lesson.video}" preload="metadata"></video>`
       : '';
@@ -567,7 +594,11 @@ function renderLessonDetail(mi, li) {
   const isDone = done.has(id);
 
   const videoHtml = lesson.youtube
-    ? `<iframe src="https://www.youtube.com/embed/${lesson.youtube}" title="${lesson.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    ? `<a class="lesson-watch-link" href="https://youtu.be/${lesson.youtube}" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/${lesson.youtube}/hqdefault.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lesson-watch-play"><span>▶</span></div>
+        <div class="lesson-watch-label">Assistir no YouTube ↗</div>
+      </a>`
     : lesson.video
     ? `<video controls src="${lesson.video}"></video>`
     : `<div class="lesson-detail-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
@@ -588,7 +619,12 @@ function renderLessonDetail(mi, li) {
       </button>
     </div>`;
 
-  document.getElementById('lessonBackBtn').addEventListener('click', () => renderModules());
+  window.scrollTo({ top: 0 });
+
+  document.getElementById('lessonBackBtn').addEventListener('click', () => {
+    renderModules();
+    window.scrollTo({ top: 0 });
+  });
 
   document.getElementById('markWatchedBtn').addEventListener('click', () => {
     const set = doneSet();
