@@ -365,8 +365,10 @@
     </div>
 
     <div id="page-modules" style="display:none;">
-      <div class="modules-label">Módulos do curso</div>
-      <div class="module-grid" id="moduleGrid"></div>
+      <div id="moduleGridWrap">
+        <div class="modules-label">Módulos do curso</div>
+        <div class="module-grid" id="moduleGrid"></div>
+      </div>
 
       <div class="modules" id="modules"></div>
     </div>
@@ -517,8 +519,9 @@ function renderModuleGrid() {
       selectedModule = Number(val);
       renderModuleGrid();
       renderModules();
+      document.getElementById('moduleGridWrap').style.display = 'none';
       document.getElementById('modules').classList.add('open');
-      document.getElementById('modules').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.scrollTo({ top: 0 });
     });
   });
 }
@@ -574,7 +577,8 @@ function renderModules() {
 
   document.getElementById('moduleBackBtn').addEventListener('click', () => {
     document.getElementById('modules').classList.remove('open');
-    document.getElementById('moduleGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('moduleGridWrap').style.display = '';
+    window.scrollTo({ top: 0 });
   });
 
   wrap.querySelectorAll('.lesson-row').forEach(row => {
