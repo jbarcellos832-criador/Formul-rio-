@@ -572,7 +572,10 @@ function renderModuleGrid() {
   grid.querySelectorAll('[data-select-module]').forEach(card => {
     card.addEventListener('click', () => {
       const val = card.dataset.selectModule;
-      if (val === 'extra') return;
+      if (val === 'extra') {
+        window.open('https://www.whatsapp.com/channel/0029Vb8YDQO3bbV92PQ1xh12', '_blank');
+        return;
+      }
       selectedModule = Number(val);
       renderModuleGrid();
       renderModules();
