@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split — Mini Curso</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ───── SIDEBAR ───── */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #0d0d0d;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px 26px;
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .brand .dot {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #d4ff3f, #a6e600);
+    color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand .dot svg { width: 17px; height: 17px; }
+  .nav { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #9a9a9a;
+    text-align: left;
+    width: 100%;
+  }
+  .nav-item .ic { width: 18px; height: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .nav-item .ic svg { width: 17px; height: 17px; }
+  .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .nav-item.active { background: rgba(212,255,63,0.1); color: #d4ff3f; border: 1px solid rgba(212,255,63,0.25); }
+  .nav-footer { padding-top: 16px; border-top: 1px solid #1c1c1c; margin-top: 10px; font-size: 12px; color: #6b6b6b; }
+
+  /* ───── MAIN ───── */
+  .main { flex: 1; min-width: 0; padding: 32px 40px 60px; }
+  .top-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; }
+  .greeting-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .greeting-sub { font-size: 14px; color: #9a9a9a; }
+
+  .hero-card {
+    background: #0d0d0d;
+    border-radius: 18px;
+    padding: 30px 28px;
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: #d4ff3f; margin-bottom: 12px; text-transform: uppercase; }
+  .hero-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .hero-sub { font-size: 14.5px; color: #b8b8b8; line-height: 1.6; max-width: 600px; margin-bottom: 22px; }
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #d4ff3f;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 13px 22px;
+    border-radius: 11px;
+  }
+  .hero-btn:hover { filter: brightness(0.95); }
+
+  .progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .progress-card { background: #0d0d0d; border-radius: 14px; padding: 18px 20px; }
+  .progress-top { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; color: #9a9a9a; margin-bottom: 10px; text-transform: uppercase; }
+  .progress-top span:last-child { color: #fff; text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .progress-bar { height: 6px; border-radius: 4px; background: #262626; overflow: hidden; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #d4ff3f, #a6e600); transition: width 0.3s ease; }
+  .progress-pct { font-size: 12px; color: #9a9a9a; }
+
+  .modules { display: flex; flex-direction: column; gap: 14px; }
+  .module { background: #0d0d0d; border-radius: 16px; overflow: hidden; }
+  .module-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; cursor: pointer; }
+  .module-head-left { display: flex; align-items: center; gap: 12px; }
+  .module-num {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: #1c1c1c;
+    color: #d4ff3f;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13.5px;
+    flex-shrink: 0;
+  }
+  .module-title { font-weight: 800; font-size: 15px; margin-bottom: 2px; }
+  .module-count { font-size: 12px; color: #9a9a9a; }
+  .module-caret { color: #9a9a9a; transition: transform 0.2s ease; flex-shrink: 0; }
+  .module.open .module-caret { transform: rotate(180deg); }
+  .module-body { display: none; padding: 0 20px 18px; }
+  .module.open .module-body { display: block; }
+
+  .lesson { display: flex; align-items: flex-start; gap: 12px; padding: 13px 14px; border-radius: 10px; margin-top: 8px; background: #161616; cursor: pointer; }
+  .lesson:hover { background: #1b1b1b; }
+  .lesson-check {
+    width: 21px; height: 21px;
+    border-radius: 50%;
+    border: 1.5px solid #3a3a3a;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: #0a0a0a;
+    font-weight: 800;
+  }
+  .lesson.done .lesson-check { background: #d4ff3f; border-color: #d4ff3f; }
+  .lesson-body { flex: 1; }
+  .lesson-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
+  .lesson-text { display: none; font-size: 13px; color: #c7c7c7; line-height: 1.65; margin-top: 6px; }
+  .lesson.expanded .lesson-text { display: block; }
+  .lesson-toggle { font-size: 11.5px; color: #d4ff3f; font-weight: 700; margin-top: 6px; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 24px 18px 50px; }
+    .progress-row { grid-template-columns: 1fr; }
+    .hero-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      </div>
+      Split — Curso
+    </div>
+    <nav class="nav">
+      <button type="button" class="nav-item active">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+        Início
+      </button>
+      <button type="button" class="nav-item" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+        Módulos
+      </button>
+      <button type="button" class="nav-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+        Meu progresso
+      </button>
+    </nav>
+    <div class="nav-footer">Split © 2026</div>
+  </aside>
+
+  <main class="main">
+    <div class="top-row">
+      <div>
+        <div class="greeting-title" id="greetingTitle">Bem-vindo(a) ao curso</div>
+        <div class="greeting-sub">Aprenda a mexer no Split do zero.</div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-eyebrow">Continue de onde parou</div>
+      <div class="hero-title">Vamos começar</div>
+      <div class="hero-sub">Um mini curso rápido pra você aprender a subir produtos, conectar suas lojas, acompanhar pedidos e receber suas comissões no Split.</div>
+      <button type="button" class="hero-btn" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">
+        Continuar assistindo <span>→</span>
+      </button>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-card">
+        <div class="progress-top"><span>MINI CURSO</span><span id="lessonCount">0 de 10</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+        <div class="progress-pct" id="progressPct">0% concluído</div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-top"><span>MÓDULOS</span><span>4 módulos</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%; background:#3a3a3a;"></div></div>
+        <div class="progress-pct">Primeiros passos, Catálogo, Integrações, Financeiro</div>
+      </div>
+    </div>
+
+    <div class="modules" id="modules"></div>
+  </main>
+
+</div>
+
+<script>
+const modulesData = [
+  {
+    title: 'Primeiros passos',
+    lessons: [
+      {
+        title: 'Como fazer login no painel',
+        text: 'Depois de comprar o Split, você recebe um e-mail com seu login e senha provisória. Acesse splitia.space, clique em "Entrar" e use esses dados. Recomendamos trocar a senha assim que entrar pela primeira vez.',
+      },
+      {
+        title: 'Conhecendo o menu lateral',
+        text: 'No menu à esquerda do painel você encontra: Dashboard (visão geral das vendas), Catálogo (produtos disponíveis), Importadores, Fornecedores, Pedidos, Integrações, Financeiro & PIX, Ferramentas, Tutoriais, Chamados e o Painel de afiliados. No celular, toque no ícone ☰ no topo para abrir esse menu.',
+      },
+    ],
+  },
+  {
+    title: 'Catálogo e produtos',
+    lessons: [
+      {
+        title: 'Como navegar no catálogo',
+        text: 'Clique em "Catálogo" no menu lateral do painel. Use a busca ou os filtros (loja, ordenação) para encontrar produtos. Cada card mostra a foto, o preço de custo e o fornecedor.',
+      },
+      {
+        title: 'Como cadastrar um produto no marketplace',
+        text: 'Dentro do catálogo, clique em "Cadastrar no Marketplace" no produto desejado. Escolha em quais marketplaces publicar (Shopee, Mercado Livre...), confira as fotos, o título e a descrição, e siga para a próxima etapa.',
+      },
+      {
+        title: 'Como definir preço e margem de lucro',
+        text: 'Na tela de cadastro, preencha a comissão, taxa fixa e sua margem de lucro desejada. O sistema calcula automaticamente o preço final de venda com base no seu custo. Revise o resumo antes de clicar em "Publicar".',
+      },
+    ],
+  },
+  {
+    title: 'Marketplaces e integrações',
+    lessons: [
+      {
+        title: 'Como conectar sua loja (Mercado Livre, Shopee, Bling)',
+        text: 'Vá em "Integrações" no menu lateral e clique para conectar a plataforma desejada. Você vai precisar autorizar o acesso da sua conta do marketplace. Depois de conectada, seus produtos publicados sincronizam automaticamente.',
+      },
+      {
+        title: 'Acompanhando seus pedidos',
+        text: 'A seção "Pedidos" mostra o status de cada venda: aguardando pagamento, pago, impresso e despachado. Use os filtros para encontrar um pedido específico rapidamente.',
+      },
+    ],
+  },
+  {
+    title: 'Financeiro e link de afiliado',
+    lessons: [
+      {
+        title: 'Como funciona o saldo e o PIX',
+        text: 'Em "Financeiro & PIX" você acompanha entradas, pagamentos a fornecedores e o saldo atual. Para adicionar saldo, clique em "Adicionar Saldo", escolha o valor e pague o QR Code PIX gerado — o crédito cai automaticamente após a confirmação.',
+      },
+      {
+        title: 'Como pegar seu link de indicação',
+        text: 'No "Painel de afiliados" você encontra seu link de indicação único e o QR Code dele. Clique em "Copiar" para compartilhar nas redes sociais, grupos ou com clientes.',
+      },
+      {
+        title: 'Como acompanhar suas comissões',
+        text: 'Ainda no Painel de afiliados, acompanhe o saldo disponível, o total de comissões, indicados ativos e a taxa de conversão. O histórico de comissões mostra cada indicação que virou venda.',
+      },
+    ],
+  },
+];
+
+function doneSet() {
+  try { return new Set(JSON.parse(localStorage.getItem('splitCursoDone') || '[]')); }
+  catch { return new Set(); }
+}
+function saveDone(set) {
+  try { localStorage.setItem('splitCursoDone', JSON.stringify([...set])); } catch {}
+}
+
+function renderModules() {
+  const done = doneSet();
+  const wrap = document.getElementById('modules');
+  let totalLessons = 0;
+
+  wrap.innerHTML = modulesData.map((mod, mi) => {
+    const lessonsHtml = mod.lessons.map((lesson, li) => {
+      const id = mi + '-' + li;
+      totalLessons++;
+      const isDone = done.has(id);
+      return `
+        <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
+          <div class="lesson-check">${isDone ? '✓' : ''}</div>
+          <div class="lesson-body">
+            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-text">${lesson.text}</div>
+            <div class="lesson-toggle">${isDone ? 'Concluída · ver novamente' : 'Ver aula'}</div>
+          </div>
+        </div>`;
+    }).join('');
+    const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+    return `
+      <div class="module${mi === 0 ? ' open' : ''}" data-module-idx="${mi}">
+        <div class="module-head">
+          <div class="module-head-left">
+            <div class="module-num">${mi + 1}</div>
+            <div>
+              <div class="module-title">${mod.title}</div>
+              <div class="module-count">${doneInMod} de ${mod.lessons.length} concluídas</div>
+            </div>
+          </div>
+          <span class="module-caret">▾</span>
+        </div>
+        <div class="module-body">${lessonsHtml}</div>
+      </div>`;
+  }).join('');
+
+  const doneCount = done.size;
+  document.getElementById('lessonCount').textContent = doneCount + ' de ' + totalLessons;
+  const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '% concluído';
+
+  wrap.querySelectorAll('.module-head').forEach(head => {
+    head.addEventListener('click', () => head.closest('.module').classList.toggle('open'));
+  });
+
+  wrap.querySelectorAll('.lesson').forEach(lessonEl => {
+    lessonEl.addEventListener('click', () => {
+      lessonEl.classList.toggle('expanded');
+      if (lessonEl.classList.contains('done')) return;
+      const id = lessonEl.dataset.lessonId;
+      const set = doneSet();
+      set.add(id);
+      saveDone(set);
+
+      lessonEl.classList.add('done');
+      lessonEl.querySelector('.lesson-check').textContent = '✓';
+      lessonEl.querySelector('.lesson-toggle').textContent = 'Concluída · ver novamente';
+      const modEl = lessonEl.closest('.module');
+      const mi = Number(modEl.dataset.moduleIdx);
+      const doneInMod = modulesData[mi].lessons.filter((_, li) => set.has(mi + '-' + li)).length;
+      modEl.querySelector('.module-count').textContent = doneInMod + ' de ' + modulesData[mi].lessons.length + ' concluídas';
+
+      const total = modulesData.reduce((n, m) => n + m.lessons.length, 0);
+      const dc = set.size;
+      document.getElementById('lessonCount').textContent = dc + ' de ' + total;
+      const p = total ? Math.round((dc / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = p + '%';
+      document.getElementById('progressPct').textContent = p + '% concluído';
+    });
+  });
+}
+
+renderModules();
+</script>
+
+</body>
+</html>
