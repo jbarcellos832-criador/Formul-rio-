@@ -104,56 +104,60 @@
 
   .modules-label { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
 
-  .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
-  @media (max-width: 1100px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 620px) { .module-grid { grid-template-columns: 1fr; } }
+  .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 620px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
 
   .mod-card {
     position: relative;
     background: #0d0d0d;
     border: 1px solid #1c1c1c;
-    border-radius: 16px;
-    padding: 20px 18px;
+    border-radius: 18px;
+    padding: 16px 14px 18px;
     cursor: pointer;
     transition: border-color 0.15s ease, transform 0.15s ease;
+    text-align: center;
   }
   .mod-card:hover { border-color: rgba(212,255,63,0.35); transform: translateY(-2px); }
-  .mod-card.selected { border-color: #d4ff3f; background: rgba(212,255,63,0.06); }
-  .mod-card.locked { cursor: default; border-style: dashed; border-color: #262626; }
-  .mod-card.locked:hover { border-color: #262626; transform: none; }
+  .mod-card.selected { border-color: #d4ff3f; }
+  .mod-card.locked { cursor: default; }
+  .mod-card.locked:hover { border-color: #1c1c1c; transform: none; }
 
-  .mod-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 34px; }
+  .mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
+  .mod-menu svg { width: 16px; height: 16px; }
+
   .mod-icon {
-    width: 46px; height: 46px;
-    border-radius: 13px;
-    background: rgba(212,255,63,0.1);
-    border: 1px solid rgba(212,255,63,0.25);
+    width: 100%;
+    aspect-ratio: 1 / 0.95;
+    border-radius: 16px;
+    background: linear-gradient(160deg, #1c2410, #0d0d0d 70%);
+    border: 1px solid rgba(212,255,63,0.2);
     color: #d4ff3f;
     display: flex; align-items: center; justify-content: center;
+    margin: 22px 0 16px;
   }
-  .mod-icon svg { width: 22px; height: 22px; }
-  .mod-card.locked .mod-icon { background: #161616; border-color: #262626; color: #5a5a5a; }
-  .mod-dots { color: #4a4a4a; font-size: 18px; line-height: 1; letter-spacing: 1px; }
+  .mod-icon svg { width: 40%; height: 40%; }
+  .mod-card.locked .mod-icon { background: #141414; border-color: #232323; border-style: dashed; color: #6a6a6a; }
+  .mod-card.extra .mod-icon { background: linear-gradient(160deg, #1c2410, #0d0d0d 70%); color: #d4ff3f; }
 
   .mod-badge {
     display: inline-block;
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #0a0a0a;
     background: #d4ff3f;
-    padding: 4px 9px;
+    padding: 4px 10px;
     border-radius: 6px;
     margin-bottom: 10px;
   }
-  .mod-badge.soon { color: #9a9a9a; background: #1c1c1c; border: 1px solid #2a2a2a; }
+  .mod-badge.soon { color: #d4ff3f; background: transparent; border: 1px solid rgba(212,255,63,0.4); }
   .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #d4ff3f, #a6e600); }
 
-  .mod-card-title { font-size: 14.5px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 4px; }
-  .mod-card.locked .mod-card-title { color: #7a7a7a; }
-  .mod-card-sub { font-size: 12px; color: #9a9a9a; line-height: 1.4; }
-  .mod-card.locked .mod-card-sub { color: #5a5a5a; }
+  .mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; }
+  .mod-card.locked .mod-card-title { color: #9a9a9a; }
+  .mod-card-sub { font-size: 11.5px; color: #7a7a7a; line-height: 1.4; }
+  .mod-card-open { font-size: 11.5px; color: #d4ff3f; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
   .modules { display: none; flex-direction: column; gap: 14px; }
   .modules.open { display: flex; }
@@ -236,14 +240,14 @@
     <div class="top-row">
       <div>
         <div class="greeting-title" id="greetingTitle">Bem-vindo(a) ao curso</div>
-        <div class="greeting-sub">Aprenda a mexer no Split do zero.</div>
+        <div class="greeting-sub">Aprenda a montar e vender na sua loja marketplace do zero.</div>
       </div>
     </div>
 
     <div class="hero-card">
       <div class="hero-eyebrow">Continue de onde parou</div>
       <div class="hero-title">Vamos começar</div>
-      <div class="hero-sub">Um mini curso rápido pra você aprender a subir produtos, conectar suas lojas, acompanhar pedidos e receber suas comissões no Split.</div>
+      <div class="hero-sub">Um mini curso rápido pra você criar sua loja, escolher produtos com IA e vender todos os dias no marketplace.</div>
       <button type="button" class="hero-btn" onclick="document.getElementById('moduleGrid').scrollIntoView({behavior:'smooth'})">
         Continuar assistindo <span>→</span>
       </button>
@@ -256,9 +260,9 @@
         <div class="progress-pct" id="progressPct">0% concluído</div>
       </div>
       <div class="progress-card">
-        <div class="progress-top"><span>MÓDULOS</span><span>4 módulos</span></div>
+        <div class="progress-top"><span>MÓDULOS</span><span>3 liberados</span></div>
         <div class="progress-bar"><div class="progress-fill" style="width:100%; background:#3a3a3a;"></div></div>
-        <div class="progress-pct">Primeiros passos, Catálogo, Integrações, Financeiro</div>
+        <div class="progress-pct">Loja Marketplace, Fornecedor IA, Estratégia de Vendas</div>
       </div>
     </div>
 
@@ -272,82 +276,86 @@
 
 <script>
 const modIcons = [
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="1.5"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
 ];
+
+const soonIcons = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-9-9V4h9l9 9a2 2 0 0 1 0 2.41z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+];
+
+const extraIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
 
 const modulesData = [
   {
-    title: 'Primeiros passos',
-    sub: 'Login, painel e primeiros cliques.',
+    title: 'Loja Marketplace',
+    sub: 'Criando e configurando sua loja.',
     lessons: [
       {
-        title: 'Como fazer login no painel',
-        text: 'Depois de comprar o Split, você recebe um e-mail com seu login e senha provisória. Acesse splitia.space, clique em "Entrar" e use esses dados. Recomendamos trocar a senha assim que entrar pela primeira vez.',
+        title: 'Como criar sua conta no marketplace',
+        text: 'Acesse o marketplace escolhido (Mercado Livre, Shopee...), crie sua conta de vendedor com CPF/CNPJ e confirme seus dados. Esse é o primeiro passo antes de subir qualquer produto.',
       },
       {
-        title: 'Conhecendo o menu lateral',
-        text: 'No menu à esquerda do painel você encontra: Dashboard (visão geral das vendas), Catálogo (produtos disponíveis), Importadores, Fornecedores, Pedidos, Integrações, Financeiro & PIX, Ferramentas, Tutoriais, Chamados e o Painel de afiliados. No celular, toque no ícone ☰ no topo para abrir esse menu.',
+        title: 'Configurando frete, políticas e dados bancários',
+        text: 'Nas configurações da loja, defina o tipo de frete (Mercado Envios, correios), suas políticas de troca/devolução e cadastre a conta bancária que vai receber os pagamentos.',
+      },
+      {
+        title: 'Deixando sua loja com cara profissional',
+        text: 'Capriche na logo, na descrição da loja e nas fotos de capa. Lojas com identidade visual cuidada convertem mais e passam mais confiança pro comprador.',
       },
     ],
   },
   {
-    title: 'Catálogo e produtos',
-    sub: 'Publicar e precificar produtos.',
+    title: 'Fornecedor IA',
+    sub: 'Encontrando produtos com IA.',
     lessons: [
       {
-        title: 'Como navegar no catálogo',
-        text: 'Clique em "Catálogo" no menu lateral do painel. Use a busca ou os filtros (loja, ordenação) para encontrar produtos. Cada card mostra a foto, o preço de custo e o fornecedor.',
+        title: 'Como usar a IA pra encontrar produtos vencedores',
+        text: 'Use a inteligência artificial pra analisar tendências, volume de busca e concorrência antes de escolher um produto pra vender. Ela aponta os produtos com maior potencial de venda no momento.',
       },
       {
-        title: 'Como cadastrar um produto no marketplace',
-        text: 'Dentro do catálogo, clique em "Cadastrar no Marketplace" no produto desejado. Escolha em quais marketplaces publicar (Shopee, Mercado Livre...), confira as fotos, o título e a descrição, e siga para a próxima etapa.',
+        title: 'Escolhendo o fornecedor certo',
+        text: 'Compare prazo de entrega, preço de custo e avaliações do fornecedor. Priorize fornecedores com bom histórico e envio rápido — isso impacta direto na sua reputação como vendedor.',
       },
       {
-        title: 'Como definir preço e margem de lucro',
-        text: 'Na tela de cadastro, preencha a comissão, taxa fixa e sua margem de lucro desejada. O sistema calcula automaticamente o preço final de venda com base no seu custo. Revise o resumo antes de clicar em "Publicar".',
+        title: 'Importando o produto pra sua loja',
+        text: 'Depois de escolher o produto, importe as informações (fotos, título, descrição) pra dentro da sua loja e ajuste conforme as regras do marketplace.',
       },
     ],
   },
   {
-    title: 'Marketplaces e integrações',
-    sub: 'Conectar lojas e acompanhar pedidos.',
+    title: 'Estratégia de Vendas',
+    sub: 'Vendendo todos os dias.',
     lessons: [
       {
-        title: 'Como conectar sua loja (Mercado Livre, Shopee, Bling)',
-        text: 'Vá em "Integrações" no menu lateral e clique para conectar a plataforma desejada. Você vai precisar autorizar o acesso da sua conta do marketplace. Depois de conectada, seus produtos publicados sincronizam automaticamente.',
+        title: 'Montando sua vitrine de produtos',
+        text: 'Organize seus produtos por categoria e destaque os mais vendidos na página inicial da sua loja. Uma boa vitrine facilita a decisão de compra.',
       },
       {
-        title: 'Acompanhando seus pedidos',
-        text: 'A seção "Pedidos" mostra o status de cada venda: aguardando pagamento, pago, impresso e despachado. Use os filtros para encontrar um pedido específico rapidamente.',
-      },
-    ],
-  },
-  {
-    title: 'Financeiro e link de afiliado',
-    sub: 'Saldo, PIX e comissões de afiliado.',
-    lessons: [
-      {
-        title: 'Como funciona o saldo e o PIX',
-        text: 'Em "Financeiro & PIX" você acompanha entradas, pagamentos a fornecedores e o saldo atual. Para adicionar saldo, clique em "Adicionar Saldo", escolha o valor e pague o QR Code PIX gerado — o crédito cai automaticamente após a confirmação.',
+        title: 'Precificação estratégica',
+        text: 'Calcule seu custo total (produto + taxas + frete) e defina uma margem saudável. Preços muito baixos matam sua margem, muito altos afastam o comprador — encontre o equilíbrio.',
       },
       {
-        title: 'Como pegar seu link de indicação',
-        text: 'No "Painel de afiliados" você encontra seu link de indicação único e o QR Code dele. Clique em "Copiar" para compartilhar nas redes sociais, grupos ou com clientes.',
-      },
-      {
-        title: 'Como acompanhar suas comissões',
-        text: 'Ainda no Painel de afiliados, acompanhe o saldo disponível, o total de comissões, indicados ativos e a taxa de conversão. O histórico de comissões mostra cada indicação que virou venda.',
+        title: 'Rotina diária pra vender todo dia',
+        text: 'Reserve um horário fixo do dia pra responder perguntas, acompanhar pedidos e repor estoque. Consistência é o que separa quem vende todo dia de quem vende só às vezes.',
       },
     ],
   },
 ];
 
 const comingSoonModules = [
-  { title: 'Anúncios e tráfego pago', sub: 'Em breve' },
-  { title: 'Automação avançada', sub: 'Em breve' },
+  { title: 'Tráfego e Anúncios', sub: 'Libera depois da loja girando' },
+  { title: 'Precificação Certa', sub: 'Em breve — gravação a caminho' },
+  { title: 'Atendimento que Vende', sub: 'Em breve — gravação a caminho' },
+  { title: 'Pós-venda e Recompra', sub: 'Em breve — gravação a caminho' },
+  { title: 'Financeiro da Loja', sub: 'Em breve — gravação a caminho' },
+  { title: 'Afiliados na Loja', sub: 'Em breve — solta quando for a hora certa' },
 ];
 
 function doneSet() {
@@ -364,44 +372,40 @@ function renderModuleGrid() {
   const grid = document.getElementById('moduleGrid');
   const done = doneSet();
 
+  const menuIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+
   const realCards = modulesData.map((mod, mi) => {
     const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
     const badge = doneInMod === mod.lessons.length ? 'Concluído' : `Módulo ${String(mi + 1).padStart(2, '0')}`;
     return `
       <div class="mod-card${mi === selectedModule ? ' selected' : ''}" data-select-module="${mi}">
-        <div class="mod-card-top">
-          <div class="mod-icon">${modIcons[mi] || modIcons[0]}</div>
-          <div class="mod-dots">⋯</div>
-        </div>
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${modIcons[mi] || modIcons[0]}</div>
         <div class="mod-badge">${badge}</div>
         <div class="mod-card-title">${mod.title}</div>
         <div class="mod-card-sub">${mod.sub || ''}</div>
       </div>`;
   }).join('');
 
-  const extraCard = `
-      <div class="mod-card" data-select-module="extra">
-        <div class="mod-card-top">
-          <div class="mod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="mod-dots">⋯</div>
-        </div>
-        <div class="mod-badge extra">Extra</div>
-        <div class="mod-card-title">Comunidade</div>
-        <div class="mod-card-sub">Tire dúvidas e troque experiências com outros afiliados.</div>
-      </div>`;
-
-  const soonCards = comingSoonModules.map(m => `
+  const soonCards = comingSoonModules.map((m, si) => `
       <div class="mod-card locked">
-        <div class="mod-card-top">
-          <div class="mod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div class="mod-dots">⋯</div>
-        </div>
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${soonIcons[si] || soonIcons[0]}</div>
         <div class="mod-badge soon">Em breve</div>
         <div class="mod-card-title">${m.title}</div>
         <div class="mod-card-sub">${m.sub}</div>
       </div>`).join('');
 
-  grid.innerHTML = realCards + extraCard + soonCards;
+  const extraCard = `
+      <div class="mod-card extra" data-select-module="extra">
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${extraIcon}</div>
+        <div class="mod-badge extra">Extra</div>
+        <div class="mod-card-title">Comunidade</div>
+        <div class="mod-card-open">Abrir <span>▶</span></div>
+      </div>`;
+
+  grid.innerHTML = realCards + soonCards + extraCard;
 
   grid.querySelectorAll('[data-select-module]').forEach(card => {
     card.addEventListener('click', () => {
