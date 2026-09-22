@@ -159,46 +159,95 @@
   .mod-card-sub { font-size: 11.5px; color: #7a7a7a; line-height: 1.4; }
   .mod-card-open { font-size: 11.5px; color: #ffd400; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-  .modules { display: none; flex-direction: column; gap: 14px; }
+  .modules { display: none; flex-direction: column; }
   .modules.open { display: flex; }
-  .module { background: #0d0d0d; border-radius: 16px; overflow: hidden; }
-  .module-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; cursor: pointer; }
-  .module-head-left { display: flex; align-items: center; gap: 12px; }
-  .module-num {
-    width: 32px; height: 32px;
-    border-radius: 9px;
-    background: #1c1c1c;
+
+  .module-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #141414;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    width: fit-content;
+  }
+  .module-back:hover { background: #1a1a1a; }
+
+  .module-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .module-header-icon {
+    width: 56px; height: 56px;
+    border-radius: 15px;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3);
     color: #ffd400;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 13.5px;
     flex-shrink: 0;
   }
-  .module-title { font-weight: 800; font-size: 15px; margin-bottom: 2px; }
-  .module-count { font-size: 12px; color: #9a9a9a; }
-  .module-caret { color: #9a9a9a; transition: transform 0.2s ease; flex-shrink: 0; }
-  .module.open .module-caret { transform: rotate(180deg); }
-  .module-body { display: none; padding: 0 20px 18px; }
-  .module.open .module-body { display: block; }
+  .module-header-icon svg { width: 26px; height: 26px; }
+  .module-header-title { font-size: 22px; font-weight: 800; margin-bottom: 3px; }
+  .module-header-sub { font-size: 13px; color: #9a9a9a; }
 
-  .lesson { display: flex; align-items: flex-start; gap: 12px; padding: 13px 14px; border-radius: 10px; margin-top: 8px; background: #161616; cursor: pointer; }
-  .lesson:hover { background: #1b1b1b; }
-  .lesson-check {
-    width: 21px; height: 21px;
-    border-radius: 50%;
-    border: 1.5px solid #3a3a3a;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    color: #0a0a0a;
-    font-weight: 800;
+  .lesson-list { display: flex; flex-direction: column; gap: 14px; }
+  .lesson {
+    background: #0d0d0d;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    transition: border-color 0.15s ease;
   }
-  .lesson.done .lesson-check { background: #ffd400; border-color: #ffd400; }
-  .lesson-body { flex: 1; }
-  .lesson-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
-  .lesson-text { display: none; font-size: 13px; color: #c7c7c7; line-height: 1.65; margin-top: 6px; }
-  .lesson.expanded .lesson-text { display: block; }
-  .lesson-toggle { font-size: 11.5px; color: #ffd400; font-weight: 700; margin-top: 6px; }
+  .lesson:hover { border-color: rgba(255,212,0,0.25); }
+  .lesson.expanded { border-color: #ffd400; }
+  .lesson-row {
+    display: flex; align-items: center; gap: 18px;
+    padding: 14px 18px;
+    cursor: pointer;
+  }
+
+  .lesson-thumb {
+    position: relative;
+    width: 160px; height: 90px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1c1c1c, #0a0a0a);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lesson-thumb video, .lesson-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .lesson-play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lesson-play span {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+
+  .lesson-body { flex: 1; min-width: 0; }
+  .lesson-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; text-transform: uppercase; margin-bottom: 5px; }
+  .lesson-title { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+  .lesson-status { font-size: 12.5px; color: #d99a1f; }
+  .lesson.done .lesson-status { color: #ffd400; }
+
+  .lesson-chevron { color: #6a6a6a; flex-shrink: 0; transition: transform 0.2s ease; }
+  .lesson.expanded .lesson-chevron { transform: rotate(90deg); color: #ffd400; }
+
+  .lesson-player { display: none; padding: 0 18px 18px; }
+  .lesson.expanded .lesson-player { display: block; }
+  .lesson-player video { width: 100%; border-radius: 12px; background: #000; display: block; }
+  .lesson-player-empty {
+    background: #141414;
+    border: 1px dashed #2a2a2a;
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    font-size: 13px;
+    color: #7a7a7a;
+  }
 
   @media (max-width: 900px) {
     .sidebar { display: none; }
@@ -299,19 +348,22 @@ const extraIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const modulesData = [
   {
     title: 'Loja Marketplace',
-    sub: 'Criando e configurando sua loja.',
+    sub: 'Monte a base da sua loja e deixe tudo organizado pra começar a vender.',
     lessons: [
       {
-        title: 'Como criar sua conta no marketplace',
-        text: 'Acesse o marketplace escolhido (Mercado Livre, Shopee...), crie sua conta de vendedor com CPF/CNPJ e confirme seus dados. Esse é o primeiro passo antes de subir qualquer produto.',
+        title: 'como criar a loja do mercado livre do zero',
+        text: '',
+        video: null,
       },
       {
-        title: 'Configurando frete, políticas e dados bancários',
-        text: 'Nas configurações da loja, defina o tipo de frete (Mercado Envios, correios), suas políticas de troca/devolução e cadastre a conta bancária que vai receber os pagamentos.',
+        title: 'Como funciona as vendas e ferramentas do mercado livre',
+        text: '',
+        video: null,
       },
       {
-        title: 'Deixando sua loja com cara profissional',
-        text: 'Capriche na logo, na descrição da loja e nas fotos de capa. Lojas com identidade visual cuidada convertem mais e passam mais confiança pro comprador.',
+        title: 'tudo certo com a loja e mercado livre?',
+        text: '',
+        video: null,
       },
     ],
   },
@@ -428,38 +480,43 @@ function renderModules() {
   const done = doneSet();
   const wrap = document.getElementById('modules');
   const totalLessons = modulesData.reduce((n, m) => n + m.lessons.length, 0);
+  const mi = selectedModule;
+  const mod = modulesData[mi];
 
-  wrap.innerHTML = modulesData.filter((_, mi) => mi === selectedModule).map((mod, _mi) => {
-    const mi = selectedModule;
-    const lessonsHtml = mod.lessons.map((lesson, li) => {
-      const id = mi + '-' + li;
-      const isDone = done.has(id);
-      return `
-        <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
-          <div class="lesson-check">${isDone ? '✓' : ''}</div>
-          <div class="lesson-body">
-            <div class="lesson-title">${lesson.title}</div>
-            <div class="lesson-text">${lesson.text}</div>
-            <div class="lesson-toggle">${isDone ? 'Concluída · ver novamente' : 'Ver aula'}</div>
-          </div>
-        </div>`;
-    }).join('');
-    const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+  const lessonsHtml = mod.lessons.map((lesson, li) => {
+    const id = mi + '-' + li;
+    const isDone = done.has(id);
+    const videoHtml = lesson.video
+      ? `<video controls src="${lesson.video}"></video>`
+      : `<div class="lesson-player-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
     return `
-      <div class="module open" data-module-idx="${mi}">
-        <div class="module-head">
-          <div class="module-head-left">
-            <div class="module-num">${mi + 1}</div>
-            <div>
-              <div class="module-title">${mod.title}</div>
-              <div class="module-count">${doneInMod} de ${mod.lessons.length} concluídas</div>
-            </div>
+      <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
+        <div class="lesson-row">
+          <div class="lesson-thumb">
+            ${lesson.video ? `<video src="${lesson.video}" preload="metadata"></video>` : ''}
+            <div class="lesson-play"><span>▶</span></div>
           </div>
-          <span class="module-caret">▾</span>
+          <div class="lesson-body">
+            <div class="lesson-num">Aula ${String(li + 1).padStart(2, '0')}</div>
+            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-status">${isDone ? 'Concluída · clique pra assistir de novo' : 'Liberada · clique pra assistir'}</div>
+          </div>
+          <div class="lesson-chevron">›</div>
         </div>
-        <div class="module-body">${lessonsHtml}</div>
+        <div class="lesson-player">${videoHtml}</div>
       </div>`;
   }).join('');
+
+  wrap.innerHTML = `
+    <button type="button" class="module-back" id="moduleBackBtn">← Voltar</button>
+    <div class="module-header">
+      <div class="module-header-icon">${modIcons[mi] || modIcons[0]}</div>
+      <div>
+        <div class="module-header-title">${mod.title}</div>
+        <div class="module-header-sub">${mod.sub || ''}</div>
+      </div>
+    </div>
+    <div class="lesson-list">${lessonsHtml}</div>`;
 
   const doneCount = done.size;
   document.getElementById('lessonCount').textContent = doneCount + ' de ' + totalLessons;
@@ -467,12 +524,14 @@ function renderModules() {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressPct').textContent = pct + '% concluído';
 
-  wrap.querySelectorAll('.module-head').forEach(head => {
-    head.addEventListener('click', () => head.closest('.module').classList.toggle('open'));
+  document.getElementById('moduleBackBtn').addEventListener('click', () => {
+    document.getElementById('modules').classList.remove('open');
+    document.getElementById('moduleGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  wrap.querySelectorAll('.lesson').forEach(lessonEl => {
-    lessonEl.addEventListener('click', () => {
+  wrap.querySelectorAll('.lesson-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const lessonEl = row.closest('.lesson');
       lessonEl.classList.toggle('expanded');
       if (lessonEl.classList.contains('done')) return;
       const id = lessonEl.dataset.lessonId;
@@ -481,12 +540,7 @@ function renderModules() {
       saveDone(set);
 
       lessonEl.classList.add('done');
-      lessonEl.querySelector('.lesson-check').textContent = '✓';
-      lessonEl.querySelector('.lesson-toggle').textContent = 'Concluída · ver novamente';
-      const modEl = lessonEl.closest('.module');
-      const mi = Number(modEl.dataset.moduleIdx);
-      const doneInMod = modulesData[mi].lessons.filter((_, li) => set.has(mi + '-' + li)).length;
-      modEl.querySelector('.module-count').textContent = doneInMod + ' de ' + modulesData[mi].lessons.length + ' concluídas';
+      lessonEl.querySelector('.lesson-status').textContent = 'Concluída · clique pra assistir de novo';
 
       const total = modulesData.reduce((n, m) => n + m.lessons.length, 0);
       const dc = set.size;
@@ -494,6 +548,7 @@ function renderModules() {
       const p = total ? Math.round((dc / total) * 100) : 0;
       document.getElementById('progressFill').style.width = p + '%';
       document.getElementById('progressPct').textContent = p + '% concluído';
+      renderModuleGrid();
     });
   });
 }
