@@ -26,9 +26,11 @@
     padding: 24px 16px;
     display: flex;
     flex-direction: column;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
     height: 100vh;
+    overflow-y: auto;
   }
   .brand {
     display: flex;
@@ -69,7 +71,7 @@
   .nav-footer { padding-top: 16px; border-top: 1px solid #1c1c1c; margin-top: 10px; font-size: 12px; color: #6b6b6b; }
 
   /* ───── MAIN ───── */
-  .main { flex: 1; min-width: 0; padding: 32px 40px 60px; }
+  .main { flex: 1; min-width: 0; padding: 32px 40px 60px; margin-left: 260px; }
   .top-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; }
   .greeting-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
   .greeting-sub { font-size: 14px; color: #9a9a9a; }
@@ -236,22 +238,40 @@
   .lesson-chevron { color: #6a6a6a; flex-shrink: 0; transition: transform 0.2s ease; }
   .lesson.expanded .lesson-chevron { transform: rotate(90deg); color: #ffd400; }
 
-  .lesson-player { display: none; padding: 0 18px 18px; }
-  .lesson.expanded .lesson-player { display: block; }
-  .lesson-player video { width: 100%; border-radius: 12px; background: #000; display: block; }
-  .lesson-player-empty {
+  .lesson-detail { max-width: 780px; }
+  .lesson-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .lesson-detail-title { font-size: 20px; font-weight: 800; margin-bottom: 3px; }
+  .lesson-detail-sub { font-size: 13px; color: #9a9a9a; }
+  .lesson-detail-video { width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin-bottom: 18px; }
+  .lesson-detail-video iframe { width: 100%; aspect-ratio: 16/9; border: 0; display: block; }
+  .lesson-detail-video video { width: 100%; display: block; }
+  .lesson-detail-empty {
     background: #141414;
     border: 1px dashed #2a2a2a;
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 40px 24px;
     text-align: center;
-    font-size: 13px;
+    font-size: 13.5px;
     color: #7a7a7a;
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
   }
+  .mark-watched-btn {
+    display: block; width: 100%;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14.5px;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .mark-watched-btn:hover { filter: brightness(0.95); }
+  .mark-watched-btn.done { background: #1c1c1c; color: #9a9a9a; }
 
   @media (max-width: 900px) {
     .sidebar { display: none; }
-    .main { padding: 24px 18px 50px; }
+    .main { padding: 24px 18px 50px; margin-left: 0; }
     .progress-row { grid-template-columns: 1fr; }
     .hero-title { font-size: 22px; }
   }
@@ -486,19 +506,13 @@ function renderModules() {
   const lessonsHtml = mod.lessons.map((lesson, li) => {
     const id = mi + '-' + li;
     const isDone = done.has(id);
-    const hasVideo = Boolean(lesson.youtube || lesson.video);
-    const videoHtml = lesson.youtube
-      ? `<iframe src="https://www.youtube.com/embed/${lesson.youtube}" title="${lesson.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;"></iframe>`
-      : lesson.video
-      ? `<video controls src="${lesson.video}"></video>`
-      : `<div class="lesson-player-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
     const thumbHtml = lesson.youtube
       ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="">`
       : lesson.video
       ? `<video src="${lesson.video}" preload="metadata"></video>`
       : '';
     return `
-      <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
+      <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}" data-lesson-idx="${li}">
         <div class="lesson-row">
           <div class="lesson-thumb">
             ${thumbHtml}
@@ -511,7 +525,6 @@ function renderModules() {
           </div>
           <div class="lesson-chevron">›</div>
         </div>
-        <div class="lesson-player">${videoHtml}</div>
       </div>`;
   }).join('');
 
@@ -540,24 +553,59 @@ function renderModules() {
   wrap.querySelectorAll('.lesson-row').forEach(row => {
     row.addEventListener('click', () => {
       const lessonEl = row.closest('.lesson');
-      lessonEl.classList.toggle('expanded');
-      if (lessonEl.classList.contains('done')) return;
-      const id = lessonEl.dataset.lessonId;
-      const set = doneSet();
-      set.add(id);
-      saveDone(set);
-
-      lessonEl.classList.add('done');
-      lessonEl.querySelector('.lesson-status').textContent = 'Concluída · clique pra assistir de novo';
-
-      const total = modulesData.reduce((n, m) => n + m.lessons.length, 0);
-      const dc = set.size;
-      document.getElementById('lessonCount').textContent = dc + ' de ' + total;
-      const p = total ? Math.round((dc / total) * 100) : 0;
-      document.getElementById('progressFill').style.width = p + '%';
-      document.getElementById('progressPct').textContent = p + '% concluído';
-      renderModuleGrid();
+      renderLessonDetail(mi, Number(lessonEl.dataset.lessonIdx));
     });
+  });
+}
+
+function renderLessonDetail(mi, li) {
+  const wrap = document.getElementById('modules');
+  const mod = modulesData[mi];
+  const lesson = mod.lessons[li];
+  const id = mi + '-' + li;
+  const done = doneSet();
+  const isDone = done.has(id);
+
+  const videoHtml = lesson.youtube
+    ? `<iframe src="https://www.youtube.com/embed/${lesson.youtube}" title="${lesson.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    : lesson.video
+    ? `<video controls src="${lesson.video}"></video>`
+    : `<div class="lesson-detail-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
+
+  wrap.innerHTML = `
+    <button type="button" class="module-back" id="lessonBackBtn">← Voltar</button>
+    <div class="lesson-detail">
+      <div class="lesson-detail-header">
+        <div class="module-header-icon">${modIcons[mi] || modIcons[0]}</div>
+        <div>
+          <div class="lesson-detail-title">${lesson.title}</div>
+          <div class="lesson-detail-sub">${mod.title}</div>
+        </div>
+      </div>
+      <div class="lesson-detail-video">${videoHtml}</div>
+      <button type="button" class="mark-watched-btn${isDone ? ' done' : ''}" id="markWatchedBtn">
+        ${isDone ? 'Aula concluída ✓' : 'Marcar como assistido'}
+      </button>
+    </div>`;
+
+  document.getElementById('lessonBackBtn').addEventListener('click', () => renderModules());
+
+  document.getElementById('markWatchedBtn').addEventListener('click', () => {
+    const set = doneSet();
+    set.add(id);
+    saveDone(set);
+
+    const btn = document.getElementById('markWatchedBtn');
+    btn.textContent = 'Aula concluída ✓';
+    btn.classList.add('done');
+
+    const total = modulesData.reduce((n, m) => n + m.lessons.length, 0);
+    const dc = set.size;
+    document.getElementById('lessonCount').textContent = dc + ' de ' + total;
+    const p = total ? Math.round((dc / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = p + '%';
+    document.getElementById('progressPct').textContent = p + '% concluído';
+    renderModuleGrid();
   });
 }
 
