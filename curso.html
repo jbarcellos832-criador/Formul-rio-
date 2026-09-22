@@ -296,6 +296,52 @@
   .mark-watched-btn:hover { filter: brightness(0.95); }
   .mark-watched-btn.done { background: #1c1c1c; color: #9a9a9a; }
 
+  /* ───── PROVAS SOCIAIS (WhatsApp mock) ───── */
+  .wa-wrap { max-width: 460px; border-radius: 16px; overflow: hidden; border: 1px solid #1c1c1c; }
+  .wa-header {
+    background: #202c33;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wa-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .wa-header-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .wa-header-sub { font-size: 12.5px; color: #8a99a0; }
+
+  .wa-body {
+    background: #0b141a;
+    background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    padding: 16px 12px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .wa-msg { align-self: flex-start; max-width: 88%; }
+  .wa-bubble {
+    background: #202c33;
+    border-radius: 4px 12px 12px 12px;
+    padding: 6px;
+  }
+  .wa-media {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 8px;
+    background: linear-gradient(160deg, #1c2410, #0d0d0d 70%);
+    display: flex; align-items: center; justify-content: center;
+    color: #ffd400;
+    overflow: hidden;
+  }
+  .wa-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .wa-media svg { width: 34%; height: 34%; }
+  .wa-caption { font-size: 13.5px; color: #e9edef; padding: 8px 6px 2px; line-height: 1.5; }
+  .wa-time { font-size: 11px; color: #8a99a0; padding: 0 6px 4px; text-align: right; }
+
   @media (max-width: 900px) {
     .sidebar { display: none; }
     .main { padding: 24px 18px 50px; margin-left: 0; }
@@ -327,6 +373,10 @@
       <button type="button" class="nav-item">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
         Meu progresso
+      </button>
+      <button type="button" class="nav-item" data-page="provas">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.5 17 14.5 18.5 21.5 12 18 5.5 21.5 7 14.5 2 9.5 9 8.5 12 2"/></svg></span>
+        Provas sociais
       </button>
     </nav>
     <div class="nav-footer">Split © 2026</div>
@@ -371,6 +421,20 @@
       </div>
 
       <div class="modules" id="modules"></div>
+    </div>
+
+    <div id="page-provas" style="display:none;">
+      <div class="modules-label">Provas sociais</div>
+      <div class="wa-wrap">
+        <div class="wa-header">
+          <div class="wa-avatar">🙌</div>
+          <div>
+            <div class="wa-header-title">Projeto ML 🙌</div>
+            <div class="wa-header-sub" id="provasCount">0 prints</div>
+          </div>
+        </div>
+        <div class="wa-body" id="provasBody"></div>
+      </div>
     </div>
   </main>
 
@@ -640,9 +704,41 @@ function renderLessonDetail(mi, li) {
   });
 }
 
+const provasData = [
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="1.5"/></svg>',
+    caption: 'Painel do aluno: 81 pedidos e 74 já pagos. Operação rodando forte no Mercado Livre.',
+    time: '17:40',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+    caption: 'Mais um PIX caindo direto na conta. É só repetir o processo todo dia.',
+    time: '09:12',
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>',
+    caption: 'Primeira semana de loja e já batendo recorde de vendas do mês.',
+    time: 'ontem',
+  },
+];
+
+function renderProvas() {
+  const body = document.getElementById('provasBody');
+  body.innerHTML = provasData.map(p => `
+    <div class="wa-msg">
+      <div class="wa-bubble">
+        <div class="wa-media">${p.img ? `<img src="${p.img}" alt="">` : p.icon}</div>
+        <div class="wa-caption">${p.caption}</div>
+        <div class="wa-time">${p.time} ✓✓</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('provasCount').textContent = provasData.length + ' prints';
+}
+
 function goToPage(page) {
   document.getElementById('page-home').style.display = page === 'home' ? '' : 'none';
   document.getElementById('page-modules').style.display = page === 'modules' ? '' : 'none';
+  document.getElementById('page-provas').style.display = page === 'provas' ? '' : 'none';
   document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.page === page);
   });
@@ -658,6 +754,7 @@ document.querySelectorAll('[data-goto]').forEach(btn => {
 
 renderModuleGrid();
 renderModules();
+renderProvas();
 </script>
 
 </body>
