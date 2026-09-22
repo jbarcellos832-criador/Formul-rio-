@@ -814,6 +814,96 @@
     .aff-ref-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Tutoriais (mini curso preto e amarelo) ── */
+  .tut-topbar-card {
+    background: #0d0d0d;
+    color: #fff;
+    border-radius: 18px;
+    padding: 28px 26px;
+    margin-bottom: 18px;
+  }
+  .tut-eyebrow { font-size: 12.5px; font-weight: 700; color: #b7b7b7; margin-bottom: 10px; }
+  .tut-title { font-size: 26px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .tut-sub { font-size: 14px; color: #c7c7c7; line-height: 1.6; max-width: 560px; }
+
+  .tut-progress-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
+  .tut-progress-card {
+    background: #0d0d0d;
+    border-radius: 14px;
+    padding: 18px 20px;
+    color: #fff;
+  }
+  .tut-progress-top {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; color: #9a9a9a;
+    margin-bottom: 10px;
+  }
+  .tut-progress-top span:last-child { color: #fff; }
+  .tut-progress-bar { height: 6px; border-radius: 4px; background: #262626; overflow: hidden; margin-bottom: 8px; }
+  .tut-progress-fill { height: 100%; background: linear-gradient(90deg, #d4ff3f, #a6e600); transition: width 0.3s ease; }
+  .tut-progress-pct { font-size: 12px; color: #9a9a9a; }
+
+  .tut-modules { display: flex; flex-direction: column; gap: 14px; }
+  .tut-module {
+    background: #0d0d0d;
+    border-radius: 16px;
+    overflow: hidden;
+    color: #fff;
+  }
+  .tut-module-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px;
+    cursor: pointer;
+  }
+  .tut-module-head-left { display: flex; align-items: center; gap: 12px; }
+  .tut-module-num {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: #1c1c1c;
+    color: #d4ff3f;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .tut-module-title { font-weight: 800; font-size: 14.5px; margin-bottom: 2px; }
+  .tut-module-count { font-size: 12px; color: #9a9a9a; }
+  .tut-module-caret { color: #9a9a9a; transition: transform 0.2s ease; flex-shrink: 0; }
+  .tut-module.open .tut-module-caret { transform: rotate(180deg); }
+  .tut-module-body { display: none; padding: 0 20px 18px; }
+  .tut-module.open .tut-module-body { display: block; }
+
+  .tut-lesson {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-top: 8px;
+    background: #161616;
+    cursor: pointer;
+  }
+  .tut-lesson:hover { background: #1b1b1b; }
+  .tut-lesson-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid #3a3a3a;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: #0d0d0d;
+  }
+  .tut-lesson.done .tut-lesson-check { background: #d4ff3f; border-color: #d4ff3f; }
+  .tut-lesson-body { flex: 1; }
+  .tut-lesson-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
+  .tut-lesson-text {
+    display: none;
+    font-size: 13px;
+    color: #c7c7c7;
+    line-height: 1.65;
+    margin-top: 6px;
+  }
+  .tut-lesson.expanded .tut-lesson-text { display: block; }
+  .tut-lesson-toggle { font-size: 11.5px; color: #d4ff3f; font-weight: 700; margin-top: 6px; }
+
   /* ── Cadastrar produto ── */
   .pf-breadcrumb {
     display: flex; align-items: center; gap: 14px;
@@ -3096,6 +3186,30 @@
       </div>
     </div>
 
+    <!-- Tutoriais (mini curso) -->
+    <div class="content" id="page-tutoriais" style="display:none;">
+      <div class="tut-topbar-card">
+        <div>
+          <div class="tut-eyebrow">Boa noite, Afiliado</div>
+          <div class="tut-title">Vamos começar</div>
+          <div class="tut-sub">Aprenda a mexer no Split do zero: subir produtos, conectar lojas e receber suas comissões.</div>
+        </div>
+      </div>
+
+      <div class="tut-progress-row">
+        <div class="tut-progress-card">
+          <div class="tut-progress-top">
+            <span>MINI CURSO</span>
+            <span id="tutLessonCount">0 de 10</span>
+          </div>
+          <div class="tut-progress-bar"><div class="tut-progress-fill" id="tutProgressFill" style="width:0%;"></div></div>
+          <div class="tut-progress-pct" id="tutProgressPct">0% concluído</div>
+        </div>
+      </div>
+
+      <div class="tut-modules" id="tutModules"></div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -4373,6 +4487,7 @@
   const pageChamados = document.getElementById('page-chamados');
   const pageAfiliados = document.getElementById('page-afiliados');
   const pageFinanceiro = document.getElementById('page-financeiro');
+  const pageTutoriais = document.getElementById('page-tutoriais');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -4390,6 +4505,7 @@
     pageChamados.style.display = 'none';
     pageAfiliados.style.display = 'none';
     pageFinanceiro.style.display = 'none';
+    pageTutoriais.style.display = 'none';
     pageGeneric.style.display = 'none';
     const pfPage = document.getElementById('page-product-form');
     if (pfPage) pfPage.style.display = 'none';
@@ -4411,6 +4527,8 @@
       pageAfiliados.style.display = '';
     } else if (key === 'financeiro') {
       pageFinanceiro.style.display = '';
+    } else if (key === 'tutoriais') {
+      pageTutoriais.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
@@ -4420,6 +4538,155 @@
     }
     closeAllDropdowns();
   }
+
+  // ── Tutoriais (mini curso) ──
+  const tutModulesData = [
+    {
+      title: 'Primeiros passos',
+      lessons: [
+        {
+          title: 'Como fazer login no painel',
+          text: 'Depois de comprar o Split, você recebe um e-mail com seu login e senha provisória. Acesse splitia.space, clique em "Entrar" e use esses dados. Recomendamos trocar a senha assim que entrar pela primeira vez.',
+        },
+        {
+          title: 'Conhecendo o menu lateral',
+          text: 'No menu à esquerda você encontra: Dashboard (visão geral das vendas), Catálogo (produtos disponíveis), Importadores, Fornecedores, Pedidos, Integrações, Financeiro & PIX, Ferramentas, Tutoriais, Chamados e o Painel de afiliados. No celular, toque no ícone ☰ no topo para abrir esse menu.',
+        },
+      ],
+    },
+    {
+      title: 'Catálogo e produtos',
+      lessons: [
+        {
+          title: 'Como navegar no catálogo',
+          text: 'Clique em "Catálogo" no menu lateral. Use a busca ou os filtros (loja, ordenação) para encontrar produtos. Cada card mostra a foto, o preço de custo e o fornecedor.',
+        },
+        {
+          title: 'Como cadastrar um produto no marketplace',
+          text: 'Dentro do catálogo, clique em "Cadastrar no Marketplace" no produto desejado. Escolha em quais marketplaces publicar (Shopee, Mercado Livre...), confira as fotos, o título e a descrição, e siga para a próxima etapa.',
+        },
+        {
+          title: 'Como definir preço e margem de lucro',
+          text: 'Na tela de cadastro, preencha a comissão, taxa fixa e sua margem de lucro desejada. O sistema calcula automaticamente o preço final de venda com base no seu custo. Revise o resumo antes de clicar em "Publicar".',
+        },
+      ],
+    },
+    {
+      title: 'Marketplaces e integrações',
+      lessons: [
+        {
+          title: 'Como conectar sua loja (Mercado Livre, Shopee, Bling)',
+          text: 'Vá em "Integrações" no menu lateral e clique para conectar a plataforma desejada. Você vai precisar autorizar o acesso da sua conta do marketplace. Depois de conectada, seus produtos publicados sincronizam automaticamente.',
+        },
+        {
+          title: 'Acompanhando seus pedidos',
+          text: 'A seção "Pedidos" mostra o status de cada venda: aguardando pagamento, pago, impresso e despachado. Use os filtros para encontrar um pedido específico rapidamente.',
+        },
+      ],
+    },
+    {
+      title: 'Financeiro e link de afiliado',
+      lessons: [
+        {
+          title: 'Como funciona o saldo e o PIX',
+          text: 'Em "Financeiro & PIX" você acompanha entradas, pagamentos a fornecedores e o saldo atual. Para adicionar saldo, clique em "Adicionar Saldo", escolha o valor e pague o QR Code PIX gerado — o crédito cai automaticamente após a confirmação.',
+        },
+        {
+          title: 'Como pegar seu link de indicação',
+          text: 'No "Painel de afiliados" você encontra seu link de indicação único e o QR Code dele. Clique em "Copiar" para compartilhar nas redes sociais, grupos ou com clientes.',
+        },
+        {
+          title: 'Como acompanhar suas comissões',
+          text: 'Ainda no Painel de afiliados, acompanhe o saldo disponível, o total de comissões, indicados ativos e a taxa de conversão. O histórico de comissões mostra cada indicação que virou venda.',
+        },
+      ],
+    },
+  ];
+
+  function tutDoneSet() {
+    try {
+      return new Set(JSON.parse(localStorage.getItem('splitTutDone') || '[]'));
+    } catch { return new Set(); }
+  }
+  function tutSaveDone(set) {
+    try { localStorage.setItem('splitTutDone', JSON.stringify([...set])); } catch {}
+  }
+
+  function renderTutModules() {
+    const done = tutDoneSet();
+    const wrap = document.getElementById('tutModules');
+    let totalLessons = 0;
+    wrap.innerHTML = tutModulesData.map((mod, mi) => {
+      const lessonsHtml = mod.lessons.map((lesson, li) => {
+        const id = mi + '-' + li;
+        totalLessons++;
+        const isDone = done.has(id);
+        return `
+          <div class="tut-lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
+            <div class="tut-lesson-check">${isDone ? '✓' : ''}</div>
+            <div class="tut-lesson-body">
+              <div class="tut-lesson-title">${lesson.title}</div>
+              <div class="tut-lesson-text">${lesson.text}</div>
+              <div class="tut-lesson-toggle">${isDone ? 'Concluída · ver novamente' : 'Ver aula'}</div>
+            </div>
+          </div>`;
+      }).join('');
+      const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+      return `
+        <div class="tut-module${mi === 0 ? ' open' : ''}" data-module-idx="${mi}">
+          <div class="tut-module-head">
+            <div class="tut-module-head-left">
+              <div class="tut-module-num">${mi + 1}</div>
+              <div>
+                <div class="tut-module-title">${mod.title}</div>
+                <div class="tut-module-count">${doneInMod} de ${mod.lessons.length} concluídas</div>
+              </div>
+            </div>
+            <span class="tut-module-caret">▾</span>
+          </div>
+          <div class="tut-module-body">${lessonsHtml}</div>
+        </div>`;
+    }).join('');
+
+    const doneCount = [...done].length;
+    document.getElementById('tutLessonCount').textContent = doneCount + ' de ' + totalLessons;
+    const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
+    document.getElementById('tutProgressFill').style.width = pct + '%';
+    document.getElementById('tutProgressPct').textContent = pct + '% concluído';
+
+    wrap.querySelectorAll('.tut-module-head').forEach(head => {
+      head.addEventListener('click', () => {
+        head.closest('.tut-module').classList.toggle('open');
+      });
+    });
+    wrap.querySelectorAll('.tut-lesson').forEach(lessonEl => {
+      lessonEl.addEventListener('click', () => {
+        lessonEl.classList.toggle('expanded');
+        if (lessonEl.classList.contains('done')) return;
+        const id = lessonEl.dataset.lessonId;
+        const doneSet = tutDoneSet();
+        doneSet.add(id);
+        tutSaveDone(doneSet);
+
+        lessonEl.classList.add('done');
+        lessonEl.querySelector('.tut-lesson-check').textContent = '✓';
+        lessonEl.querySelector('.tut-lesson-toggle').textContent = 'Concluída · ver novamente';
+        const modEl = lessonEl.closest('.tut-module');
+        const mi = Number(modEl.dataset.moduleIdx);
+        const doneInMod = tutModulesData[mi].lessons.filter((_, li) => doneSet.has(mi + '-' + li)).length;
+        modEl.querySelector('.tut-module-count').textContent = doneInMod + ' de ' + tutModulesData[mi].lessons.length + ' concluídas';
+
+        const totalLessons = tutModulesData.reduce((n, m) => n + m.lessons.length, 0);
+        const doneCount = doneSet.size;
+        document.getElementById('tutLessonCount').textContent = doneCount + ' de ' + totalLessons;
+        const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
+        document.getElementById('tutProgressFill').style.width = pct + '%';
+        document.getElementById('tutProgressPct').textContent = pct + '% concluído';
+      });
+    });
+  }
+
+  renderTutModules();
 
   navItems.forEach(el => {
     el.addEventListener('click', e => {
