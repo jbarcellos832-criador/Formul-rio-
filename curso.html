@@ -102,7 +102,61 @@
   .progress-fill { height: 100%; background: linear-gradient(90deg, #d4ff3f, #a6e600); transition: width 0.3s ease; }
   .progress-pct { font-size: 12px; color: #9a9a9a; }
 
-  .modules { display: flex; flex-direction: column; gap: 14px; }
+  .modules-label { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
+
+  .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 1100px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .module-grid { grid-template-columns: 1fr; } }
+
+  .mod-card {
+    position: relative;
+    background: #0d0d0d;
+    border: 1px solid #1c1c1c;
+    border-radius: 16px;
+    padding: 20px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .mod-card:hover { border-color: rgba(212,255,63,0.35); transform: translateY(-2px); }
+  .mod-card.selected { border-color: #d4ff3f; background: rgba(212,255,63,0.06); }
+  .mod-card.locked { cursor: default; border-style: dashed; border-color: #262626; }
+  .mod-card.locked:hover { border-color: #262626; transform: none; }
+
+  .mod-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 34px; }
+  .mod-icon {
+    width: 46px; height: 46px;
+    border-radius: 13px;
+    background: rgba(212,255,63,0.1);
+    border: 1px solid rgba(212,255,63,0.25);
+    color: #d4ff3f;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mod-icon svg { width: 22px; height: 22px; }
+  .mod-card.locked .mod-icon { background: #161616; border-color: #262626; color: #5a5a5a; }
+  .mod-dots { color: #4a4a4a; font-size: 18px; line-height: 1; letter-spacing: 1px; }
+
+  .mod-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: #d4ff3f;
+    padding: 4px 9px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .mod-badge.soon { color: #9a9a9a; background: #1c1c1c; border: 1px solid #2a2a2a; }
+  .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #d4ff3f, #a6e600); }
+
+  .mod-card-title { font-size: 14.5px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .mod-card.locked .mod-card-title { color: #7a7a7a; }
+  .mod-card-sub { font-size: 12px; color: #9a9a9a; line-height: 1.4; }
+  .mod-card.locked .mod-card-sub { color: #5a5a5a; }
+
+  .modules { display: none; flex-direction: column; gap: 14px; }
+  .modules.open { display: flex; }
   .module { background: #0d0d0d; border-radius: 16px; overflow: hidden; }
   .module-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; cursor: pointer; }
   .module-head-left { display: flex; align-items: center; gap: 12px; }
@@ -166,7 +220,7 @@
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
         Início
       </button>
-      <button type="button" class="nav-item" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">
+      <button type="button" class="nav-item" onclick="document.getElementById('moduleGrid').scrollIntoView({behavior:'smooth'})">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
         Módulos
       </button>
@@ -190,7 +244,7 @@
       <div class="hero-eyebrow">Continue de onde parou</div>
       <div class="hero-title">Vamos começar</div>
       <div class="hero-sub">Um mini curso rápido pra você aprender a subir produtos, conectar suas lojas, acompanhar pedidos e receber suas comissões no Split.</div>
-      <button type="button" class="hero-btn" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">
+      <button type="button" class="hero-btn" onclick="document.getElementById('moduleGrid').scrollIntoView({behavior:'smooth'})">
         Continuar assistindo <span>→</span>
       </button>
     </div>
@@ -208,15 +262,26 @@
       </div>
     </div>
 
+    <div class="modules-label">Módulos do curso</div>
+    <div class="module-grid" id="moduleGrid"></div>
+
     <div class="modules" id="modules"></div>
   </main>
 
 </div>
 
 <script>
+const modIcons = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+];
+
 const modulesData = [
   {
     title: 'Primeiros passos',
+    sub: 'Login, painel e primeiros cliques.',
     lessons: [
       {
         title: 'Como fazer login no painel',
@@ -230,6 +295,7 @@ const modulesData = [
   },
   {
     title: 'Catálogo e produtos',
+    sub: 'Publicar e precificar produtos.',
     lessons: [
       {
         title: 'Como navegar no catálogo',
@@ -247,6 +313,7 @@ const modulesData = [
   },
   {
     title: 'Marketplaces e integrações',
+    sub: 'Conectar lojas e acompanhar pedidos.',
     lessons: [
       {
         title: 'Como conectar sua loja (Mercado Livre, Shopee, Bling)',
@@ -260,6 +327,7 @@ const modulesData = [
   },
   {
     title: 'Financeiro e link de afiliado',
+    sub: 'Saldo, PIX e comissões de afiliado.',
     lessons: [
       {
         title: 'Como funciona o saldo e o PIX',
@@ -277,6 +345,11 @@ const modulesData = [
   },
 ];
 
+const comingSoonModules = [
+  { title: 'Anúncios e tráfego pago', sub: 'Em breve' },
+  { title: 'Automação avançada', sub: 'Em breve' },
+];
+
 function doneSet() {
   try { return new Set(JSON.parse(localStorage.getItem('splitCursoDone') || '[]')); }
   catch { return new Set(); }
@@ -285,15 +358,73 @@ function saveDone(set) {
   try { localStorage.setItem('splitCursoDone', JSON.stringify([...set])); } catch {}
 }
 
+let selectedModule = 0;
+
+function renderModuleGrid() {
+  const grid = document.getElementById('moduleGrid');
+  const done = doneSet();
+
+  const realCards = modulesData.map((mod, mi) => {
+    const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+    const badge = doneInMod === mod.lessons.length ? 'Concluído' : `Módulo ${String(mi + 1).padStart(2, '0')}`;
+    return `
+      <div class="mod-card${mi === selectedModule ? ' selected' : ''}" data-select-module="${mi}">
+        <div class="mod-card-top">
+          <div class="mod-icon">${modIcons[mi] || modIcons[0]}</div>
+          <div class="mod-dots">⋯</div>
+        </div>
+        <div class="mod-badge">${badge}</div>
+        <div class="mod-card-title">${mod.title}</div>
+        <div class="mod-card-sub">${mod.sub || ''}</div>
+      </div>`;
+  }).join('');
+
+  const extraCard = `
+      <div class="mod-card" data-select-module="extra">
+        <div class="mod-card-top">
+          <div class="mod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="mod-dots">⋯</div>
+        </div>
+        <div class="mod-badge extra">Extra</div>
+        <div class="mod-card-title">Comunidade</div>
+        <div class="mod-card-sub">Tire dúvidas e troque experiências com outros afiliados.</div>
+      </div>`;
+
+  const soonCards = comingSoonModules.map(m => `
+      <div class="mod-card locked">
+        <div class="mod-card-top">
+          <div class="mod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div class="mod-dots">⋯</div>
+        </div>
+        <div class="mod-badge soon">Em breve</div>
+        <div class="mod-card-title">${m.title}</div>
+        <div class="mod-card-sub">${m.sub}</div>
+      </div>`).join('');
+
+  grid.innerHTML = realCards + extraCard + soonCards;
+
+  grid.querySelectorAll('[data-select-module]').forEach(card => {
+    card.addEventListener('click', () => {
+      const val = card.dataset.selectModule;
+      if (val === 'extra') return;
+      selectedModule = Number(val);
+      renderModuleGrid();
+      renderModules();
+      document.getElementById('modules').classList.add('open');
+      document.getElementById('modules').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
 function renderModules() {
   const done = doneSet();
   const wrap = document.getElementById('modules');
-  let totalLessons = 0;
+  const totalLessons = modulesData.reduce((n, m) => n + m.lessons.length, 0);
 
-  wrap.innerHTML = modulesData.map((mod, mi) => {
+  wrap.innerHTML = modulesData.filter((_, mi) => mi === selectedModule).map((mod, _mi) => {
+    const mi = selectedModule;
     const lessonsHtml = mod.lessons.map((lesson, li) => {
       const id = mi + '-' + li;
-      totalLessons++;
       const isDone = done.has(id);
       return `
         <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
@@ -307,7 +438,7 @@ function renderModules() {
     }).join('');
     const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
     return `
-      <div class="module${mi === 0 ? ' open' : ''}" data-module-idx="${mi}">
+      <div class="module open" data-module-idx="${mi}">
         <div class="module-head">
           <div class="module-head-left">
             <div class="module-num">${mi + 1}</div>
@@ -359,6 +490,7 @@ function renderModules() {
   });
 }
 
+renderModuleGrid();
 renderModules();
 </script>
 
