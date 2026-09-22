@@ -353,7 +353,7 @@ const modulesData = [
       {
         title: 'como criar a loja do mercado livre do zero',
         text: '',
-        video: null,
+        youtube: 'ox_TbJs-dbk',
       },
       {
         title: 'Como funciona as vendas e ferramentas do mercado livre',
@@ -486,14 +486,22 @@ function renderModules() {
   const lessonsHtml = mod.lessons.map((lesson, li) => {
     const id = mi + '-' + li;
     const isDone = done.has(id);
-    const videoHtml = lesson.video
+    const hasVideo = Boolean(lesson.youtube || lesson.video);
+    const videoHtml = lesson.youtube
+      ? `<iframe src="https://www.youtube.com/embed/${lesson.youtube}" title="${lesson.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;"></iframe>`
+      : lesson.video
       ? `<video controls src="${lesson.video}"></video>`
       : `<div class="lesson-player-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
+    const thumbHtml = lesson.youtube
+      ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="">`
+      : lesson.video
+      ? `<video src="${lesson.video}" preload="metadata"></video>`
+      : '';
     return `
       <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
         <div class="lesson-row">
           <div class="lesson-thumb">
-            ${lesson.video ? `<video src="${lesson.video}" preload="metadata"></video>` : ''}
+            ${thumbHtml}
             <div class="lesson-play"><span>▶</span></div>
           </div>
           <div class="lesson-body">
