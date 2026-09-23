@@ -60,9 +60,11 @@
     display: flex;
     flex-direction: column;
     padding: 20px 14px;
-    position: sticky;
+    position: fixed;
+    left: 0;
     top: 0;
     height: 100vh;
+    overflow-y: auto;
   }
 
   .brand-row {
@@ -165,6 +167,7 @@
     flex: 1;
     min-width: 0;
     background: var(--white);
+    margin-left: 260px;
   }
 
   .topbar {
@@ -2045,6 +2048,7 @@
       transition: transform 0.25s ease;
     }
     .sidebar.mobile-open { transform: translateX(0); }
+    .main { margin-left: 0; }
     .stat-grid { grid-template-columns: minmax(0, 1fr); }
     .content { padding: 20px; }
     .search { display: none; }
