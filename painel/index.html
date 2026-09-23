@@ -2439,15 +2439,7 @@
               <div class="panel-value-label">Total acumulado</div>
             </div>
           </div>
-          <div class="chart-area">
-            <div class="chart-y">
-              <span>R$ 0</span>
-              <span>R$ 1</span>
-              <span>R$ 2</span>
-              <span>R$ 3</span>
-              <span>R$ 4</span>
-            </div>
-          </div>
+          <div class="fin-chart-wrap" id="dashChartWrap"></div>
         </div>
 
         <div class="panel">
@@ -4695,12 +4687,50 @@
     });
   });
 
+  // Dashboard overview chart (Faturamento e Performance)
+  function renderDashChart(range) {
+    const wrap = document.getElementById('dashChartWrap');
+    if (!wrap) return;
+    const labelsByRange = {
+      '7d': ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'],
+      '30d': Array.from({ length: 30 }, (_, i) => String(i + 1)),
+      '12m': ['out', 'nov', 'dez', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set'],
+    };
+    const points = labelsByRange[range] || labelsByRange['12m'];
+    const W = Math.max(900, points.length * 30), H = 220;
+    const padL = 46, padB = 24, padT = 10, padR = 10;
+    const plotW = W - padL - padR;
+    const stepX = points.length > 1 ? plotW / (points.length - 1) : 0;
+    const yZero = H - padB;
+
+    let gridLines = '', axisLabels = '', xLabels = '';
+    for (let s = 0; s <= 4; s++) {
+      const y = padT + ((H - padT - padB) / 4) * s;
+      gridLines += `<line class="grid-line" x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}"/>`;
+      axisLabels += `<text class="axis-label" x="0" y="${y + 4}">R$ ${4 - s}</text>`;
+    }
+    const labelEvery = Math.max(1, Math.ceil(points.length / 12));
+    points.forEach((label, i) => {
+      if (i % labelEvery !== 0 && i !== points.length - 1) return;
+      const x = padL + i * stepX;
+      xLabels += `<text class="axis-label" x="${x}" y="${H - 4}" text-anchor="middle">${label}</text>`;
+    });
+
+    wrap.innerHTML = `<svg class="fin-chart-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+      ${gridLines}${axisLabels}${xLabels}
+      <line x1="${padL}" y1="${yZero}" x2="${W - padR}" y2="${yZero}" stroke="#c9cdd6" stroke-width="1.5"></line>
+      <text x="${padL + plotW / 2}" y="${padT + (H - padT - padB) / 2}" text-anchor="middle" fill="var(--muted)" font-size="12.5" font-family="Manrope, sans-serif">Nenhuma venda no período</text>
+    </svg>`;
+  }
+  renderDashChart('12m');
+
   // Period range pills
   document.getElementById('rangePill').addEventListener('click', e => {
     const btn = e.target.closest('button[data-range]');
     if (!btn) return;
     document.querySelectorAll('#rangePill button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    renderDashChart(btn.dataset.range);
   });
 
   // Refresh button
