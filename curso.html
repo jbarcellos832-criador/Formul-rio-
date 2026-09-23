@@ -450,11 +450,104 @@
     .progress-row { grid-template-columns: 1fr; }
     .hero-title { font-size: 22px; }
   }
+
+  /* ───── LOGIN ───── */
+  #loginScreen {
+    position: fixed; inset: 0;
+    background: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+  }
+  .login-card {
+    width: 100%; max-width: 380px;
+    background: #0d0d0d;
+    border: 1px solid #1c1c1c;
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+  .login-brand {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 26px;
+    font-weight: 500; color: #c7c7c7;
+  }
+  .login-brand .dot {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    border: 1.5px solid #4a3d0f;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .login-brand .dot svg { width: 17px; height: 17px; }
+  .login-brand-accent { color: #ffd400; font-weight: 800; }
+  .login-title { font-size: 21px; font-weight: 800; margin-bottom: 6px; }
+  .login-sub { font-size: 13.5px; color: #9a9a9a; margin-bottom: 24px; }
+  .login-field { margin-bottom: 14px; }
+  .login-field label { display: block; font-size: 12.5px; font-weight: 700; color: #9a9a9a; margin-bottom: 6px; }
+  .login-field input {
+    width: 100%;
+    background: #161616;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    padding: 13px 14px;
+    color: #fff;
+    font-size: 14.5px;
+    font-family: inherit;
+  }
+  .login-field input:focus { outline: none; border-color: #ffd400; }
+  .login-error {
+    display: none;
+    font-size: 13px;
+    color: #ff6b6b;
+    background: rgba(255,107,107,0.1);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+  .login-error.show { display: block; }
+  .login-btn {
+    width: 100%;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14.5px;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+  .login-btn:hover { filter: brightness(0.95); }
 </style>
 </head>
 <body>
 
-<div class="layout">
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>
+      </div>
+      Projeto <span class="login-brand-accent">ML</span>
+    </div>
+    <div class="login-title">Entrar no curso</div>
+    <div class="login-sub">Digite seu e-mail e senha de acesso.</div>
+    <form id="loginForm">
+      <div class="login-error" id="loginError">E-mail ou senha incorretos.</div>
+      <div class="login-field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="login-btn">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<div class="layout" id="appLayout" style="display:none;">
 
   <aside class="sidebar">
     <div class="brand">
@@ -968,6 +1061,32 @@ document.getElementById('mobileBackdrop').addEventListener('click', closeMobileM
 renderModuleGrid();
 renderModules();
 renderProvas();
+
+const VALID_EMAIL = 'projetoml@gmail.com';
+const VALID_PASSWORD = '2kfaturamento';
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appLayout').style.display = '';
+}
+
+if (localStorage.getItem('projetoMLLoggedIn') === 'true') {
+  showApp();
+}
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+  if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+    localStorage.setItem('projetoMLLoggedIn', 'true');
+    errorEl.classList.remove('show');
+    showApp();
+  } else {
+    errorEl.classList.add('show');
+  }
+});
 </script>
 
 </body>
