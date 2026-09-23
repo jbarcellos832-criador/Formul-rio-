@@ -843,69 +843,195 @@
   }
   .tut-progress-top span:last-child { color: #fff; }
   .tut-progress-bar { height: 6px; border-radius: 4px; background: #262626; overflow: hidden; margin-bottom: 8px; }
-  .tut-progress-fill { height: 100%; background: linear-gradient(90deg, #d4ff3f, #a6e600); transition: width 0.3s ease; }
+  .tut-progress-fill { height: 100%; background: linear-gradient(90deg, #ffd400, #ffb800); transition: width 0.3s ease; }
   .tut-progress-pct { font-size: 12px; color: #9a9a9a; }
 
-  .tut-modules { display: flex; flex-direction: column; gap: 14px; }
-  .tut-module {
+  .tut-subnav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tut-subnav-btn {
     background: #0d0d0d;
-    border-radius: 16px;
-    overflow: hidden;
-    color: #fff;
-  }
-  .tut-module-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 20px;
-    cursor: pointer;
-  }
-  .tut-module-head-left { display: flex; align-items: center; gap: 12px; }
-  .tut-module-num {
-    width: 30px; height: 30px;
-    border-radius: 9px;
-    background: #1c1c1c;
-    color: #d4ff3f;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 13px;
-    flex-shrink: 0;
-  }
-  .tut-module-title { font-weight: 800; font-size: 14.5px; margin-bottom: 2px; }
-  .tut-module-count { font-size: 12px; color: #9a9a9a; }
-  .tut-module-caret { color: #9a9a9a; transition: transform 0.2s ease; flex-shrink: 0; }
-  .tut-module.open .tut-module-caret { transform: rotate(180deg); }
-  .tut-module-body { display: none; padding: 0 20px 18px; }
-  .tut-module.open .tut-module-body { display: block; }
-
-  .tut-lesson {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    margin-top: 8px;
-    background: #161616;
-    cursor: pointer;
-  }
-  .tut-lesson:hover { background: #1b1b1b; }
-  .tut-lesson-check {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid #3a3a3a;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    color: #0d0d0d;
-  }
-  .tut-lesson.done .tut-lesson-check { background: #d4ff3f; border-color: #d4ff3f; }
-  .tut-lesson-body { flex: 1; }
-  .tut-lesson-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
-  .tut-lesson-text {
-    display: none;
+    color: #9a9a9a;
+    font-weight: 700;
     font-size: 13px;
-    color: #c7c7c7;
-    line-height: 1.65;
-    margin-top: 6px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #1c1c1c;
   }
-  .tut-lesson.expanded .tut-lesson-text { display: block; }
-  .tut-lesson-toggle { font-size: 11.5px; color: #d4ff3f; font-weight: 700; margin-top: 6px; }
+  .tut-subnav-btn.active { color: #ffd400; border-color: rgba(255,212,0,0.4); background: rgba(255,212,0,0.08); }
+  .tut-subnav-btn:hover { color: #fff; }
+
+  .tut-view { display: none; }
+  .tut-view.active { display: block; }
+
+  .tut-modules-label { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
+  .tut-module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+  @media (max-width: 620px) { .tut-module-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .tut-mod-card {
+    position: relative;
+    background: #0d0d0d;
+    border: 1px solid #1c1c1c;
+    border-radius: 18px;
+    padding: 16px 14px 18px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .tut-mod-card:hover { border-color: rgba(255,212,0,0.35); transform: translateY(-2px); }
+  .tut-mod-card.locked { cursor: default; }
+  .tut-mod-card.locked:hover { border-color: #1c1c1c; transform: none; }
+  .tut-mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
+  .tut-mod-menu svg { width: 16px; height: 16px; }
+  .tut-mod-icon {
+    width: 100%;
+    aspect-ratio: 1 / 0.95;
+    border-radius: 16px;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.2);
+    color: #ffd400;
+    display: flex; align-items: center; justify-content: center;
+    margin: 22px 0 16px;
+  }
+  .tut-mod-icon svg { width: 40%; height: 40%; }
+  .tut-mod-card.locked .tut-mod-icon { background: #141414; border-color: #232323; border-style: dashed; color: #6a6a6a; }
+  .tut-mod-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #0a0a0a; background: #ffd400;
+    padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+  }
+  .tut-mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); }
+  .tut-mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #ffd400, #ffb800); }
+  .tut-mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; color: #fff; }
+  .tut-mod-card.locked .tut-mod-card-title { color: #9a9a9a; }
+  .tut-mod-card-sub { font-size: 11.5px; color: #7a7a7a; line-height: 1.4; }
+  .tut-mod-card-open { font-size: 11.5px; color: #ffd400; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
+  .tut-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #141414; color: #fff; font-weight: 700; font-size: 13.5px;
+    padding: 11px 18px; border-radius: 10px; margin-bottom: 22px; width: fit-content;
+  }
+  .tut-back:hover { background: #1a1a1a; }
+  .tut-mod-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .tut-mod-header-icon {
+    width: 56px; height: 56px; border-radius: 15px;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3); color: #ffd400;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .tut-mod-header-icon svg { width: 26px; height: 26px; }
+  .tut-mod-header-title { font-size: 20px; font-weight: 800; margin-bottom: 3px; color: #fff; }
+  .tut-mod-header-sub { font-size: 13px; color: #9a9a9a; }
+
+  .tut-lesson-list { display: flex; flex-direction: column; gap: 14px; }
+  .tut-lesson {
+    background: #0d0d0d; border: 1px solid transparent; border-radius: 16px;
+    transition: border-color 0.15s ease;
+  }
+  .tut-lesson:hover { border-color: rgba(255,212,0,0.25); }
+  .tut-lesson-row { display: flex; align-items: center; gap: 18px; padding: 14px 18px; cursor: pointer; }
+  .tut-lesson-thumb {
+    position: relative; width: 160px; height: 90px; flex-shrink: 0;
+    border-radius: 10px; overflow: hidden;
+    background: linear-gradient(160deg, #1c1c1c, #0a0a0a);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tut-lesson-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .tut-lesson-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .tut-lesson-play span {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,0.92); color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
+  .tut-lesson-body { flex: 1; min-width: 0; }
+  .tut-lesson-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; text-transform: uppercase; margin-bottom: 5px; }
+  .tut-lesson-title { font-size: 15px; font-weight: 800; margin-bottom: 5px; color: #fff; }
+  .tut-lesson-status { font-size: 12.5px; color: #d99a1f; }
+  .tut-lesson.done .tut-lesson-status { color: #ffd400; }
+  .tut-lesson-chevron { color: #6a6a6a; flex-shrink: 0; }
+
+  .tut-lesson-detail { max-width: 780px; }
+  .tut-lesson-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .tut-lesson-detail-title { font-size: 20px; font-weight: 800; margin-bottom: 3px; color: #fff; }
+  .tut-lesson-detail-sub { font-size: 13px; color: #9a9a9a; }
+  .tut-lesson-detail-video { width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin-bottom: 18px; }
+  .tut-watch-link { position: relative; display: block; width: 100%; aspect-ratio: 16/9; background: linear-gradient(160deg, #1c1c1c, #0a0a0a); }
+  .tut-watch-link img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tut-watch-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(255,255,255,0.95); color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .tut-watch-label {
+    position: absolute; bottom: 14px; left: 14px;
+    background: rgba(10,10,10,0.85); color: #ffd400;
+    font-size: 12.5px; font-weight: 700; padding: 7px 12px; border-radius: 8px;
+  }
+  .tut-mark-watched {
+    display: block; width: 100%; background: #ffd400; color: #0a0a0a;
+    font-weight: 800; font-size: 14.5px; padding: 16px; border-radius: 12px; text-align: center;
+  }
+  .tut-mark-watched:hover { filter: brightness(0.95); }
+  .tut-mark-watched.done { background: #1c1c1c; color: #9a9a9a; }
+
+  /* Provas sociais */
+  .tut-wa-wrap { max-width: 460px; border-radius: 16px; overflow: hidden; border: 1px solid #1c1c1c; }
+  .tut-wa-header { background: #202c33; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .tut-wa-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3);
+    display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .tut-wa-header-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .tut-wa-header-sub { font-size: 12.5px; color: #8a99a0; }
+  .tut-wa-body {
+    background: #0b141a;
+    background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    padding: 16px 12px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .tut-wa-msg { align-self: flex-start; max-width: 88%; }
+  .tut-wa-bubble { background: #202c33; border-radius: 4px 12px 12px 12px; padding: 6px; }
+  .tut-wa-media { width: 100%; border-radius: 8px; overflow: hidden; }
+  .tut-wa-media img { width: 100%; height: auto; display: block; }
+  .tut-wa-caption { font-size: 13.5px; color: #e9edef; padding: 8px 6px 2px; line-height: 1.5; }
+  .tut-wa-time { font-size: 11px; color: #8a99a0; padding: 0 6px 4px; text-align: right; }
+
+  /* Grupo de avisos */
+  .tut-avisos-card {
+    max-width: 640px; background: #0d0d0d; border: 1px solid rgba(255,212,0,0.25);
+    border-radius: 18px; padding: 26px; margin-bottom: 20px;
+    box-shadow: 0 0 40px rgba(255,212,0,0.06);
+  }
+  .tut-avisos-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .tut-avisos-official {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #0a0a0a; background: #ffd400; padding: 5px 11px; border-radius: 6px;
+  }
+  .tut-avisos-icon {
+    width: 44px; height: 44px; border-radius: 13px;
+    background: rgba(255,212,0,0.1); border: 1px solid rgba(255,212,0,0.3); color: #ffd400;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tut-avisos-icon svg { width: 22px; height: 22px; }
+  .tut-avisos-title { font-size: 19px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+  .tut-avisos-text { font-size: 14px; color: #b8b8b8; line-height: 1.6; margin-bottom: 22px; }
+  .tut-avisos-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+    background: #ffd400; color: #0a0a0a; font-weight: 800; font-size: 15px;
+    padding: 15px; border-radius: 12px;
+  }
+  .tut-avisos-btn:hover { filter: brightness(0.95); }
+  .tut-avisos-btn svg { width: 19px; height: 19px; }
+  .tut-avisos-rules { max-width: 640px; background: #0d0d0d; border-radius: 18px; padding: 24px 26px; }
+  .tut-avisos-rules-title { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; margin-bottom: 16px; color: #fff; }
+  .tut-avisos-rules-title svg { width: 19px; height: 19px; color: #ffd400; }
+  .tut-avisos-rules-text { font-size: 14px; color: #b8b8b8; line-height: 1.7; margin-bottom: 14px; }
+  .tut-avisos-rules-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .tut-avisos-rules-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #d0d0d0; }
+  .tut-avisos-rules-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #ffd400; flex-shrink: 0; }
 
   /* ── Cadastrar produto ── */
   .pf-breadcrumb {
@@ -3188,7 +3314,7 @@
         <div>
           <div class="tut-eyebrow">Boa noite, Afiliado</div>
           <div class="tut-title">Vamos começar</div>
-          <div class="tut-sub">Aprenda a mexer no Split do zero: subir produtos, conectar lojas e receber suas comissões.</div>
+          <div class="tut-sub">Aprenda a montar sua loja, escolher produtos com IA e vender todos os dias no marketplace.</div>
         </div>
       </div>
 
@@ -3196,14 +3322,71 @@
         <div class="tut-progress-card">
           <div class="tut-progress-top">
             <span>MINI CURSO</span>
-            <span id="tutLessonCount">0 de 10</span>
+            <span id="tutLessonCount">0 de 9</span>
           </div>
           <div class="tut-progress-bar"><div class="tut-progress-fill" id="tutProgressFill" style="width:0%;"></div></div>
           <div class="tut-progress-pct" id="tutProgressPct">0% concluído</div>
         </div>
       </div>
 
-      <div class="tut-modules" id="tutModules"></div>
+      <div class="tut-subnav">
+        <button type="button" class="tut-subnav-btn active" data-tut-view="modules">Módulos</button>
+        <button type="button" class="tut-subnav-btn" data-tut-view="avisos">Grupo de avisos</button>
+        <button type="button" class="tut-subnav-btn" data-tut-view="provas">Provas sociais</button>
+      </div>
+
+      <div class="tut-view active" id="tutViewModules">
+        <div id="tutModuleGridWrap">
+          <div class="tut-modules-label">Módulos do curso</div>
+          <div class="tut-module-grid" id="tutModuleGrid"></div>
+        </div>
+        <div id="tutModules" style="display:none;"></div>
+      </div>
+
+      <div class="tut-view" id="tutViewAvisos">
+        <div class="tut-avisos-card">
+          <div class="tut-avisos-top">
+            <div class="tut-avisos-official">Oficial</div>
+            <div class="tut-avisos-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+          </div>
+          <div class="tut-avisos-title">Grupo de avisos</div>
+          <div class="tut-avisos-text">Tudo sobre a ferramenta e o projeto: atualizações, novas aulas liberadas e comunicados oficiais. Canal silencioso — só o que realmente importa.</div>
+          <a class="tut-avisos-btn" href="https://www.whatsapp.com/channel/0029Vb8YDQO3bbV92PQ1xh12" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm5.6 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.4.7-2 .9-2.3.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.2-.3.4-.1.7.2.3.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1l.6-.7c.2-.3.4-.2.6-.1l1.7.8c.2.1.3.2.4.3.1.2.1.9-.1 1.6z"/></svg>
+            Entrar no canal de avisos
+          </a>
+        </div>
+        <div class="tut-avisos-rules">
+          <div class="tut-avisos-rules-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Regras da comunidade
+          </div>
+          <div class="tut-avisos-rules-text"><strong>É obrigatório entrar no grupo</strong> pra receber os avisos. Serve tanto aqui dentro da área de membros quanto no canal do WhatsApp:</div>
+          <ul class="tut-avisos-rules-list">
+            <li>Avisos da ferramenta</li>
+            <li>Aviso de aulas</li>
+            <li>Aviso de módulo novo</li>
+            <li>Provas</li>
+            <li>Depoimentos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tut-view" id="tutViewProvas">
+        <div class="tut-modules-label">Provas sociais</div>
+        <div class="tut-wa-wrap">
+          <div class="tut-wa-header">
+            <div class="tut-wa-avatar">🙌</div>
+            <div>
+              <div class="tut-wa-header-title">Projeto ML 🙌</div>
+              <div class="tut-wa-header-sub" id="tutProvasCount">0 prints</div>
+            </div>
+          </div>
+          <div class="tut-wa-body" id="tutProvasBody"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Placeholder pages (functional nav targets) -->
@@ -4535,69 +4718,74 @@
     closeAllDropdowns();
   }
 
-  // ── Tutoriais (mini curso) ──
+  // ── Tutoriais (mini curso Projeto ML) ──
+  const tutModIcons = [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="1.5"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+  ];
+  const tutSoonIcons = [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-9-9V4h9l9 9a2 2 0 0 1 0 2.41z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  ];
+  const tutExtraIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+
   const tutModulesData = [
     {
-      title: 'Primeiros passos',
+      title: 'Loja Marketplace',
+      sub: 'Monte a base da sua loja e deixe tudo organizado pra começar a vender.',
       lessons: [
-        {
-          title: 'Como fazer login no painel',
-          text: 'Depois de comprar o Split, você recebe um e-mail com seu login e senha provisória. Acesse splitia.space, clique em "Entrar" e use esses dados. Recomendamos trocar a senha assim que entrar pela primeira vez.',
-        },
-        {
-          title: 'Conhecendo o menu lateral',
-          text: 'No menu à esquerda você encontra: Dashboard (visão geral das vendas), Catálogo (produtos disponíveis), Importadores, Fornecedores, Pedidos, Integrações, Financeiro & PIX, Ferramentas, Tutoriais, Chamados e o Painel de afiliados. No celular, toque no ícone ☰ no topo para abrir esse menu.',
-        },
+        { title: 'como criar a loja do mercado livre do zero', youtube: 'ox_TbJs-dbk' },
+        { title: 'Como funciona as vendas e ferramentas do mercado livre', youtube: 'LoyVdv7jmRI' },
+        { title: 'tudo certo com a loja e mercado livre?', youtube: 'vsiejbnEIuQ' },
       ],
     },
     {
-      title: 'Catálogo e produtos',
+      title: 'Fornecedor IA',
+      sub: 'Encontrando produtos com IA.',
       lessons: [
-        {
-          title: 'Como navegar no catálogo',
-          text: 'Clique em "Catálogo" no menu lateral. Use a busca ou os filtros (loja, ordenação) para encontrar produtos. Cada card mostra a foto, o preço de custo e o fornecedor.',
-        },
-        {
-          title: 'Como cadastrar um produto no marketplace',
-          text: 'Dentro do catálogo, clique em "Cadastrar no Marketplace" no produto desejado. Escolha em quais marketplaces publicar (Shopee, Mercado Livre...), confira as fotos, o título e a descrição, e siga para a próxima etapa.',
-        },
-        {
-          title: 'Como definir preço e margem de lucro',
-          text: 'Na tela de cadastro, preencha a comissão, taxa fixa e sua margem de lucro desejada. O sistema calcula automaticamente o preço final de venda com base no seu custo. Revise o resumo antes de clicar em "Publicar".',
-        },
+        { title: 'Como usar a IA pra encontrar produtos vencedores', youtube: 'ahsZ6kdVfyo' },
+        { title: 'Escolhendo o fornecedor certo', youtube: '1wac9mznEQw' },
       ],
     },
     {
-      title: 'Marketplaces e integrações',
+      title: 'Estratégia de Vendas',
+      sub: 'Vendendo todos os dias.',
       lessons: [
-        {
-          title: 'Como conectar sua loja (Mercado Livre, Shopee, Bling)',
-          text: 'Vá em "Integrações" no menu lateral e clique para conectar a plataforma desejada. Você vai precisar autorizar o acesso da sua conta do marketplace. Depois de conectada, seus produtos publicados sincronizam automaticamente.',
-        },
-        {
-          title: 'Acompanhando seus pedidos',
-          text: 'A seção "Pedidos" mostra o status de cada venda: aguardando pagamento, pago, impresso e despachado. Use os filtros para encontrar um pedido específico rapidamente.',
-        },
-      ],
-    },
-    {
-      title: 'Financeiro e link de afiliado',
-      lessons: [
-        {
-          title: 'Como funciona o saldo e o PIX',
-          text: 'Em "Financeiro & PIX" você acompanha entradas, pagamentos a fornecedores e o saldo atual. Para adicionar saldo, clique em "Adicionar Saldo", escolha o valor e pague o QR Code PIX gerado — o crédito cai automaticamente após a confirmação.',
-        },
-        {
-          title: 'Como pegar seu link de indicação',
-          text: 'No "Painel de afiliados" você encontra seu link de indicação único e o QR Code dele. Clique em "Copiar" para compartilhar nas redes sociais, grupos ou com clientes.',
-        },
-        {
-          title: 'Como acompanhar suas comissões',
-          text: 'Ainda no Painel de afiliados, acompanhe o saldo disponível, o total de comissões, indicados ativos e a taxa de conversão. O histórico de comissões mostra cada indicação que virou venda.',
-        },
+        { title: 'Montando sua vitrine de produtos', youtube: 'XN9XuF-ZBnk' },
       ],
     },
   ];
+
+  const tutSoonModules = [
+    { title: 'Tráfego e Anúncios', sub: 'Libera depois da loja girando' },
+    { title: 'Precificação Certa', sub: 'Em breve — gravação a caminho' },
+    { title: 'Atendimento que Vende', sub: 'Em breve — gravação a caminho' },
+    { title: 'Pós-venda e Recompra', sub: 'Em breve — gravação a caminho' },
+    { title: 'Financeiro da Loja', sub: 'Em breve — gravação a caminho' },
+    { title: 'Afiliados na Loja', sub: 'Em breve — solta quando for a hora certa' },
+  ];
+
+  const tutProvasData = [
+    { img: '../assets/provas/prova-01.jpg', caption: 'Print da ferramenta de pedidos mostrando as vendas do dia — aluno mandando pra bater um papo sobre os resultados.', time: '19:32' },
+    { img: '../assets/provas/prova-02.jpg', caption: 'Primeira venda saindo pelo Mercado Envios — aquele momento que todo aluno lembra.', time: '11:25' },
+    { img: '../assets/provas/prova-03.jpg', caption: 'Notificação de venda chegando enquanto o aluno tira dúvida no grupo.', time: '20:32' },
+    { img: '../assets/provas/prova-04.jpg', caption: 'Saldo disponível pra liberar depois de só 5 dias vendendo.', time: '14:10' },
+    { img: '../assets/provas/prova-05.jpg', caption: 'Produtos já cadastrados na loja, prontos pra começar a vender.', time: 'hoje' },
+    { img: '../assets/provas/prova-06.jpg', caption: '"Fiz uma venda" — mais uma aluna comemorando a primeira venda no Mercado Livre.', time: '15:20' },
+    { img: '../assets/provas/prova-07.jpg', caption: 'Painel de vendas ao vivo mostrando a primeira venda entrando.', time: '00:56' },
+    { img: '../assets/provas/prova-08.jpg', caption: 'Aluno mandando print dos pedidos no Fornecefy e da compra feita no Mercado Livre.', time: '09:50' },
+    { img: '../assets/provas/prova-09.jpg', caption: 'Notificação de venda chegando — "Kakah primeira venda".', time: '12:33' },
+    { img: '../assets/provas/prova-10.png', caption: 'Métricas da loja no Mercado Livre: vendas brutas, visitas e conversão subindo.', time: '18:29' },
+    { img: '../assets/provas/prova-11.jpg', caption: '"Consegui fazer uma venda" — aluno confirmando a primeira venda e já perguntando o próximo passo.', time: '12:09' },
+    { img: '../assets/provas/prova-12.jpg', caption: 'Detalhe de uma venda com o custo de vender e de cobrar já calculados certinho.', time: '14:59' },
+  ];
+
+  let tutSelectedModule = 0;
 
   function tutDoneSet() {
     try {
@@ -4608,81 +4796,195 @@
     try { localStorage.setItem('splitTutDone', JSON.stringify([...set])); } catch {}
   }
 
-  function renderTutModules() {
+  function renderTutModuleGrid() {
+    const grid = document.getElementById('tutModuleGrid');
     const done = tutDoneSet();
-    const wrap = document.getElementById('tutModules');
-    let totalLessons = 0;
-    wrap.innerHTML = tutModulesData.map((mod, mi) => {
-      const lessonsHtml = mod.lessons.map((lesson, li) => {
-        const id = mi + '-' + li;
-        totalLessons++;
-        const isDone = done.has(id);
-        return `
-          <div class="tut-lesson${isDone ? ' done' : ''}" data-lesson-id="${id}">
-            <div class="tut-lesson-check">${isDone ? '✓' : ''}</div>
-            <div class="tut-lesson-body">
-              <div class="tut-lesson-title">${lesson.title}</div>
-              <div class="tut-lesson-text">${lesson.text}</div>
-              <div class="tut-lesson-toggle">${isDone ? 'Concluída · ver novamente' : 'Ver aula'}</div>
-            </div>
-          </div>`;
-      }).join('');
+    const menuIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+
+    const realCards = tutModulesData.map((mod, mi) => {
       const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+      const badge = doneInMod === mod.lessons.length ? 'Concluído' : `Módulo ${String(mi + 1).padStart(2, '0')}`;
       return `
-        <div class="tut-module${mi === 0 ? ' open' : ''}" data-module-idx="${mi}">
-          <div class="tut-module-head">
-            <div class="tut-module-head-left">
-              <div class="tut-module-num">${mi + 1}</div>
-              <div>
-                <div class="tut-module-title">${mod.title}</div>
-                <div class="tut-module-count">${doneInMod} de ${mod.lessons.length} concluídas</div>
-              </div>
-            </div>
-            <span class="tut-module-caret">▾</span>
-          </div>
-          <div class="tut-module-body">${lessonsHtml}</div>
+        <div class="tut-mod-card" data-tut-select-module="${mi}">
+          <div class="tut-mod-menu">${menuIcon}</div>
+          <div class="tut-mod-icon">${tutModIcons[mi] || tutModIcons[0]}</div>
+          <div class="tut-mod-badge">${badge}</div>
+          <div class="tut-mod-card-title">${mod.title}</div>
+          <div class="tut-mod-card-sub">${mod.sub || ''}</div>
         </div>`;
     }).join('');
 
-    const doneCount = [...done].length;
-    document.getElementById('tutLessonCount').textContent = doneCount + ' de ' + totalLessons;
-    const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
-    document.getElementById('tutProgressFill').style.width = pct + '%';
-    document.getElementById('tutProgressPct').textContent = pct + '% concluído';
+    const soonCards = tutSoonModules.map((m, si) => `
+      <div class="tut-mod-card locked">
+        <div class="tut-mod-menu">${menuIcon}</div>
+        <div class="tut-mod-icon">${tutSoonIcons[si] || tutSoonIcons[0]}</div>
+        <div class="tut-mod-badge soon">Em breve</div>
+        <div class="tut-mod-card-title">${m.title}</div>
+        <div class="tut-mod-card-sub">${m.sub}</div>
+      </div>`).join('');
 
-    wrap.querySelectorAll('.tut-module-head').forEach(head => {
-      head.addEventListener('click', () => {
-        head.closest('.tut-module').classList.toggle('open');
-      });
-    });
-    wrap.querySelectorAll('.tut-lesson').forEach(lessonEl => {
-      lessonEl.addEventListener('click', () => {
-        lessonEl.classList.toggle('expanded');
-        if (lessonEl.classList.contains('done')) return;
-        const id = lessonEl.dataset.lessonId;
-        const doneSet = tutDoneSet();
-        doneSet.add(id);
-        tutSaveDone(doneSet);
+    const extraCard = `
+      <div class="tut-mod-card" data-tut-select-module="extra">
+        <div class="tut-mod-menu">${menuIcon}</div>
+        <div class="tut-mod-icon">${tutExtraIcon}</div>
+        <div class="tut-mod-badge extra">Extra</div>
+        <div class="tut-mod-card-title">Comunidade</div>
+        <div class="tut-mod-card-open">Abrir <span>▶</span></div>
+      </div>`;
 
-        lessonEl.classList.add('done');
-        lessonEl.querySelector('.tut-lesson-check').textContent = '✓';
-        lessonEl.querySelector('.tut-lesson-toggle').textContent = 'Concluída · ver novamente';
-        const modEl = lessonEl.closest('.tut-module');
-        const mi = Number(modEl.dataset.moduleIdx);
-        const doneInMod = tutModulesData[mi].lessons.filter((_, li) => doneSet.has(mi + '-' + li)).length;
-        modEl.querySelector('.tut-module-count').textContent = doneInMod + ' de ' + tutModulesData[mi].lessons.length + ' concluídas';
+    grid.innerHTML = realCards + soonCards + extraCard;
 
-        const totalLessons = tutModulesData.reduce((n, m) => n + m.lessons.length, 0);
-        const doneCount = doneSet.size;
-        document.getElementById('tutLessonCount').textContent = doneCount + ' de ' + totalLessons;
-        const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
-        document.getElementById('tutProgressFill').style.width = pct + '%';
-        document.getElementById('tutProgressPct').textContent = pct + '% concluído';
+    grid.querySelectorAll('[data-tut-select-module]').forEach(card => {
+      card.addEventListener('click', () => {
+        const val = card.dataset.tutSelectModule;
+        if (val === 'extra') {
+          window.open('https://www.whatsapp.com/channel/0029Vb8YDQO3bbV92PQ1xh12', '_blank');
+          return;
+        }
+        tutSelectedModule = Number(val);
+        renderTutModuleGrid();
+        renderTutModules();
+        document.getElementById('tutModuleGridWrap').style.display = 'none';
+        document.getElementById('tutModules').style.display = '';
       });
     });
   }
 
-  renderTutModules();
+  function renderTutModules() {
+    const done = tutDoneSet();
+    const wrap = document.getElementById('tutModules');
+    const totalLessons = tutModulesData.reduce((n, m) => n + m.lessons.length, 0);
+    const mi = tutSelectedModule;
+    const mod = tutModulesData[mi];
+
+    const lessonsHtml = mod.lessons.map((lesson, li) => {
+      const id = mi + '-' + li;
+      const isDone = done.has(id);
+      const thumbHtml = lesson.youtube ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="" onerror="this.style.display='none'">` : '';
+      return `
+        <div class="tut-lesson${isDone ? ' done' : ''}" data-lesson-id="${id}" data-lesson-idx="${li}">
+          <div class="tut-lesson-row">
+            <div class="tut-lesson-thumb">
+              ${thumbHtml}
+              <div class="tut-lesson-play"><span>▶</span></div>
+            </div>
+            <div class="tut-lesson-body">
+              <div class="tut-lesson-num">Aula ${String(li + 1).padStart(2, '0')}</div>
+              <div class="tut-lesson-title">${lesson.title}</div>
+              <div class="tut-lesson-status">${isDone ? 'Concluída · clique pra assistir de novo' : 'Liberada · clique pra assistir'}</div>
+            </div>
+            <div class="tut-lesson-chevron">›</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    wrap.innerHTML = `
+      <button type="button" class="tut-back" id="tutModuleBackBtn">← Voltar</button>
+      <div class="tut-mod-header">
+        <div class="tut-mod-header-icon">${tutModIcons[mi] || tutModIcons[0]}</div>
+        <div>
+          <div class="tut-mod-header-title">${mod.title}</div>
+          <div class="tut-mod-header-sub">${mod.sub || ''}</div>
+        </div>
+      </div>
+      <div class="tut-lesson-list">${lessonsHtml}</div>`;
+
+    tutUpdateProgress(done, totalLessons);
+
+    document.getElementById('tutModuleBackBtn').addEventListener('click', () => {
+      wrap.style.display = 'none';
+      document.getElementById('tutModuleGridWrap').style.display = '';
+    });
+
+    wrap.querySelectorAll('.tut-lesson-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const lessonEl = row.closest('.tut-lesson');
+        renderTutLessonDetail(mi, Number(lessonEl.dataset.lessonIdx));
+      });
+    });
+  }
+
+  function renderTutLessonDetail(mi, li) {
+    const wrap = document.getElementById('tutModules');
+    const mod = tutModulesData[mi];
+    const lesson = mod.lessons[li];
+    const id = mi + '-' + li;
+    const done = tutDoneSet();
+    const isDone = done.has(id);
+
+    const videoHtml = lesson.youtube
+      ? `<a class="tut-watch-link" href="https://youtu.be/${lesson.youtube}" target="_blank" rel="noopener">
+          <img src="https://img.youtube.com/vi/${lesson.youtube}/hqdefault.jpg" alt="" onerror="this.style.display='none'">
+          <div class="tut-watch-play"><span>▶</span></div>
+          <div class="tut-watch-label">Assistir no YouTube ↗</div>
+        </a>`
+      : `<div class="tut-avisos-rules" style="text-align:center;color:#7a7a7a;">Vídeo ainda não enviado.</div>`;
+
+    wrap.innerHTML = `
+      <button type="button" class="tut-back" id="tutLessonBackBtn">← Voltar</button>
+      <div class="tut-lesson-detail">
+        <div class="tut-lesson-detail-header">
+          <div class="tut-mod-header-icon">${tutModIcons[mi] || tutModIcons[0]}</div>
+          <div>
+            <div class="tut-lesson-detail-title">${lesson.title}</div>
+            <div class="tut-lesson-detail-sub">${mod.title}</div>
+          </div>
+        </div>
+        <div class="tut-lesson-detail-video">${videoHtml}</div>
+        <button type="button" class="tut-mark-watched${isDone ? ' done' : ''}" id="tutMarkWatchedBtn">
+          ${isDone ? 'Aula concluída ✓' : 'Marcar como assistido'}
+        </button>
+      </div>`;
+
+    document.getElementById('tutLessonBackBtn').addEventListener('click', () => renderTutModules());
+
+    document.getElementById('tutMarkWatchedBtn').addEventListener('click', () => {
+      const set = tutDoneSet();
+      set.add(id);
+      tutSaveDone(set);
+      const btn = document.getElementById('tutMarkWatchedBtn');
+      btn.textContent = 'Aula concluída ✓';
+      btn.classList.add('done');
+      const total = tutModulesData.reduce((n, m) => n + m.lessons.length, 0);
+      tutUpdateProgress(set, total);
+      renderTutModuleGrid();
+    });
+  }
+
+  function tutUpdateProgress(doneSet, total) {
+    const doneCount = doneSet.size;
+    document.getElementById('tutLessonCount').textContent = doneCount + ' de ' + total;
+    const pct = total ? Math.round((doneCount / total) * 100) : 0;
+    document.getElementById('tutProgressFill').style.width = pct + '%';
+    document.getElementById('tutProgressPct').textContent = pct + '% concluído';
+  }
+
+  function renderTutProvas() {
+    const body = document.getElementById('tutProvasBody');
+    body.innerHTML = tutProvasData.map(p => `
+      <div class="tut-wa-msg">
+        <div class="tut-wa-bubble">
+          <div class="tut-wa-media"><img src="${p.img}" alt=""></div>
+          <div class="tut-wa-caption">${p.caption}</div>
+          <div class="tut-wa-time">${p.time} ✓✓</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('tutProvasCount').textContent = tutProvasData.length + ' prints';
+  }
+
+  document.querySelectorAll('.tut-subnav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tut-subnav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tut-view').forEach(v => v.classList.remove('active'));
+      document.getElementById('tutView' + btn.dataset.tutView.charAt(0).toUpperCase() + btn.dataset.tutView.slice(1)).classList.add('active');
+    });
+  });
+
+  renderTutModuleGrid();
+  const tutInitialDone = tutDoneSet();
+  tutUpdateProgress(tutInitialDone, tutModulesData.reduce((n, m) => n + m.lessons.length, 0));
+  renderTutProvas();
 
   navItems.forEach(el => {
     el.addEventListener('click', e => {
