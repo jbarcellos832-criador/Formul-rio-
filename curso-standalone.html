@@ -411,8 +411,39 @@
   .avisos-rules-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #d0d0d0; }
   .avisos-rules-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #ffd400; flex-shrink: 0; }
 
+  .mobile-menu-btn { display: none; }
+  .mobile-backdrop { display: none; }
+
   @media (max-width: 900px) {
-    .sidebar { display: none; }
+    .mobile-menu-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      background: #141414;
+      border-radius: 10px;
+      color: #fff;
+      flex-shrink: 0;
+      margin-bottom: 14px;
+    }
+    .mobile-menu-btn svg { width: 20px; height: 20px; }
+    .top-row { flex-direction: column; align-items: flex-start; }
+
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 100;
+    }
+    .sidebar.mobile-open { transform: translateX(0); display: flex; }
+
+    .mobile-backdrop.open {
+      display: block;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+    }
+
     .main { padding: 24px 18px 50px; margin-left: 0; }
     .progress-row { grid-template-columns: 1fr; }
     .hero-title { font-size: 22px; }
@@ -455,8 +486,13 @@
     <div class="nav-footer">Split © 2026</div>
   </aside>
 
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
   <main class="main">
     <div class="top-row">
+      <button type="button" class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <div>
         <div class="greeting-title" id="greetingTitle">Bem-vindo(a) ao curso</div>
         <div class="greeting-sub">Aprenda a montar e vender na sua loja marketplace do zero.</div>
@@ -907,11 +943,25 @@ function goToPage(page) {
 }
 
 document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
-  btn.addEventListener('click', () => goToPage(btn.dataset.page));
+  btn.addEventListener('click', () => {
+    goToPage(btn.dataset.page);
+    closeMobileMenu();
+  });
 });
 document.querySelectorAll('[data-goto]').forEach(btn => {
   btn.addEventListener('click', () => goToPage(btn.dataset.goto));
 });
+
+function openMobileMenu() {
+  document.querySelector('.sidebar').classList.add('mobile-open');
+  document.getElementById('mobileBackdrop').classList.add('open');
+}
+function closeMobileMenu() {
+  document.querySelector('.sidebar').classList.remove('mobile-open');
+  document.getElementById('mobileBackdrop').classList.remove('open');
+}
+document.getElementById('mobileMenuBtn').addEventListener('click', openMobileMenu);
+document.getElementById('mobileBackdrop').addEventListener('click', closeMobileMenu);
 
 renderModuleGrid();
 renderModules();
