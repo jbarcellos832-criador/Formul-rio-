@@ -3836,9 +3836,11 @@
     document.getElementById('pubSuccessLogo').innerHTML = marketLogos[primaryMarket];
     document.getElementById('pubMarketName').textContent = marketNames;
     document.getElementById('pubSuccessMarketName').textContent = marketNames;
-    document.getElementById('pubViewListingBtn').href = primaryMarket === 'ml'
-      ? `https://lista.mercadolivre.com.br/${encodeURIComponent(productName)}`
-      : `https://shopee.com.br/search?keyword=${encodeURIComponent(productName)}`;
+    document.getElementById('pubViewListingBtn').href = productName === 'Amolador Afiador Para Faca Canivete Tesoura Com Ventosa Fixa'
+      ? '../produto-amolador.html'
+      : primaryMarket === 'ml'
+        ? `https://lista.mercadolivre.com.br/${encodeURIComponent(productName)}`
+        : `https://shopee.com.br/search?keyword=${encodeURIComponent(productName)}`;
 
     document.getElementById('pubProgressView').style.display = '';
     document.getElementById('pubSuccessView').classList.remove('show');
