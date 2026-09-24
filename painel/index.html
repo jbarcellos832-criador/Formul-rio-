@@ -1120,7 +1120,7 @@
     font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--muted); margin-bottom: 12px;
   }
-  .pf-market-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 14px; }
+  .pf-market-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 14px; }
   .pf-market-opt {
     display: flex; align-items: center; gap: 12px;
     border: 1.5px solid var(--border);
@@ -3612,7 +3612,7 @@
   };
   const marketDisplayNames = { shopee: 'Shopee', ml: 'Mercado Livre' };
 
-  const pfState = { productIdx: null, images: [], activeIdx: 0, markets: new Set(['shopee']) };
+  const pfState = { productIdx: null, images: [], activeIdx: 0, markets: new Set(['ml']) };
 
   function buildDescription(name) {
     return `Vantagens:\n${name} com qualidade premium e ótimo custo-benefício.\nEnvio rápido, direto do estoque a pronta entrega.\n\nCaracterísticas:\nProduto original, testado e aprovado. Ideal para uso no dia a dia.\n\nGarantia e suporte:\nSuporte direto com o fornecedor em caso de dúvidas ou problemas com o produto.`;
@@ -3624,7 +3624,7 @@
 
   function renderMarketGrid() {
     const grid = document.getElementById('pfMarketGrid');
-    grid.innerHTML = ['shopee', 'ml'].map(key => {
+    grid.innerHTML = ['ml'].map(key => {
       const selected = pfState.markets.has(key);
       return `
       <div class="pf-market-opt${selected ? ' selected' : ''}" data-market="${key}">
@@ -3771,16 +3771,16 @@
     pfState.productIdx = idx;
     pfState.images = [p.img];
     pfState.activeIdx = 0;
-    pfState.markets = new Set(['shopee']);
+    pfState.markets = new Set(['ml']);
 
     document.getElementById('pfTitleInput').value = p.name;
     document.getElementById('pfDescInput').value = buildDescription(p.name);
-    document.getElementById('pfComissao').value = feeDefaults.shopee.comissao;
-    document.getElementById('pfTaxaFixa').value = feeDefaults.shopee.taxaFixa;
+    document.getElementById('pfComissao').value = feeDefaults.ml.comissao;
+    document.getElementById('pfTaxaFixa').value = feeDefaults.ml.taxaFixa;
     document.getElementById('pfAntecipacao').value = 0;
     document.getElementById('pfMargem').value = 30;
-    document.getElementById('pfFeesMarketName').textContent = 'Shopee';
-    document.getElementById('pfPublishingIn').textContent = 'Shopee';
+    document.getElementById('pfFeesMarketName').textContent = 'Mercado Livre';
+    document.getElementById('pfPublishingIn').textContent = 'Mercado Livre';
 
     renderMarketGrid();
     renderThumbs();
