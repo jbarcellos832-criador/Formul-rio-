@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split — Mini Curso</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ───── SIDEBAR ───── */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #0d0d0d;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px 26px;
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .brand { font-weight: 500; color: #c7c7c7; }
+  .brand .dot {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    background: transparent;
+    border: 1.5px solid #4a3d0f;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand .dot svg { width: 18px; height: 18px; }
+  .brand-accent { color: #ffd400; font-weight: 800; }
+  .brand .dot svg { width: 17px; height: 17px; }
+  .nav { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #9a9a9a;
+    text-align: left;
+    width: 100%;
+  }
+  .nav-item .ic { width: 18px; height: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .nav-item .ic svg { width: 17px; height: 17px; }
+  .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .nav-item.active { background: rgba(255,212,0,0.1); color: #ffd400; border: 1px solid rgba(255,212,0,0.25); }
+  .nav-footer { padding-top: 16px; border-top: 1px solid #1c1c1c; margin-top: 10px; font-size: 12px; color: #6b6b6b; }
+
+  /* ───── MAIN ───── */
+  .main { flex: 1; min-width: 0; padding: 32px 40px 60px; margin-left: 260px; }
+  .top-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; }
+  .greeting-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .greeting-sub { font-size: 14px; color: #9a9a9a; }
+
+  .hero-card {
+    background: #0d0d0d;
+    border-radius: 18px;
+    padding: 30px 28px;
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; margin-bottom: 12px; text-transform: uppercase; }
+  .hero-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .hero-sub { font-size: 14.5px; color: #b8b8b8; line-height: 1.6; max-width: 600px; margin-bottom: 22px; }
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 13px 22px;
+    border-radius: 11px;
+  }
+  .hero-btn:hover { filter: brightness(0.95); }
+
+  .progress-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .progress-card { background: #0d0d0d; border-radius: 14px; padding: 18px 20px; }
+  .progress-top { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; color: #9a9a9a; margin-bottom: 10px; text-transform: uppercase; }
+  .progress-top span:last-child { color: #fff; text-transform: none; letter-spacing: 0; font-weight: 700; }
+  .progress-bar { height: 6px; border-radius: 4px; background: #262626; overflow: hidden; margin-bottom: 8px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #ffd400, #ffb800); transition: width 0.3s ease; }
+  .progress-pct { font-size: 12px; color: #9a9a9a; }
+
+  .modules-label { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
+
+  .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 620px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .mod-card {
+    position: relative;
+    background: #0d0d0d;
+    border: 1px solid #1c1c1c;
+    border-radius: 18px;
+    padding: 16px 14px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+    text-align: center;
+  }
+  .mod-card:hover { border-color: rgba(255,212,0,0.35); transform: translateY(-2px); }
+  .mod-card.selected { border-color: #ffd400; }
+  .mod-card.locked { cursor: default; }
+  .mod-card.locked:hover { border-color: #1c1c1c; transform: none; }
+
+  .mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
+  .mod-menu svg { width: 16px; height: 16px; }
+
+  .mod-icon {
+    width: 100%;
+    aspect-ratio: 1 / 0.95;
+    border-radius: 16px;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.2);
+    color: #ffd400;
+    display: flex; align-items: center; justify-content: center;
+    margin: 22px 0 16px;
+  }
+  .mod-icon svg { width: 40%; height: 40%; }
+  .mod-card.locked .mod-icon { background: #141414; border-color: #232323; border-style: dashed; color: #6a6a6a; }
+  .mod-card.extra .mod-icon { background: linear-gradient(160deg, #2b2308, #0d0d0d 70%); color: #ffd400; }
+
+  .mod-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: #ffd400;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); }
+  .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #ffd400, #ffb800); }
+
+  .mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; }
+  .mod-card.locked .mod-card-title { color: #9a9a9a; }
+  .mod-card-sub { font-size: 11.5px; color: #7a7a7a; line-height: 1.4; }
+  .mod-card-open { font-size: 11.5px; color: #ffd400; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
+  .modules { display: none; flex-direction: column; }
+  .modules.open { display: flex; }
+
+  .module-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #141414;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    width: fit-content;
+  }
+  .module-back:hover { background: #1a1a1a; }
+
+  .module-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .module-header-icon {
+    width: 56px; height: 56px;
+    border-radius: 15px;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3);
+    color: #ffd400;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .module-header-icon svg { width: 26px; height: 26px; }
+  .module-header-title { font-size: 22px; font-weight: 800; margin-bottom: 3px; }
+  .module-header-sub { font-size: 13px; color: #9a9a9a; }
+
+  .lesson-list { display: flex; flex-direction: column; gap: 14px; }
+  .lesson {
+    background: #0d0d0d;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    transition: border-color 0.15s ease;
+  }
+  .lesson:hover { border-color: rgba(255,212,0,0.25); }
+  .lesson.expanded { border-color: #ffd400; }
+  .lesson-row {
+    display: flex; align-items: center; gap: 18px;
+    padding: 14px 18px;
+    cursor: pointer;
+  }
+
+  .lesson-thumb {
+    position: relative;
+    width: 160px; height: 90px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1c1c1c, #0a0a0a);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lesson-thumb video, .lesson-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .lesson-play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lesson-play span {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+
+  .lesson-body { flex: 1; min-width: 0; }
+  .lesson-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; text-transform: uppercase; margin-bottom: 5px; }
+  .lesson-title { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+  .lesson-status { font-size: 12.5px; color: #d99a1f; }
+  .lesson.done .lesson-status { color: #ffd400; }
+
+  .lesson-chevron { color: #6a6a6a; flex-shrink: 0; transition: transform 0.2s ease; }
+  .lesson.expanded .lesson-chevron { transform: rotate(90deg); color: #ffd400; }
+
+  .lesson-detail { max-width: 780px; }
+  .lesson-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .lesson-detail-title { font-size: 20px; font-weight: 800; margin-bottom: 3px; }
+  .lesson-detail-sub { font-size: 13px; color: #9a9a9a; }
+  .lesson-detail-video { width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin-bottom: 18px; }
+  .lesson-detail-video iframe { width: 100%; aspect-ratio: 16/9; border: 0; display: block; }
+  .lesson-detail-video video { width: 100%; display: block; }
+
+  .lesson-watch-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(160deg, #1c1c1c, #0a0a0a);
+  }
+  .lesson-watch-link img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lesson-watch-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    color: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .lesson-watch-label {
+    position: absolute; bottom: 14px; left: 14px;
+    background: rgba(10,10,10,0.85);
+    color: #ffd400;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 8px;
+  }
+  .lesson-detail-empty {
+    background: #141414;
+    border: 1px dashed #2a2a2a;
+    border-radius: 14px;
+    padding: 40px 24px;
+    text-align: center;
+    font-size: 13.5px;
+    color: #7a7a7a;
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mark-watched-btn {
+    display: block; width: 100%;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14.5px;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .mark-watched-btn:hover { filter: brightness(0.95); }
+  .mark-watched-btn.done { background: #1c1c1c; color: #9a9a9a; }
+
+  /* ───── PROVAS SOCIAIS (WhatsApp mock) ───── */
+  .wa-wrap { max-width: 460px; border-radius: 16px; overflow: hidden; border: 1px solid #1c1c1c; }
+  .wa-header {
+    background: #202c33;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wa-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
+    border: 1px solid rgba(255,212,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .wa-header-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .wa-header-sub { font-size: 12.5px; color: #8a99a0; }
+
+  .wa-body {
+    background: #0b141a;
+    background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    padding: 16px 12px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .wa-msg { align-self: flex-start; max-width: 88%; }
+  .wa-bubble {
+    background: #202c33;
+    border-radius: 4px 12px 12px 12px;
+    padding: 6px;
+  }
+  .wa-media {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wa-media.placeholder {
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #1c2410, #0d0d0d 70%);
+    display: flex; align-items: center; justify-content: center;
+    color: #ffd400;
+  }
+  .wa-media img { width: 100%; height: auto; display: block; }
+  .wa-media svg { width: 34%; height: 34%; }
+  .wa-caption { font-size: 13.5px; color: #e9edef; padding: 8px 6px 2px; line-height: 1.5; }
+  .wa-time { font-size: 11px; color: #8a99a0; padding: 0 6px 4px; text-align: right; }
+
+  /* ───── GRUPO DE AVISOS ───── */
+  .avisos-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,212,0,0.1);
+    border: 1px solid rgba(255,212,0,0.3);
+    color: #ffd400;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .avisos-badge svg { width: 16px; height: 16px; }
+  .avisos-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .avisos-sub { font-size: 14.5px; color: #9a9a9a; line-height: 1.6; max-width: 640px; margin-bottom: 24px; }
+
+  .avisos-card {
+    max-width: 640px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255,212,0,0.25);
+    border-radius: 18px;
+    padding: 26px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 40px rgba(255,212,0,0.06);
+  }
+  .avisos-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .avisos-official-badge {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #0a0a0a; background: #ffd400; padding: 5px 11px; border-radius: 6px;
+  }
+  .avisos-icon {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: rgba(255,212,0,0.1);
+    border: 1px solid rgba(255,212,0,0.3);
+    color: #ffd400;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .avisos-icon svg { width: 22px; height: 22px; }
+  .avisos-card-title { font-size: 19px; font-weight: 800; margin-bottom: 10px; }
+  .avisos-card-text { font-size: 14px; color: #b8b8b8; line-height: 1.6; margin-bottom: 22px; }
+  .avisos-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 15px;
+    border-radius: 12px;
+  }
+  .avisos-btn:hover { filter: brightness(0.95); }
+  .avisos-btn svg { width: 19px; height: 19px; }
+
+  .avisos-rules {
+    max-width: 640px;
+    background: #0d0d0d;
+    border-radius: 18px;
+    padding: 24px 26px;
+  }
+  .avisos-rules-title { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; margin-bottom: 16px; }
+  .avisos-rules-title svg { width: 19px; height: 19px; color: #ffd400; }
+  .avisos-rules-text { font-size: 14px; color: #b8b8b8; line-height: 1.7; margin-bottom: 14px; }
+  .avisos-rules-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .avisos-rules-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #d0d0d0; }
+  .avisos-rules-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #ffd400; flex-shrink: 0; }
+
+  .mobile-menu-btn { display: none; }
+  .mobile-backdrop { display: none; }
+
+  @media (max-width: 900px) {
+    .mobile-menu-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px;
+      background: #141414;
+      border-radius: 10px;
+      color: #fff;
+      flex-shrink: 0;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 50;
+    }
+    .mobile-menu-btn svg { width: 20px; height: 20px; }
+    .top-row { flex-direction: column; align-items: flex-start; }
+
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 100;
+    }
+    .sidebar.mobile-open { transform: translateX(0); display: flex; }
+
+    .mobile-backdrop.open {
+      display: block;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+    }
+
+    .main { padding: 56px 18px 50px; margin-left: 0; }
+    .progress-row { grid-template-columns: 1fr; }
+    .hero-title { font-size: 22px; }
+  }
+
+  /* ───── LOGIN ───── */
+  #loginScreen {
+    position: fixed; inset: 0;
+    background: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+  }
+  .login-card {
+    width: 100%; max-width: 380px;
+    background: #0d0d0d;
+    border: 1px solid #1c1c1c;
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+  .login-brand {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 26px;
+    font-weight: 500; color: #c7c7c7;
+  }
+  .login-brand .dot {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    border: 1.5px solid #4a3d0f;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .login-brand .dot svg { width: 17px; height: 17px; }
+  .login-brand-accent { color: #ffd400; font-weight: 800; }
+  .login-title { font-size: 21px; font-weight: 800; margin-bottom: 6px; }
+  .login-sub { font-size: 13.5px; color: #9a9a9a; margin-bottom: 24px; }
+  .login-field { margin-bottom: 14px; }
+  .login-field label { display: block; font-size: 12.5px; font-weight: 700; color: #9a9a9a; margin-bottom: 6px; }
+  .login-field input {
+    width: 100%;
+    background: #161616;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    padding: 13px 14px;
+    color: #fff;
+    font-size: 14.5px;
+    font-family: inherit;
+  }
+  .login-field input:focus { outline: none; border-color: #ffd400; }
+  .login-error {
+    display: none;
+    font-size: 13px;
+    color: #ff6b6b;
+    background: rgba(255,107,107,0.1);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+  .login-error.show { display: block; }
+  .login-btn {
+    width: 100%;
+    background: #ffd400;
+    color: #0a0a0a;
+    font-weight: 800;
+    font-size: 14.5px;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+  .login-btn:hover { filter: brightness(0.95); }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>
+      </div>
+      Projeto <span class="login-brand-accent">ML</span>
+    </div>
+    <div class="login-title">Entrar no curso</div>
+    <div class="login-sub">Digite seu e-mail e senha de acesso.</div>
+    <form id="loginForm">
+      <div class="login-error" id="loginError">E-mail ou senha incorretos.</div>
+      <div class="login-field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="login-btn">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<div class="layout" id="appLayout" style="display:none;">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>
+      </div>
+      Projeto <span class="brand-accent">ML</span>
+    </div>
+    <nav class="nav">
+      <button type="button" class="nav-item active" data-page="home">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+        Início
+      </button>
+      <button type="button" class="nav-item" data-page="modules">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+        Módulos
+      </button>
+      <button type="button" class="nav-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+        Meu progresso
+      </button>
+      <button type="button" class="nav-item" data-page="avisos">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        Grupo de avisos
+      </button>
+      <button type="button" class="nav-item" data-page="provas">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.5 17 14.5 18.5 21.5 12 18 5.5 21.5 7 14.5 2 9.5 9 8.5 12 2"/></svg></span>
+        Provas sociais
+      </button>
+    </nav>
+    <div class="nav-footer">Split © 2026</div>
+  </aside>
+
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+  <main class="main">
+    <div class="top-row">
+      <button type="button" class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div>
+        <div class="greeting-title" id="greetingTitle">Bem-vindo(a) ao curso</div>
+        <div class="greeting-sub">Aprenda a montar e vender na sua loja marketplace do zero.</div>
+      </div>
+    </div>
+
+    <div id="page-home">
+      <div class="hero-card">
+        <div class="hero-eyebrow">Continue de onde parou</div>
+        <div class="hero-title">Vamos começar</div>
+        <div class="hero-sub">Um mini curso rápido pra você criar sua loja, escolher produtos com IA e vender todos os dias no marketplace.</div>
+        <button type="button" class="hero-btn" data-goto="modules">
+          Continuar assistindo <span>→</span>
+        </button>
+      </div>
+
+      <div class="progress-row">
+        <div class="progress-card">
+          <div class="progress-top"><span>MINI CURSO</span><span id="lessonCount">0 de 10</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+          <div class="progress-pct" id="progressPct">0% concluído</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-top"><span>MÓDULOS</span><span>3 liberados</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:100%; background:#3a3a3a;"></div></div>
+          <div class="progress-pct">Loja Marketplace, Fornecedor IA, Estratégia de Vendas</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-modules" style="display:none;">
+      <div id="moduleGridWrap">
+        <div class="modules-label">Módulos do curso</div>
+        <div class="module-grid" id="moduleGrid"></div>
+      </div>
+
+      <div class="modules" id="modules"></div>
+    </div>
+
+    <div id="page-avisos" style="display:none;">
+      <div class="avisos-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Comunidade Projeto ML 🙌
+      </div>
+      <div class="avisos-title">Grupo de avisos</div>
+      <div class="avisos-sub">O canal oficial do Projeto ML no WhatsApp. É por aqui que você fica sabendo de tudo em primeira mão.</div>
+
+      <div class="avisos-card">
+        <div class="avisos-card-top">
+          <div class="avisos-official-badge">Oficial</div>
+          <div class="avisos-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+        </div>
+        <div class="avisos-card-title">Grupo de avisos</div>
+        <div class="avisos-card-text">Tudo sobre a ferramenta e o projeto: atualizações, novas aulas liberadas e comunicados oficiais. Canal silencioso — só o que realmente importa.</div>
+        <a class="avisos-btn" href="https://www.whatsapp.com/channel/0029Vb8YDQO3bbV92PQ1xh12" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm5.6 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.4.7-2 .9-2.3.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.2-.3.4-.1.7.2.3.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1l.6-.7c.2-.3.4-.2.6-.1l1.7.8c.2.1.3.2.4.3.1.2.1.9-.1 1.6z"/></svg>
+          Entrar no canal de avisos
+        </a>
+      </div>
+
+      <div class="avisos-rules">
+        <div class="avisos-rules-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Regras da comunidade
+        </div>
+        <div class="avisos-rules-text"><strong>É obrigatório entrar no grupo</strong> pra receber os avisos. Serve tanto aqui dentro da área de membros quanto no canal do WhatsApp:</div>
+        <ul class="avisos-rules-list">
+          <li>Avisos da ferramenta</li>
+          <li>Aviso de aulas</li>
+          <li>Aviso de módulo novo</li>
+          <li>Provas</li>
+          <li>Depoimentos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="page-provas" style="display:none;">
+      <div class="modules-label">Provas sociais</div>
+      <div class="wa-wrap">
+        <div class="wa-header">
+          <div class="wa-avatar">🙌</div>
+          <div>
+            <div class="wa-header-title">Projeto ML 🙌</div>
+            <div class="wa-header-sub" id="provasCount">0 prints</div>
+          </div>
+        </div>
+        <div class="wa-body" id="provasBody"></div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+const modIcons = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="1.5"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+];
+
+const soonIcons = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-9-9V4h9l9 9a2 2 0 0 1 0 2.41z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+];
+
+const extraIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+
+const modulesData = [
+  {
+    title: 'Loja Marketplace',
+    sub: 'Monte a base da sua loja e deixe tudo organizado pra começar a vender.',
+    lessons: [
+      {
+        title: 'como criar a loja do mercado livre do zero',
+        text: '',
+        youtube: 'ox_TbJs-dbk',
+      },
+      {
+        title: 'Como funciona as vendas e ferramentas do mercado livre',
+        text: '',
+        youtube: 'LoyVdv7jmRI',
+      },
+      {
+        title: 'tudo certo com a loja e mercado livre?',
+        text: '',
+        youtube: 'vsiejbnEIuQ',
+      },
+    ],
+  },
+  {
+    title: 'Fornecedor IA',
+    sub: 'Encontrando produtos com IA.',
+    lessons: [
+      {
+        title: 'Como usar a IA pra encontrar produtos vencedores',
+        text: 'Use a inteligência artificial pra analisar tendências, volume de busca e concorrência antes de escolher um produto pra vender. Ela aponta os produtos com maior potencial de venda no momento.',
+        youtube: 'ahsZ6kdVfyo',
+      },
+      {
+        title: 'Escolhendo o fornecedor certo',
+        text: 'Compare prazo de entrega, preço de custo e avaliações do fornecedor. Priorize fornecedores com bom histórico e envio rápido — isso impacta direto na sua reputação como vendedor.',
+        youtube: '1wac9mznEQw',
+      },
+    ],
+  },
+  {
+    title: 'Estratégia de Vendas',
+    sub: 'Vendendo todos os dias.',
+    lessons: [
+      {
+        title: 'Montando sua vitrine de produtos',
+        text: 'Organize seus produtos por categoria e destaque os mais vendidos na página inicial da sua loja. Uma boa vitrine facilita a decisão de compra.',
+        youtube: 'XN9XuF-ZBnk',
+      },
+    ],
+  },
+];
+
+const comingSoonModules = [
+  { title: 'Tráfego e Anúncios', sub: 'Libera depois da loja girando' },
+  { title: 'Precificação Certa', sub: 'Em breve — gravação a caminho' },
+  { title: 'Atendimento que Vende', sub: 'Em breve — gravação a caminho' },
+  { title: 'Pós-venda e Recompra', sub: 'Em breve — gravação a caminho' },
+  { title: 'Financeiro da Loja', sub: 'Em breve — gravação a caminho' },
+  { title: 'Afiliados na Loja', sub: 'Em breve — solta quando for a hora certa' },
+];
+
+function doneSet() {
+  try { return new Set(JSON.parse(localStorage.getItem('splitCursoDone') || '[]')); }
+  catch { return new Set(); }
+}
+function saveDone(set) {
+  try { localStorage.setItem('splitCursoDone', JSON.stringify([...set])); } catch {}
+}
+
+let selectedModule = 0;
+
+function renderModuleGrid() {
+  const grid = document.getElementById('moduleGrid');
+  const done = doneSet();
+
+  const menuIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+
+  const realCards = modulesData.map((mod, mi) => {
+    const doneInMod = mod.lessons.filter((_, li) => done.has(mi + '-' + li)).length;
+    const badge = doneInMod === mod.lessons.length ? 'Concluído' : `Módulo ${String(mi + 1).padStart(2, '0')}`;
+    return `
+      <div class="mod-card${mi === selectedModule ? ' selected' : ''}" data-select-module="${mi}">
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${modIcons[mi] || modIcons[0]}</div>
+        <div class="mod-badge">${badge}</div>
+        <div class="mod-card-title">${mod.title}</div>
+        <div class="mod-card-sub">${mod.sub || ''}</div>
+      </div>`;
+  }).join('');
+
+  const soonCards = comingSoonModules.map((m, si) => `
+      <div class="mod-card locked">
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${soonIcons[si] || soonIcons[0]}</div>
+        <div class="mod-badge soon">Em breve</div>
+        <div class="mod-card-title">${m.title}</div>
+        <div class="mod-card-sub">${m.sub}</div>
+      </div>`).join('');
+
+  const extraCard = `
+      <div class="mod-card extra" data-select-module="extra">
+        <div class="mod-menu">${menuIcon}</div>
+        <div class="mod-icon">${extraIcon}</div>
+        <div class="mod-badge extra">Extra</div>
+        <div class="mod-card-title">Comunidade</div>
+        <div class="mod-card-open">Abrir <span>▶</span></div>
+      </div>`;
+
+  grid.innerHTML = realCards + soonCards + extraCard;
+
+  grid.querySelectorAll('[data-select-module]').forEach(card => {
+    card.addEventListener('click', () => {
+      const val = card.dataset.selectModule;
+      if (val === 'extra') {
+        window.open('https://www.whatsapp.com/channel/0029Vb8YDQO3bbV92PQ1xh12', '_blank');
+        return;
+      }
+      selectedModule = Number(val);
+      renderModuleGrid();
+      renderModules();
+      document.getElementById('moduleGridWrap').style.display = 'none';
+      document.getElementById('modules').classList.add('open');
+      window.scrollTo({ top: 0 });
+    });
+  });
+}
+
+function renderModules() {
+  const done = doneSet();
+  const wrap = document.getElementById('modules');
+  const totalLessons = modulesData.reduce((n, m) => n + m.lessons.length, 0);
+  const mi = selectedModule;
+  const mod = modulesData[mi];
+
+  const lessonsHtml = mod.lessons.map((lesson, li) => {
+    const id = mi + '-' + li;
+    const isDone = done.has(id);
+    const thumbHtml = lesson.youtube
+      ? `<img src="https://img.youtube.com/vi/${lesson.youtube}/mqdefault.jpg" alt="" onerror="this.style.display='none'">`
+      : lesson.video
+      ? `<video src="${lesson.video}" preload="metadata"></video>`
+      : '';
+    return `
+      <div class="lesson${isDone ? ' done' : ''}" data-lesson-id="${id}" data-lesson-idx="${li}">
+        <div class="lesson-row">
+          <div class="lesson-thumb">
+            ${thumbHtml}
+            <div class="lesson-play"><span>▶</span></div>
+          </div>
+          <div class="lesson-body">
+            <div class="lesson-num">Aula ${String(li + 1).padStart(2, '0')}</div>
+            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-status">${isDone ? 'Concluída · clique pra assistir de novo' : 'Liberada · clique pra assistir'}</div>
+          </div>
+          <div class="lesson-chevron">›</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <button type="button" class="module-back" id="moduleBackBtn">← Voltar</button>
+    <div class="module-header">
+      <div class="module-header-icon">${modIcons[mi] || modIcons[0]}</div>
+      <div>
+        <div class="module-header-title">${mod.title}</div>
+        <div class="module-header-sub">${mod.sub || ''}</div>
+      </div>
+    </div>
+    <div class="lesson-list">${lessonsHtml}</div>`;
+
+  const doneCount = done.size;
+  document.getElementById('lessonCount').textContent = doneCount + ' de ' + totalLessons;
+  const pct = totalLessons ? Math.round((doneCount / totalLessons) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '% concluído';
+
+  document.getElementById('moduleBackBtn').addEventListener('click', () => {
+    document.getElementById('modules').classList.remove('open');
+    document.getElementById('moduleGridWrap').style.display = '';
+    window.scrollTo({ top: 0 });
+  });
+
+  wrap.querySelectorAll('.lesson-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const lessonEl = row.closest('.lesson');
+      renderLessonDetail(mi, Number(lessonEl.dataset.lessonIdx));
+    });
+  });
+}
+
+function renderLessonDetail(mi, li) {
+  const wrap = document.getElementById('modules');
+  const mod = modulesData[mi];
+  const lesson = mod.lessons[li];
+  const id = mi + '-' + li;
+  const done = doneSet();
+  const isDone = done.has(id);
+
+  const videoHtml = lesson.youtube
+    ? `<a class="lesson-watch-link" href="https://youtu.be/${lesson.youtube}" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/${lesson.youtube}/hqdefault.jpg" alt="" onerror="this.style.display='none'">
+        <div class="lesson-watch-play"><span>▶</span></div>
+        <div class="lesson-watch-label">Assistir no YouTube ↗</div>
+      </a>`
+    : lesson.video
+    ? `<video controls src="${lesson.video}"></video>`
+    : `<div class="lesson-detail-empty">Vídeo ainda não enviado — assim que chegar, ele aparece aqui.</div>`;
+
+  wrap.innerHTML = `
+    <button type="button" class="module-back" id="lessonBackBtn">← Voltar</button>
+    <div class="lesson-detail">
+      <div class="lesson-detail-header">
+        <div class="module-header-icon">${modIcons[mi] || modIcons[0]}</div>
+        <div>
+          <div class="lesson-detail-title">${lesson.title}</div>
+          <div class="lesson-detail-sub">${mod.title}</div>
+        </div>
+      </div>
+      <div class="lesson-detail-video">${videoHtml}</div>
+      <button type="button" class="mark-watched-btn${isDone ? ' done' : ''}" id="markWatchedBtn">
+        ${isDone ? 'Aula concluída ✓' : 'Marcar como assistido'}
+      </button>
+    </div>`;
+
+  window.scrollTo({ top: 0 });
+
+  document.getElementById('lessonBackBtn').addEventListener('click', () => {
+    renderModules();
+    window.scrollTo({ top: 0 });
+  });
+
+  document.getElementById('markWatchedBtn').addEventListener('click', () => {
+    const set = doneSet();
+    set.add(id);
+    saveDone(set);
+
+    const btn = document.getElementById('markWatchedBtn');
+    btn.textContent = 'Aula concluída ✓';
+    btn.classList.add('done');
+
+    const total = modulesData.reduce((n, m) => n + m.lessons.length, 0);
+    const dc = set.size;
+    document.getElementById('lessonCount').textContent = dc + ' de ' + total;
+    const p = total ? Math.round((dc / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = p + '%';
+    document.getElementById('progressPct').textContent = p + '% concluído';
+    renderModuleGrid();
+  });
+}
+
+const provasData = [
+  {
+    img: 'assets/provas/prova-01.jpg',
+    caption: 'Print da ferramenta de pedidos mostrando as vendas do dia — aluno mandando pra bater um papo sobre os resultados.',
+    time: '19:32',
+  },
+  {
+    img: 'assets/provas/prova-02.jpg',
+    caption: 'Primeira venda saindo pelo Mercado Envios — aquele momento que todo aluno lembra.',
+    time: '11:25',
+  },
+  {
+    img: 'assets/provas/prova-03.jpg',
+    caption: 'Notificação de venda chegando enquanto o aluno tira dúvida no grupo.',
+    time: '20:32',
+  },
+  {
+    img: 'assets/provas/prova-04.jpg',
+    caption: 'Saldo disponível pra liberar depois de só 5 dias vendendo.',
+    time: '14:10',
+  },
+  {
+    img: 'assets/provas/prova-05.jpg',
+    caption: 'Produtos já cadastrados na loja, prontos pra começar a vender.',
+    time: 'hoje',
+  },
+  {
+    img: 'assets/provas/prova-06.jpg',
+    caption: '"Fiz uma venda" — mais uma aluna comemorando a primeira venda no Mercado Livre.',
+    time: '15:20',
+  },
+  {
+    img: 'assets/provas/prova-07.jpg',
+    caption: 'Painel de vendas ao vivo mostrando a primeira venda entrando.',
+    time: '00:56',
+  },
+  {
+    img: 'assets/provas/prova-08.jpg',
+    caption: 'Aluno mandando print dos pedidos no Fornecefy e da compra feita no Mercado Livre.',
+    time: '09:50',
+  },
+  {
+    img: 'assets/provas/prova-09.jpg',
+    caption: 'Notificação de venda chegando — "Kakah primeira venda".',
+    time: '12:33',
+  },
+  {
+    img: 'assets/provas/prova-10.png',
+    caption: 'Métricas da loja no Mercado Livre: vendas brutas, visitas e conversão subindo.',
+    time: '18:29',
+  },
+  {
+    img: 'assets/provas/prova-11.jpg',
+    caption: '"Consegui fazer uma venda" — aluno confirmando a primeira venda e já perguntando o próximo passo.',
+    time: '12:09',
+  },
+  {
+    img: 'assets/provas/prova-12.jpg',
+    caption: 'Detalhe de uma venda com o custo de vender e de cobrar já calculados certinho.',
+    time: '14:59',
+  },
+];
+
+function renderProvas() {
+  const body = document.getElementById('provasBody');
+  body.innerHTML = provasData.map(p => `
+    <div class="wa-msg">
+      <div class="wa-bubble">
+        <div class="wa-media${p.img ? '' : ' placeholder'}">${p.img ? `<img src="${p.img}" alt="">` : p.icon}</div>
+        <div class="wa-caption">${p.caption}</div>
+        <div class="wa-time">${p.time} ✓✓</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('provasCount').textContent = provasData.length + ' prints';
+}
+
+function goToPage(page) {
+  document.getElementById('page-home').style.display = page === 'home' ? '' : 'none';
+  document.getElementById('page-modules').style.display = page === 'modules' ? '' : 'none';
+  document.getElementById('page-avisos').style.display = page === 'avisos' ? '' : 'none';
+  document.getElementById('page-provas').style.display = page === 'provas' ? '' : 'none';
+  document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === page);
+  });
+  window.scrollTo({ top: 0 });
+}
+
+document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    goToPage(btn.dataset.page);
+    closeMobileMenu();
+  });
+});
+document.querySelectorAll('[data-goto]').forEach(btn => {
+  btn.addEventListener('click', () => goToPage(btn.dataset.goto));
+});
+
+function openMobileMenu() {
+  document.querySelector('.sidebar').classList.add('mobile-open');
+  document.getElementById('mobileBackdrop').classList.add('open');
+}
+function closeMobileMenu() {
+  document.querySelector('.sidebar').classList.remove('mobile-open');
+  document.getElementById('mobileBackdrop').classList.remove('open');
+}
+document.getElementById('mobileMenuBtn').addEventListener('click', openMobileMenu);
+document.getElementById('mobileBackdrop').addEventListener('click', closeMobileMenu);
+
+renderModuleGrid();
+renderModules();
+renderProvas();
+
+const VALID_EMAIL = 'projetoml@gmail.com';
+const VALID_PASSWORD = '2kfaturamento';
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appLayout').style.display = '';
+}
+
+if (localStorage.getItem('projetoMLLoggedIn') === 'true') {
+  showApp();
+}
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+  if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+    localStorage.setItem('projetoMLLoggedIn', 'true');
+    errorEl.classList.remove('show');
+    showApp();
+  } else {
+    errorEl.classList.add('show');
+  }
+});
+</script>
+
+</body>
+</html>
