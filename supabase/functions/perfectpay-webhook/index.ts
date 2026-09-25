@@ -25,6 +25,18 @@ const APP_LOGIN_URL = Deno.env.get("APP_LOGIN_URL") ?? "https://splitia.space/";
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 
+// CORS headers so this endpoint can also be triggered from a browser (e.g.
+// a manual test page), not just server-to-server calls from Perfect Pay.
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+function respond(body: string, status: number) {
+  return new Response(body, { status, headers: CORS_HEADERS });
+}
+
 // Statuses from Perfect Pay that should grant access. Adjust to match
 // exactly what your Perfect Pay panel sends (check a real payload under
 // Integrações > Webhook in Perfect Pay before going live).
@@ -97,8 +109,11 @@ async function sendWelcomeEmail(to: string, name: string, password: string) {
 }
 
 Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
+    return respond("Method not allowed", 405);
   }
 
   // Perfect Pay must be configured to send this token back (as a query
@@ -106,14 +121,14 @@ Deno.serve(async (req) => {
   // instead, depending on what Perfect Pay supports).
   const url = new URL(req.url);
   if (url.searchParams.get("token") !== WEBHOOK_TOKEN) {
-    return new Response("Unauthorized", { status: 401 });
+    return respond("Unauthorized", 401);
   }
 
   let payload: Record<string, unknown>;
   try {
     payload = await req.json();
   } catch {
-    return new Response("Invalid JSON", { status: 400 });
+    return respond("Invalid JSON", 400);
   }
 
   // TODO: confirm these field names against a real Perfect Pay payload.
@@ -154,12 +169,12 @@ Deno.serve(async (req) => {
   );
 
   if (!email) {
-    return new Response("Missing customer email", { status: 400 });
+    return respond("Missing customer email", 400);
   }
   if (!APPROVED_STATUSES.has(status)) {
     // Not an approved-sale event (e.g. a refund or pending notification) —
     // acknowledge it but do nothing.
-    return new Response("Ignored (status not approved)", { status: 200 });
+    return respond("Ignored (status not approved)", 200);
   }
 
   // Idempotency: if we've already processed this exact order, stop here.
@@ -169,7 +184,7 @@ Deno.serve(async (req) => {
     .eq("perfectpay_order_id", orderId)
     .maybeSingle();
   if (existing) {
-    return new Response("Already processed", { status: 200 });
+    return respond("Already processed", 200);
   }
 
   const password = randomPassword();
@@ -188,9 +203,7 @@ Deno.serve(async (req) => {
       user_metadata: { full_name: name, plan },
     });
     if (createError) {
-      return new Response(`Failed to create user: ${createError.message}`, {
-        status: 500,
-      });
+      return respond(`Failed to create user: ${createError.message}`, 500);
     }
     await sendWelcomeEmail(email, name, password);
   }
@@ -203,5 +216,5 @@ Deno.serve(async (req) => {
     status,
   });
 
-  return new Response("OK", { status: 200 });
+  return respond("OK", 200);
 });
