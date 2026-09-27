@@ -3564,7 +3564,7 @@
               <div class="supplier">Rio de Janeiro</div>
             </div>
           </div>
-          <button class="btn-list" data-idx="${products.indexOf(p)}" ${p.cadastrado ? 'disabled style="opacity:0.6;"' : ''}>${p.cadastrado ? 'Cadastrado ✓' : 'Cadastrar no Marketplace'}</button>
+          <button class="btn-list" data-idx="${products.indexOf(p)}">Cadastrar no Marketplace</button>
         </div>
       </div>
     `).join('');
@@ -4084,18 +4084,8 @@
 
   const connectedStores = [
     {
-      key: 'shopee', marketKey: 'shopee', name: 'Loja Shopee', platform: 'Shopee', logo: marketLogos.shopee, logoBg: 'transparent', logoColor: '#ee4d2d',
-      lastSync: null,
-      type: 'shopee',
-    },
-    {
       key: 'ml', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: marketLogos.ml, logoBg: 'transparent', logoColor: '#c9a300',
       lastSync: '16/09/2026, 15:19:50',
-      type: 'ml',
-    },
-    {
-      key: 'ml-2', marketKey: 'ml', name: 'Mercado Livre', platform: 'Mercado Livre', logo: marketLogos.ml, logoBg: 'transparent', logoColor: '#c9a300',
-      lastSync: null,
       type: 'ml',
     },
   ];
