@@ -159,6 +159,13 @@
   .ean-barcode-box { background: #fff; border-radius: 14px; padding: 24px 20px 16px; display: inline-block; }
   .ean-barcode-box svg { display: block; }
   .short-result-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 13px 14px; margin-top: 18px; font-size: 14.5px; color: var(--green, #16c784); font-weight: 700; }
+  .short-hist-row { display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .short-hist-row:first-child { border-top: none; }
+  .short-hist-orig { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 13.5px; }
+  .short-hist-short { color: var(--green, #16c784); font-weight: 800; font-size: 14px; flex-shrink: 0; }
+  .short-hist-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .short-hist-actions button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #ccc; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .short-hist-actions button:hover { background: rgba(255,255,255,0.09); color: #fff; }
 
   .side-footer {
     display: flex;
@@ -3529,19 +3536,23 @@
       <div class="page-head">
         <div>
           <div class="page-title">Encurtador de Link</div>
-          <div class="page-sub">Crie links curtos do Split para compartilhar seus produtos.</div>
+          <div class="page-sub">Gere hashes curtos para URLs longas (armazenado localmente).</div>
+        </div>
+      </div>
+      <div class="tool-card" style="margin-bottom:20px;">
+        <div class="tool-label">URL longa</div>
+        <div style="display:flex; gap:12px;">
+          <input type="text" class="tool-input" id="shortLinkInput" placeholder="https://exemplo.com/url/muito/longa" style="flex:1;">
+          <button type="button" class="tool-btn primary" id="shortLinkBtn" style="flex:none; padding:0 24px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+            Encurtar
+          </button>
         </div>
       </div>
       <div class="tool-card">
-        <div class="tool-label">Link original</div>
-        <input type="text" class="tool-input" id="shortLinkInput" placeholder="https://splitia.space/produto/..." style="margin-bottom:18px;">
-        <button type="button" class="tool-btn primary" id="shortLinkBtn" style="width:100%;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
-          Encurtar link
-        </button>
-        <div class="short-result-box" id="shortLinkResult" style="display:none;">
-          <span id="shortLinkResultText" style="flex:1;"></span>
-          <button type="button" class="tool-btn secondary" id="shortLinkCopyBtn" style="flex:none; padding:8px 14px;">Copiar</button>
+        <div style="font-size:15.5px; font-weight:800; color:#fff; margin-bottom:16px;" id="shortHistoryTitle">Histórico (0)</div>
+        <div id="shortHistoryList">
+          <div style="text-align:center; padding:40px 10px; color:var(--muted); font-size:14px;">Nenhum link encurtado ainda.</div>
         </div>
       </div>
     </div>
@@ -5341,24 +5352,78 @@
     setTimeout(() => { btn.innerHTML = original; }, 1500);
   });
 
-  // ── Ferramentas: Encurtador de Link ──
+  // ── Ferramentas: Encurtador de Link (histórico salvo localmente) ──
+  const SHORT_LINK_STORAGE_KEY = 'split_short_links';
+
+  function loadShortLinks() {
+    try {
+      return JSON.parse(localStorage.getItem(SHORT_LINK_STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveShortLinks(list) {
+    try {
+      localStorage.setItem(SHORT_LINK_STORAGE_KEY, JSON.stringify(list));
+    } catch {}
+  }
+
+  function renderShortHistory() {
+    const list = loadShortLinks();
+    document.getElementById('shortHistoryTitle').textContent = `Histórico (${list.length})`;
+    const wrap = document.getElementById('shortHistoryList');
+    if (list.length === 0) {
+      wrap.innerHTML = '<div style="text-align:center; padding:40px 10px; color:var(--muted); font-size:14px;">Nenhum link encurtado ainda.</div>';
+      return;
+    }
+    wrap.innerHTML = list.map((item, i) => `
+      <div class="short-hist-row" data-i="${i}">
+        <span class="short-hist-orig" title="${item.original.replace(/"/g, '&quot;')}">${item.original}</span>
+        <span class="short-hist-short">splitia.space/s/${item.code}</span>
+        <div class="short-hist-actions">
+          <button type="button" data-copy="${i}" title="Copiar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button type="button" data-del="${i}" title="Remover">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
   document.getElementById('shortLinkBtn').addEventListener('click', () => {
-    const original = document.getElementById('shortLinkInput').value.trim();
+    const input = document.getElementById('shortLinkInput');
+    const original = input.value.trim();
     if (!original) return;
     const code = Math.random().toString(36).slice(2, 8);
-    const short = `splitia.space/s/${code}`;
-    document.getElementById('shortLinkResultText').textContent = short;
-    document.getElementById('shortLinkResult').style.display = 'flex';
+    const list = loadShortLinks();
+    list.unshift({ original, code, date: Date.now() });
+    saveShortLinks(list);
+    input.value = '';
+    renderShortHistory();
   });
-  document.getElementById('shortLinkCopyBtn').addEventListener('click', () => {
-    const short = document.getElementById('shortLinkResultText').textContent;
-    if (!short) return;
-    navigator.clipboard.writeText('https://' + short).catch(() => {});
-    const btn = document.getElementById('shortLinkCopyBtn');
-    const original = btn.textContent;
-    btn.textContent = 'Copiado!';
-    setTimeout(() => { btn.textContent = original; }, 1500);
+
+  document.getElementById('shortHistoryList').addEventListener('click', e => {
+    const copyBtn = e.target.closest('[data-copy]');
+    const delBtn = e.target.closest('[data-del]');
+    const list = loadShortLinks();
+    if (copyBtn) {
+      const item = list[Number(copyBtn.dataset.copy)];
+      if (!item) return;
+      navigator.clipboard.writeText(`https://splitia.space/s/${item.code}`).catch(() => {});
+      const original = copyBtn.innerHTML;
+      copyBtn.textContent = '✓';
+      setTimeout(() => { copyBtn.innerHTML = original; }, 1200);
+    } else if (delBtn) {
+      list.splice(Number(delBtn.dataset.del), 1);
+      saveShortLinks(list);
+      renderShortHistory();
+    }
   });
+
+  renderShortHistory();
 
   // Dashboard overview chart (Faturamento e Performance)
   function renderDashChart(range) {
