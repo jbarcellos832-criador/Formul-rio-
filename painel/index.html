@@ -154,11 +154,10 @@
   .tool-btn { flex: 1; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 14.5px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .tool-btn.primary { background: var(--green, #16c784); color: #06341f; }
   .tool-btn.secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
-  .ean-result { text-align: center; padding: 30px 10px; }
-  .ean-bars { display: flex; align-items: flex-end; justify-content: center; height: 90px; gap: 1.5px; margin-bottom: 10px; background: #fff; border-radius: 10px; padding: 12px; }
-  .ean-bars span { display: block; width: 2.5px; background: #111; height: 100%; }
-  .ean-bars span.short { height: 78%; align-self: flex-start; }
-  .ean-code { font-size: 22px; font-weight: 800; letter-spacing: 0.08em; margin-top: 6px; color: #fff; }
+  .ean-result { text-align: center; padding: 6px 10px 30px; }
+  .ean-code { font-size: 30px; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 20px; color: #fff; }
+  .ean-barcode-box { background: #fff; border-radius: 14px; padding: 24px 20px 16px; display: inline-block; }
+  .ean-barcode-box svg { display: block; }
   .short-result-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 13px 14px; margin-top: 18px; font-size: 14.5px; color: var(--green, #16c784); font-weight: 700; }
 
   .side-footer {
@@ -3499,25 +3498,27 @@
     <div class="content" id="page-ean" style="display:none;">
       <div class="page-head">
         <div>
-          <div class="page-title">Gerador de Código EAN</div>
-          <div class="page-sub">Gere códigos de barras EAN-13 válidos para seus produtos.</div>
+          <div class="page-title">Gerador de EAN</div>
+          <div class="page-sub">Gere códigos de barras EAN-13 com dígito verificador automático.</div>
         </div>
       </div>
       <div class="tool-card">
-        <div class="tool-label">Prefixo (opcional, até 12 dígitos)</div>
-        <input type="text" class="tool-input" id="eanPrefixInput" placeholder="Deixe em branco para gerar aleatório" maxlength="12" style="margin-bottom:22px;">
-        <button type="button" class="tool-btn primary" id="eanGenerateBtn" style="width:100%; margin-bottom:22px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.99 6.57 2.63L21 8"/><path d="M21 3v5h-5"/></svg>
-          Gerar código
-        </button>
+        <div class="tool-label">Código base (12 dígitos)</div>
+        <input type="text" class="tool-input" id="eanBaseInput" value="789123456789" maxlength="12" inputmode="numeric" style="margin-bottom:8px;">
+        <div id="eanValidationMsg" style="font-size:12.5px; font-weight:700; margin-bottom:22px;"></div>
         <div class="ean-result">
-          <div class="ean-bars" id="eanBars"></div>
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">EAN-13</div>
           <div class="ean-code" id="eanCodeText">—</div>
+          <div class="ean-barcode-box" id="eanBarcodeBox"></div>
         </div>
         <div class="tool-btn-row">
+          <button type="button" class="tool-btn primary" id="eanDownloadBtn" style="width:100%;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download SVG
+          </button>
           <button type="button" class="tool-btn secondary" id="eanCopyBtn" style="width:100%;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copiar código
+            Copiar EAN
           </button>
         </div>
       </div>
@@ -5239,7 +5240,12 @@
   });
   updateQrPreview();
 
-  // ── Ferramentas: Gerador EAN ──
+  // ── Ferramentas: Gerador EAN (EAN-13 real, com barras codificadas) ──
+  const EAN_L = ['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+  const EAN_G = ['0100111','0110011','0011011','0100001','0011101','0111001','0000101','0010001','0001001','0010111'];
+  const EAN_R = ['1110010','1100110','1101100','1000010','1011100','1001110','1010000','1000100','1001000','1110100'];
+  const EAN_PARITY = ['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+
   function eanCheckDigit(digits12) {
     let sum = 0;
     for (let i = 0; i < 12; i++) {
@@ -5247,36 +5253,88 @@
     }
     return (10 - (sum % 10)) % 10;
   }
-  function generateEan(prefix) {
-    let base = (prefix || '').replace(/\D/g, '').slice(0, 12);
-    while (base.length < 12) {
-      base += Math.floor(Math.random() * 10);
+
+  function eanEncodeBits(code13) {
+    const pattern = EAN_PARITY[Number(code13[0])];
+    let bits = '101';
+    for (let i = 1; i <= 6; i++) {
+      const table = pattern[i - 1] === 'L' ? EAN_L : EAN_G;
+      bits += table[Number(code13[i])];
     }
-    return base + eanCheckDigit(base);
+    bits += '01010';
+    for (let i = 7; i <= 12; i++) {
+      bits += EAN_R[Number(code13[i])];
+    }
+    bits += '101';
+    return bits;
   }
-  function renderEanBars(code) {
-    const wrap = document.getElementById('eanBars');
-    wrap.innerHTML = '';
-    for (let i = 0; i < code.length; i++) {
-      const digit = Number(code[i]);
-      const barCount = 2 + (digit % 3);
-      for (let b = 0; b < barCount; b++) {
-        const span = document.createElement('span');
-        if ((digit + b) % 4 === 0) span.classList.add('short');
-        wrap.appendChild(span);
+
+  function buildEanSvg(code13) {
+    const bits = eanEncodeBits(code13);
+    const guardRanges = [[0, 2], [45, 49], [92, 94]];
+    const isGuard = idx => guardRanges.some(([a, b]) => idx >= a && idx <= b);
+    const moduleW = 2.6;
+    const baseH = 90;
+    const guardH = 102;
+    const width = bits.length * moduleW;
+    const height = guardH + 6;
+    let rects = '';
+    for (let i = 0; i < bits.length; i++) {
+      if (bits[i] === '1') {
+        const h = isGuard(i) ? guardH : baseH;
+        rects += `<rect x="${(i * moduleW).toFixed(2)}" y="0" width="${moduleW}" height="${h}" fill="#111"/>`;
       }
     }
+    return { svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${rects}</svg>`, width, height };
   }
-  document.getElementById('eanGenerateBtn').addEventListener('click', () => {
-    const prefix = document.getElementById('eanPrefixInput').value;
-    const code = generateEan(prefix);
-    document.getElementById('eanCodeText').textContent = code;
-    renderEanBars(code);
+
+  function formatEanDisplay(code13) {
+    return `${code13[0]}  ${code13.slice(1, 7)}  ${code13.slice(7, 13)}`;
+  }
+
+  let eanCurrentCode = '';
+
+  function updateEanPreview() {
+    const raw = document.getElementById('eanBaseInput').value.replace(/\D/g, '').slice(0, 12);
+    const msg = document.getElementById('eanValidationMsg');
+    const barcodeBox = document.getElementById('eanBarcodeBox');
+    const codeText = document.getElementById('eanCodeText');
+    if (raw.length !== 12) {
+      msg.textContent = `${raw.length}/12 dígitos`;
+      msg.style.color = 'var(--muted)';
+      codeText.textContent = '—';
+      barcodeBox.innerHTML = '';
+      eanCurrentCode = '';
+      return;
+    }
+    const check = eanCheckDigit(raw);
+    const code13 = raw + check;
+    eanCurrentCode = code13;
+    msg.textContent = '12 dígitos OK · dígito verificador calculado';
+    msg.style.color = 'var(--green, #16c784)';
+    codeText.textContent = formatEanDisplay(code13);
+    const { svg } = buildEanSvg(code13);
+    barcodeBox.innerHTML = svg + `<div style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:#111; margin-top:6px;">${code13}</div>`;
+  }
+
+  document.getElementById('eanBaseInput').addEventListener('input', updateEanPreview);
+  updateEanPreview();
+
+  document.getElementById('eanDownloadBtn').addEventListener('click', () => {
+    if (!eanCurrentCode) return;
+    const { svg } = buildEanSvg(eanCurrentCode);
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ean13-${eanCurrentCode}.svg`;
+    a.click();
+    URL.revokeObjectURL(url);
   });
+
   document.getElementById('eanCopyBtn').addEventListener('click', () => {
-    const code = document.getElementById('eanCodeText').textContent;
-    if (code === '—') return;
-    navigator.clipboard.writeText(code).catch(() => {});
+    if (!eanCurrentCode) return;
+    navigator.clipboard.writeText(eanCurrentCode).catch(() => {});
     const btn = document.getElementById('eanCopyBtn');
     const original = btn.innerHTML;
     btn.textContent = 'Copiado!';
