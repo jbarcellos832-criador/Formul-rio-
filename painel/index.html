@@ -167,6 +167,26 @@
   .short-hist-actions button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #ccc; display: flex; align-items: center; justify-content: center; cursor: pointer; }
   .short-hist-actions button:hover { background: rgba(255,255,255,0.09); color: #fff; }
 
+  .trend-plat-row { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .trend-plat-btn { display: flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: #ccc; font-weight: 700; font-size: 14px; cursor: pointer; }
+  .trend-plat-btn.active { background: var(--green, #16c784); color: #06341f; border-color: transparent; }
+  .trend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .trend-search-row { display: flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+  .trend-search-box { flex: 1; min-width: 240px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: #888; }
+  .trend-search-box input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; padding: 12px 0; font-family: inherit; }
+  .trend-cat-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .trend-cat-btn { padding: 11px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: #ccc; font-weight: 700; font-size: 13.5px; cursor: pointer; white-space: nowrap; }
+  .trend-cat-btn.active { background: #fff; color: #111; border-color: transparent; }
+  .trend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .trend-card { background: var(--card-bg, #17181c); border: 1px solid var(--card-border, rgba(255,255,255,0.08)); border-radius: 14px; padding: 18px; }
+  .trend-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .trend-badge { font-size: 11px; font-weight: 800; padding: 4px 9px; border-radius: 6px; color: #fff; }
+  .trend-rank { font-size: 12.5px; color: var(--muted); font-weight: 700; }
+  .trend-growth { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--green, #16c784); background: rgba(22,199,132,0.12); padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; gap: 3px; }
+  .trend-name { font-size: 15.5px; font-weight: 800; color: #fff; margin-bottom: 22px; line-height: 1.35; min-height: 42px; }
+  .trend-card-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
+  .trend-card-bottom a { color: var(--green, #16c784); font-weight: 700; text-decoration: none; }
+
   .side-footer {
     display: flex;
     align-items: center;
@@ -3557,6 +3577,37 @@
       </div>
     </div>
 
+    <!-- Ferramentas: Tendências de Mercado -->
+    <div class="content" id="page-tendencias" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Tendências de Mercado</div>
+          <div class="page-sub">Descubra os produtos e termos com maior crescimento de buscas na Shopee, Mercado Livre e TikTok.</div>
+        </div>
+      </div>
+      <div class="trend-plat-row" id="trendPlatRow">
+        <button type="button" class="trend-plat-btn active" data-plat="todas">Todas as Plataformas</button>
+        <button type="button" class="trend-plat-btn" data-plat="shopee"><span class="trend-dot" style="background:#ee4d2d;"></span>Shopee</button>
+        <button type="button" class="trend-plat-btn" data-plat="ml"><span class="trend-dot" style="background:#ffe600;"></span>Mercado Livre</button>
+        <button type="button" class="trend-plat-btn" data-plat="tiktok"><span class="trend-dot" style="background:#ff0050;"></span>TikTok Shop</button>
+      </div>
+      <div class="trend-search-row">
+        <div class="trend-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="trendSearchInput" placeholder="Buscar termo ou nicho em alta...">
+        </div>
+        <div class="trend-cat-row" id="trendCatRow">
+          <button type="button" class="trend-cat-btn active" data-cat="todas">Todas</button>
+          <button type="button" class="trend-cat-btn" data-cat="Tecnologia">Tecnologia</button>
+          <button type="button" class="trend-cat-btn" data-cat="Moda">Moda</button>
+          <button type="button" class="trend-cat-btn" data-cat="Beleza">Beleza</button>
+          <button type="button" class="trend-cat-btn" data-cat="Casa">Casa</button>
+          <button type="button" class="trend-cat-btn" data-cat="Fitness">Fitness</button>
+        </div>
+      </div>
+      <div class="trend-grid" id="trendGrid"></div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -4879,6 +4930,7 @@
   const pageQrcode = document.getElementById('page-qrcode');
   const pageEan = document.getElementById('page-ean');
   const pageEncurtador = document.getElementById('page-encurtador');
+  const pageTendencias = document.getElementById('page-tendencias');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -4900,6 +4952,7 @@
     pageQrcode.style.display = 'none';
     pageEan.style.display = 'none';
     pageEncurtador.style.display = 'none';
+    pageTendencias.style.display = 'none';
     pageGeneric.style.display = 'none';
     const pfPage = document.getElementById('page-product-form');
     if (pfPage) pfPage.style.display = 'none';
@@ -4930,6 +4983,8 @@
       pageEan.style.display = '';
     } else if (key === 'encurtador') {
       pageEncurtador.style.display = '';
+    } else if (key === 'tendencias') {
+      pageTendencias.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
@@ -5424,6 +5479,99 @@
   });
 
   renderShortHistory();
+
+  // ── Ferramentas: Tendências de Mercado ──
+  const trendData = [
+    { plat: 'shopee', rank: 1, cat: 'Beleza', growth: 342, name: 'Perfume Árabe Floral Feminino', searches: '185.4k' },
+    { plat: 'shopee', rank: 2, cat: 'Casa', growth: 280, name: 'Garrafa Térmica Digital Inox 500ml', searches: '142.1k' },
+    { plat: 'shopee', rank: 3, cat: 'Moda', growth: 210, name: 'Kit 3 Camisetas Algodão Premium', searches: '98.7k' },
+    { plat: 'shopee', rank: 4, cat: 'Casa', growth: 195, name: 'Umidificador e Difusor Ultrassônico Chama', searches: '84.2k' },
+    { plat: 'shopee', rank: 5, cat: 'Tecnologia', growth: 160, name: 'Fone de Ouvido Bluetooth Sem Fio TWS', searches: '210.0k' },
+    { plat: 'shopee', rank: 6, cat: 'Beleza', growth: 145, name: 'Organizador de Maquiagem Giratório 360', searches: '62.8k' },
+    { plat: 'ml', rank: 1, cat: 'Moda', growth: 315, name: 'Mochila Antifurto Impermeável com USB', searches: '168.0k' },
+    { plat: 'ml', rank: 2, cat: 'Tecnologia', growth: 265, name: 'Carregador Portátil Power Bank 20000mAh', searches: '155.3k' },
+    { plat: 'ml', rank: 3, cat: 'Casa', growth: 190, name: 'Luminária de Mesa LED Articulada Touch', searches: '76.4k' },
+    { plat: 'ml', rank: 4, cat: 'Fitness', growth: 175, name: 'Cinta Modeladora Abdominal Térmica', searches: '88.9k' },
+    { plat: 'ml', rank: 5, cat: 'Tecnologia', growth: 150, name: 'Suporte Veicular Celular com Carregador Indução', searches: '112.5k' },
+    { plat: 'ml', rank: 6, cat: 'Casa', growth: 130, name: 'Mini Processador Triturador de Alimentos Elétrico', searches: '94.1k' },
+    { plat: 'tiktok', rank: 1, cat: 'Beleza', growth: 420, name: 'Modelador de Cachos Automático', searches: '231.0k' },
+    { plat: 'tiktok', rank: 2, cat: 'Tecnologia', growth: 380, name: 'Mini Projetor Portátil 4K WiFi', searches: '197.5k' },
+    { plat: 'tiktok', rank: 3, cat: 'Fitness', growth: 290, name: 'Garrafa Motivacional 2 Litros com Marcador de Horário', searches: '134.6k' },
+    { plat: 'tiktok', rank: 4, cat: 'Casa', growth: 245, name: 'Kit Organizador de Geladeira Empilhável', searches: '102.3k' },
+    { plat: 'tiktok', rank: 5, cat: 'Moda', growth: 205, name: 'Óculos de Sol Polarizado Retrô', searches: '89.7k' },
+    { plat: 'tiktok', rank: 6, cat: 'Beleza', growth: 175, name: 'Sérum Facial Vitamina C Antioxidante', searches: '77.2k' },
+  ];
+
+  const trendPlatMeta = {
+    shopee: { label: 'Shopee', color: '#ee4d2d' },
+    ml: { label: 'Mercado Livre', color: '#ffe600', textColor: '#3a3000' },
+    tiktok: { label: 'TikTok Shop', color: '#ff0050' },
+  };
+
+  const trendState = { plat: 'todas', cat: 'todas', query: '' };
+
+  function renderTrendGrid() {
+    const grid = document.getElementById('trendGrid');
+    const q = trendState.query.trim().toLowerCase();
+    const filtered = trendData.filter(item => {
+      if (trendState.plat !== 'todas' && item.plat !== trendState.plat) return false;
+      if (trendState.cat !== 'todas' && item.cat !== trendState.cat) return false;
+      if (q && !item.name.toLowerCase().includes(q) && !item.cat.toLowerCase().includes(q)) return false;
+      return true;
+    });
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px 10px; color:var(--muted);">Nenhuma tendência encontrada para esse filtro.</div>';
+      return;
+    }
+    grid.innerHTML = filtered.map(item => {
+      const meta = trendPlatMeta[item.plat];
+      const searchTerm = encodeURIComponent(item.name);
+      const link = item.plat === 'shopee'
+        ? `https://shopee.com.br/search?keyword=${searchTerm}`
+        : item.plat === 'ml'
+          ? `https://lista.mercadolivre.com.br/${searchTerm}`
+          : `https://www.tiktok.com/search?q=${searchTerm}`;
+      return `
+        <div class="trend-card">
+          <div class="trend-card-top">
+            <span class="trend-badge" style="background:${meta.color}; color:${meta.textColor || '#fff'};">${meta.label}</span>
+            <span class="trend-rank">#${item.rank} em ${item.cat}</span>
+            <span class="trend-growth">↗ +${item.growth}%</span>
+          </div>
+          <div class="trend-name">${item.name}</div>
+          <div class="trend-card-bottom">
+            <span>${item.searches} buscas/mês</span>
+            <a href="${link}" target="_blank" rel="noopener">Ver Anúncios ↗</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  document.getElementById('trendPlatRow').addEventListener('click', e => {
+    const btn = e.target.closest('.trend-plat-btn');
+    if (!btn) return;
+    document.querySelectorAll('.trend-plat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    trendState.plat = btn.dataset.plat;
+    renderTrendGrid();
+  });
+
+  document.getElementById('trendCatRow').addEventListener('click', e => {
+    const btn = e.target.closest('.trend-cat-btn');
+    if (!btn) return;
+    document.querySelectorAll('.trend-cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    trendState.cat = btn.dataset.cat;
+    renderTrendGrid();
+  });
+
+  document.getElementById('trendSearchInput').addEventListener('input', e => {
+    trendState.query = e.target.value;
+    renderTrendGrid();
+  });
+
+  renderTrendGrid();
 
   // Dashboard overview chart (Faturamento e Performance)
   function renderDashChart(range) {
