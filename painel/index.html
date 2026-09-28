@@ -133,7 +133,33 @@
 
   .nav-sep { height: 1px; background: rgba(255,255,255,0.07); margin: 10px 4px; }
 
-  .caret { margin-left: auto; font-size: 11px; color: #888; }
+  .caret { margin-left: auto; font-size: 11px; color: #888; transition: transform 0.15s; }
+  .caret.open { transform: rotate(180deg); }
+
+  .nav-sub { display: flex; flex-direction: column; gap: 2px; padding-left: 30px; overflow: hidden; max-height: 0; transition: max-height 0.2s ease; }
+  .nav-sub.open { max-height: 260px; }
+  .nav-sub .nav-item { padding: 8px 12px; font-size: 13.5px; }
+  .sidebar.collapsed .nav-sub { display: none; }
+
+  .tool-card { background: var(--card-bg, #17181c); border: 1px solid var(--card-border, rgba(255,255,255,0.08)); border-radius: 16px; padding: 24px; }
+  .tool-label { font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .tool-input { width: 100%; padding: 13px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: #fff; font-size: 14.5px; font-family: inherit; }
+  .tool-input:focus { outline: none; border-color: var(--blue); }
+  .tool-res-row { display: flex; gap: 10px; margin-top: 4px; }
+  .tool-res-btn { padding: 10px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: #ccc; font-weight: 700; font-size: 13.5px; cursor: pointer; }
+  .tool-res-btn.active { background: var(--green, #16c784); color: #06341f; border-color: transparent; }
+  .qr-preview-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; padding: 40px; min-height: 300px; }
+  .qr-preview-box img { background: #fff; border-radius: 14px; padding: 14px; }
+  .tool-btn-row { display: flex; gap: 12px; margin-top: 20px; }
+  .tool-btn { flex: 1; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 14.5px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .tool-btn.primary { background: var(--green, #16c784); color: #06341f; }
+  .tool-btn.secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
+  .ean-result { text-align: center; padding: 30px 10px; }
+  .ean-bars { display: flex; align-items: flex-end; justify-content: center; height: 90px; gap: 1.5px; margin-bottom: 10px; background: #fff; border-radius: 10px; padding: 12px; }
+  .ean-bars span { display: block; width: 2.5px; background: #111; height: 100%; }
+  .ean-bars span.short { height: 78%; align-self: flex-start; }
+  .ean-code { font-size: 22px; font-weight: 800; letter-spacing: 0.08em; margin-top: 6px; color: #fff; }
+  .short-result-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 13px 14px; margin-top: 18px; font-size: 14.5px; color: var(--green, #16c784); font-weight: 700; }
 
   .side-footer {
     display: flex;
@@ -2391,11 +2417,29 @@
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></span>
         <span>Financeiro &amp; PIX</span>
       </button>
-      <button type="button" class="nav-item" id="toolsToggle" data-page="ferramentas">
+      <button type="button" class="nav-item" id="toolsToggle">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-3-3z"/></svg></span>
         <span>Ferramentas</span>
         <span class="caret" id="toolsCaret">▾</span>
       </button>
+      <div class="nav-sub" id="toolsSubmenu">
+        <button type="button" class="nav-item" data-page="qrcode">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M20 14h1v1h-1z"/><path d="M14 20h1v1h-1z"/><path d="M20 20h1v1h-1z"/></svg></span>
+          <span>QR Code</span>
+        </button>
+        <button type="button" class="nav-item" data-page="ean">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v12"/><path d="M8 6v12"/><path d="M11 6v12"/><path d="M15 6v12"/><path d="M18 6v12"/><path d="M21 6v12"/></svg></span>
+          <span>Gerador EAN</span>
+        </button>
+        <button type="button" class="nav-item" data-page="encurtador">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"/></svg></span>
+          <span>Encurtador Link</span>
+        </button>
+        <button type="button" class="nav-item" data-page="tendencias">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span>
+          <span>Tendências</span>
+        </button>
+      </div>
       <button type="button" class="nav-item" data-page="tutoriais">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
         <span>Tutoriais</span>
@@ -3418,6 +3462,89 @@
       </div>
     </div>
 
+    <!-- Ferramentas: QR Code -->
+    <div class="content" id="page-qrcode" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Gerador de QR Code</div>
+          <div class="page-sub">Gere QR codes instantâneos para links, produtos ou chaves PIX.</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-label">URL ou texto</div>
+        <input type="text" class="tool-input" id="qrTextInput" value="https://splitia.space" style="margin-bottom:22px;">
+        <div class="tool-label">Resolução</div>
+        <div class="tool-res-row" id="qrResRow" style="margin-bottom:22px;">
+          <button type="button" class="tool-res-btn" data-res="128">128px</button>
+          <button type="button" class="tool-res-btn active" data-res="256">256px</button>
+          <button type="button" class="tool-res-btn" data-res="512">512px</button>
+        </div>
+        <div class="qr-preview-box">
+          <img id="qrPreviewImg" src="" alt="QR Code" width="220" height="220">
+        </div>
+        <div class="tool-btn-row">
+          <a class="tool-btn primary" id="qrDownloadBtn" download="qrcode-split.png" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PNG
+          </a>
+          <button type="button" class="tool-btn secondary" id="qrCopyBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar Link
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ferramentas: Gerador EAN -->
+    <div class="content" id="page-ean" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Gerador de Código EAN</div>
+          <div class="page-sub">Gere códigos de barras EAN-13 válidos para seus produtos.</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-label">Prefixo (opcional, até 12 dígitos)</div>
+        <input type="text" class="tool-input" id="eanPrefixInput" placeholder="Deixe em branco para gerar aleatório" maxlength="12" style="margin-bottom:22px;">
+        <button type="button" class="tool-btn primary" id="eanGenerateBtn" style="width:100%; margin-bottom:22px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.99 6.57 2.63L21 8"/><path d="M21 3v5h-5"/></svg>
+          Gerar código
+        </button>
+        <div class="ean-result">
+          <div class="ean-bars" id="eanBars"></div>
+          <div class="ean-code" id="eanCodeText">—</div>
+        </div>
+        <div class="tool-btn-row">
+          <button type="button" class="tool-btn secondary" id="eanCopyBtn" style="width:100%;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar código
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ferramentas: Encurtador de Link -->
+    <div class="content" id="page-encurtador" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Encurtador de Link</div>
+          <div class="page-sub">Crie links curtos do Split para compartilhar seus produtos.</div>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-label">Link original</div>
+        <input type="text" class="tool-input" id="shortLinkInput" placeholder="https://splitia.space/produto/..." style="margin-bottom:18px;">
+        <button type="button" class="tool-btn primary" id="shortLinkBtn" style="width:100%;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+          Encurtar link
+        </button>
+        <div class="short-result-box" id="shortLinkResult" style="display:none;">
+          <span id="shortLinkResultText" style="flex:1;"></span>
+          <button type="button" class="tool-btn secondary" id="shortLinkCopyBtn" style="flex:none; padding:8px 14px;">Copiar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Placeholder pages (functional nav targets) -->
     <div class="content" id="page-generic" style="display:none;">
       <div class="page-head">
@@ -3448,6 +3575,7 @@
     integracoes:   { title: 'Integrações', sub: 'Conecte Mercado Livre, Shopee, Bling e outras plataformas.' },
     financeiro:    { title: 'Financeiro & PIX', sub: 'Extrato, recargas e movimentações financeiras.' },
     ferramentas:   { title: 'Ferramentas', sub: 'Utilitários para otimizar sua operação.' },
+    tendencias:    { title: 'Tendências', sub: 'Descubra os produtos em alta para vender.' },
     tutoriais:     { title: 'Tutoriais', sub: 'Aprenda a usar a plataforma passo a passo.' },
     chamados:      { title: 'Chamados', sub: 'Seus tickets de suporte.' },
     afiliados:     { title: 'Painel de afiliados', sub: 'Acompanhe suas indicações e comissões.' },
@@ -4736,6 +4864,9 @@
   const pageAfiliados = document.getElementById('page-afiliados');
   const pageFinanceiro = document.getElementById('page-financeiro');
   const pageTutoriais = document.getElementById('page-tutoriais');
+  const pageQrcode = document.getElementById('page-qrcode');
+  const pageEan = document.getElementById('page-ean');
+  const pageEncurtador = document.getElementById('page-encurtador');
   const pageGeneric = document.getElementById('page-generic');
   const genericTitle = document.getElementById('genericTitle');
   const genericSub = document.getElementById('genericSub');
@@ -4754,6 +4885,9 @@
     pageAfiliados.style.display = 'none';
     pageFinanceiro.style.display = 'none';
     pageTutoriais.style.display = 'none';
+    pageQrcode.style.display = 'none';
+    pageEan.style.display = 'none';
+    pageEncurtador.style.display = 'none';
     pageGeneric.style.display = 'none';
     const pfPage = document.getElementById('page-product-form');
     if (pfPage) pfPage.style.display = 'none';
@@ -4777,6 +4911,13 @@
       pageFinanceiro.style.display = '';
     } else if (key === 'tutoriais') {
       pageTutoriais.style.display = '';
+    } else if (key === 'qrcode') {
+      pageQrcode.style.display = '';
+      updateQrPreview();
+    } else if (key === 'ean') {
+      pageEan.style.display = '';
+    } else if (key === 'encurtador') {
+      pageEncurtador.style.display = '';
     } else {
       pageGeneric.style.display = '';
       const info = pageLabels[key] || { title: key };
@@ -5060,6 +5201,105 @@
       e.preventDefault();
       goToPage(el.dataset.page);
     });
+  });
+
+  // ── Ferramentas: submenu toggle ──
+  document.getElementById('toolsToggle').addEventListener('click', () => {
+    document.getElementById('toolsSubmenu').classList.toggle('open');
+    document.getElementById('toolsCaret').classList.toggle('open');
+  });
+
+  // ── Ferramentas: QR Code ──
+  let qrResolution = 256;
+  function updateQrPreview() {
+    const text = document.getElementById('qrTextInput').value.trim() || 'https://splitia.space';
+    const url = `https://api.qrserver.com/v1/create-qr-code/?size=${qrResolution}x${qrResolution}&data=${encodeURIComponent(text)}`;
+    const img = document.getElementById('qrPreviewImg');
+    img.src = url;
+    img.width = Math.min(qrResolution, 300);
+    img.height = Math.min(qrResolution, 300);
+    document.getElementById('qrDownloadBtn').href = url;
+  }
+  document.getElementById('qrTextInput').addEventListener('input', updateQrPreview);
+  document.querySelectorAll('#qrResRow .tool-res-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#qrResRow .tool-res-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      qrResolution = Number(btn.dataset.res);
+      updateQrPreview();
+    });
+  });
+  document.getElementById('qrCopyBtn').addEventListener('click', () => {
+    const text = document.getElementById('qrTextInput').value.trim() || 'https://splitia.space';
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById('qrCopyBtn');
+    const original = btn.innerHTML;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => { btn.innerHTML = original; }, 1500);
+  });
+  updateQrPreview();
+
+  // ── Ferramentas: Gerador EAN ──
+  function eanCheckDigit(digits12) {
+    let sum = 0;
+    for (let i = 0; i < 12; i++) {
+      sum += Number(digits12[i]) * (i % 2 === 0 ? 1 : 3);
+    }
+    return (10 - (sum % 10)) % 10;
+  }
+  function generateEan(prefix) {
+    let base = (prefix || '').replace(/\D/g, '').slice(0, 12);
+    while (base.length < 12) {
+      base += Math.floor(Math.random() * 10);
+    }
+    return base + eanCheckDigit(base);
+  }
+  function renderEanBars(code) {
+    const wrap = document.getElementById('eanBars');
+    wrap.innerHTML = '';
+    for (let i = 0; i < code.length; i++) {
+      const digit = Number(code[i]);
+      const barCount = 2 + (digit % 3);
+      for (let b = 0; b < barCount; b++) {
+        const span = document.createElement('span');
+        if ((digit + b) % 4 === 0) span.classList.add('short');
+        wrap.appendChild(span);
+      }
+    }
+  }
+  document.getElementById('eanGenerateBtn').addEventListener('click', () => {
+    const prefix = document.getElementById('eanPrefixInput').value;
+    const code = generateEan(prefix);
+    document.getElementById('eanCodeText').textContent = code;
+    renderEanBars(code);
+  });
+  document.getElementById('eanCopyBtn').addEventListener('click', () => {
+    const code = document.getElementById('eanCodeText').textContent;
+    if (code === '—') return;
+    navigator.clipboard.writeText(code).catch(() => {});
+    const btn = document.getElementById('eanCopyBtn');
+    const original = btn.innerHTML;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => { btn.innerHTML = original; }, 1500);
+  });
+
+  // ── Ferramentas: Encurtador de Link ──
+  document.getElementById('shortLinkBtn').addEventListener('click', () => {
+    const original = document.getElementById('shortLinkInput').value.trim();
+    if (!original) return;
+    const code = Math.random().toString(36).slice(2, 8);
+    const short = `splitia.space/s/${code}`;
+    document.getElementById('shortLinkResultText').textContent = short;
+    document.getElementById('shortLinkResult').style.display = 'flex';
+  });
+  document.getElementById('shortLinkCopyBtn').addEventListener('click', () => {
+    const short = document.getElementById('shortLinkResultText').textContent;
+    if (!short) return;
+    navigator.clipboard.writeText('https://' + short).catch(() => {});
+    const btn = document.getElementById('shortLinkCopyBtn');
+    const original = btn.textContent;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => { btn.textContent = original; }, 1500);
   });
 
   // Dashboard overview chart (Faturamento e Performance)
