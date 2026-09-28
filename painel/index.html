@@ -1119,6 +1119,30 @@
     font-size: 10px;
     border: none;
   }
+  .pf-thumb { cursor: grab; }
+  .pf-thumb.dragging { opacity: 0.35; }
+  .pf-thumb-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    opacity: 0; transition: opacity 0.15s ease;
+    pointer-events: none;
+  }
+  .pf-thumb:hover .pf-thumb-overlay { opacity: 1; pointer-events: auto; }
+  .pf-thumb-overlay button {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .pf-thumb-overlay button:hover { background: rgba(255,255,255,0.3); }
+  .pf-thumb-overlay button.pf-thumb-del:hover { background: #ff4d4d; }
+  .pf-thumb-overlay svg { width: 13px; height: 13px; }
+  .pf-thumb-drag-handle { cursor: grab; }
+  .pf-thumb-drag-handle:active { cursor: grabbing; }
   .pf-hint { font-size: 12px; color: var(--muted); margin-top: 10px; }
 
   .pf-section-label {
@@ -3668,10 +3692,17 @@
   function renderThumbs() {
     const wrap = document.getElementById('pfThumbs');
     wrap.innerHTML = pfState.images.map((src, i) => `
-      <div class="pf-thumb${i === pfState.activeIdx ? ' active' : ''}" data-idx="${i}">
+      <div class="pf-thumb${i === pfState.activeIdx ? ' active' : ''}" data-idx="${i}" draggable="true">
         <img src="${src}" alt="foto ${i + 1}">
         ${i === 0 ? '<span class="pf-cover-tag">CAPA</span>' : ''}
-        ${pfState.images.length > 1 ? `<button class="pf-thumb-remove" data-remove="${i}" title="Remover">✕</button>` : ''}
+        <div class="pf-thumb-overlay">
+          <button type="button" class="pf-thumb-drag-handle" title="Arrastar para reordenar" draggable="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+          </button>
+          ${pfState.images.length > 1 ? `<button type="button" class="pf-thumb-del" data-remove="${i}" title="Remover" draggable="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>` : ''}
+        </div>
       </div>
     `).join('');
     document.getElementById('pfPhotoHint').textContent = `A primeira imagem é a capa do anúncio. (${pfState.images.length}/9 fotos)`;
@@ -3693,6 +3724,46 @@
       renderThumbs();
       updateMainImage();
     }
+  });
+
+  let pfDragFromIdx = null;
+
+  document.getElementById('pfThumbs').addEventListener('dragstart', e => {
+    const thumb = e.target.closest('.pf-thumb');
+    if (!thumb) return;
+    pfDragFromIdx = Number(thumb.dataset.idx);
+    thumb.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+
+  document.getElementById('pfThumbs').addEventListener('dragend', e => {
+    const thumb = e.target.closest('.pf-thumb');
+    if (thumb) thumb.classList.remove('dragging');
+    pfDragFromIdx = null;
+  });
+
+  document.getElementById('pfThumbs').addEventListener('dragover', e => {
+    if (pfDragFromIdx === null) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  });
+
+  document.getElementById('pfThumbs').addEventListener('drop', e => {
+    if (pfDragFromIdx === null) return;
+    e.preventDefault();
+    const thumb = e.target.closest('.pf-thumb');
+    if (!thumb) return;
+    const toIdx = Number(thumb.dataset.idx);
+    if (toIdx === pfDragFromIdx) return;
+
+    const activeSrc = pfState.images[pfState.activeIdx];
+    const [moved] = pfState.images.splice(pfDragFromIdx, 1);
+    pfState.images.splice(toIdx, 0, moved);
+    pfState.activeIdx = pfState.images.indexOf(activeSrc);
+
+    pfDragFromIdx = null;
+    renderThumbs();
+    updateMainImage();
   });
 
   function updateMainImage() {
