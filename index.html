@@ -441,7 +441,9 @@
   }
   .refund-overlay.open { display: flex; }
   .refund-modal {
-    width: 100%; max-width: 440px;
+    width: 100%; max-width: 560px;
+    max-height: 88vh;
+    overflow-y: auto;
     background: #111318;
     border: 1px solid var(--card-border);
     border-radius: 18px;
@@ -472,8 +474,39 @@
     font-family: inherit;
     font-size: 14px;
   }
-  .refund-field textarea { resize: vertical; min-height: 70px; }
-  .refund-field input:focus, .refund-field textarea:focus { outline: none; border-color: var(--blue-border); }
+  .refund-field textarea { resize: vertical; min-height: 90px; }
+  .refund-field input:focus, .refund-field textarea:focus, .refund-field select:focus { outline: none; border-color: var(--blue-border); }
+  .refund-field select {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 11px 13px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    appearance: auto;
+  }
+  .refund-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .refund-field-row { grid-template-columns: 1fr; } }
+  .refund-section-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); margin: 22px 0 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .refund-field-row .refund-field:first-child + .refund-field { margin-bottom: 14px; }
+  .refund-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 8px; }
+  @media (max-width: 480px) { .refund-steps { grid-template-columns: 1fr; } }
+  .refund-step { background: var(--bg2); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; }
+  .refund-step-num {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--blue-glow); color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px; margin-bottom: 10px;
+  }
+  .refund-step-title { font-size: 13.5px; font-weight: 800; margin-bottom: 5px; }
+  .refund-step-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .refund-privacy { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
   .refund-submit {
     width: 100%;
     background: var(--blue);
@@ -868,20 +901,71 @@
     <div id="refundFormWrap">
       <h3>Solicitar reembolso</h3>
       <p class="refund-sub">Assinou há menos de 7 dias? Preencha abaixo e devolvemos o valor inteiro, sem perguntas.</p>
+
+      <div class="refund-steps">
+        <div class="refund-step">
+          <div class="refund-step-num">1</div>
+          <div class="refund-step-title">Envie sua solicitação</div>
+          <div class="refund-step-text">Preencha o formulário com seus dados e o motivo do pedido.</div>
+        </div>
+        <div class="refund-step">
+          <div class="refund-step-num">2</div>
+          <div class="refund-step-title">Análise da equipe</div>
+          <div class="refund-step-text">Nossa equipe avalia cada caso individualmente.</div>
+        </div>
+        <div class="refund-step">
+          <div class="refund-step-num">3</div>
+          <div class="refund-step-title">Devolução em 7 dias</div>
+          <div class="refund-step-text">Se aprovado, o valor volta direto na sua conta em até 7 dias úteis.</div>
+        </div>
+      </div>
+
       <form id="refundForm">
+        <div class="refund-section-label">Dados pessoais</div>
         <div class="refund-field">
-          <label for="refundEmail">E-mail usado na assinatura</label>
-          <input type="email" id="refundEmail" required placeholder="voce@email.com">
+          <label for="refundName">Nome completo</label>
+          <input type="text" id="refundName" required placeholder="Seu nome completo">
+        </div>
+        <div class="refund-field-row">
+          <div class="refund-field">
+            <label for="refundEmail">E-mail usado na assinatura</label>
+            <input type="email" id="refundEmail" required placeholder="voce@email.com">
+          </div>
+          <div class="refund-field">
+            <label for="refundPhone">Telefone / WhatsApp</label>
+            <input type="text" id="refundPhone" required placeholder="(11) 99999-9999">
+          </div>
+        </div>
+        <div class="refund-field-row">
+          <div class="refund-field">
+            <label for="refundCpf">CPF</label>
+            <input type="text" id="refundCpf" required placeholder="000.000.000-00">
+          </div>
+          <div class="refund-field">
+            <label for="refundPlan">Plano</label>
+            <input type="text" id="refundPlan" required placeholder="Mensal ou Vitalício">
+          </div>
+        </div>
+
+        <div class="refund-section-label">Motivo do reembolso</div>
+        <div class="refund-field">
+          <label for="refundMotivo">Motivo</label>
+          <select id="refundMotivo" required>
+            <option value="" selected disabled>Selecione o motivo</option>
+            <option value="nao_gostei">Não gostei do produto</option>
+            <option value="dificuldade">Tive dificuldade para usar</option>
+            <option value="nao_funcionou">Não funcionou como esperado</option>
+            <option value="compra_indevida">Compra feita por engano</option>
+            <option value="outro">Outro motivo</option>
+          </select>
         </div>
         <div class="refund-field">
-          <label for="refundPlan">Plano</label>
-          <input type="text" id="refundPlan" required placeholder="Mensal ou Vitalício">
+          <label for="refundReason">Descreva o ocorrido (opcional)</label>
+          <textarea id="refundReason" maxlength="500" placeholder="Conta pra gente o que rolou"></textarea>
         </div>
-        <div class="refund-field">
-          <label for="refundReason">Motivo (opcional)</label>
-          <textarea id="refundReason" placeholder="Conta pra gente o que rolou"></textarea>
-        </div>
+
         <button type="submit" class="refund-submit">Confirmar solicitação</button>
+        <p class="refund-privacy">Seus dados são protegidos e usados exclusivamente para processar a devolução.</p>
       </form>
     </div>
 
