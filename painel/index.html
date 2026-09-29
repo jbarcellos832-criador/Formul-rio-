@@ -187,6 +187,26 @@
   .trend-card-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
   .trend-card-bottom a { color: var(--green, #16c784); font-weight: 700; text-decoration: none; }
 
+  .ped-btn { display: flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px; font-weight: 700; font-size: 13.5px; cursor: pointer; border: 1px solid transparent; }
+  .ped-btn-primary { background: var(--green, #16c784); color: #06341f; }
+  .ped-btn-secondary { background: transparent; color: var(--blue); border-color: var(--blue); }
+  .ped-stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 22px; }
+  .ped-stat-card { background: var(--card-bg, #17181c); border: 1px solid var(--card-border, rgba(255,255,255,0.08)); border-radius: 14px; padding: 18px; }
+  .ped-stat-card.active { border-color: var(--green, #16c784); }
+  .ped-stat-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .ped-stat-ic { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ped-stat-ic svg { width: 16px; height: 16px; }
+  .ped-stat-label { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .ped-stat-value { font-size: 26px; font-weight: 800; color: #fff; }
+  .ped-filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--card-bg, #17181c); border: 1px solid var(--card-border, rgba(255,255,255,0.08)); border-radius: 14px; padding: 14px 16px; margin-bottom: 18px; }
+  .ped-search-box { flex: 1; min-width: 220px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #888; }
+  .ped-search-box input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 13.5px; padding: 10px 0; font-family: inherit; }
+  .ped-select, .ped-date-input { padding: 10px 12px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #ddd; font-size: 13px; font-weight: 600; font-family: inherit; }
+  .ped-count { color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .ped-table-wrap { background: var(--card-bg, #17181c); border: 1px solid var(--card-border, rgba(255,255,255,0.08)); border-radius: 14px; min-height: 260px; display: flex; align-items: center; justify-content: center; }
+  .ped-empty { color: var(--muted); font-size: 14.5px; padding: 60px 0; }
+  @media (max-width: 1100px) { .ped-stats-grid { grid-template-columns: repeat(3, 1fr); } }
+
   .side-footer {
     display: flex;
     align-items: center;
@@ -2844,6 +2864,89 @@
       </div>
     </div>
 
+    <!-- Pedidos -->
+    <div class="content" id="page-pedidos" style="display:none;">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Pedidos</div>
+          <div class="page-sub">Gerencie e acompanhe todos os pedidos.</div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button type="button" class="ped-btn ped-btn-primary" id="pedManualBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-9-9V4h9l9 9a2 2 0 0 1 0 2.41z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+            + Pedido Manual
+          </button>
+          <button type="button" class="ped-btn ped-btn-secondary" id="pedImportBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Importar Pedido
+          </button>
+        </div>
+      </div>
+
+      <div class="ped-stats-grid">
+        <div class="ped-stat-card active" data-status="todos">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(22,199,132,0.15); color:#16c784;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="ped-stat-label">Total Pedidos</span></div>
+          <div class="ped-stat-value" id="pedStatTotal">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="produtos">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(91,141,239,0.15); color:#5b8def;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="ped-stat-label">Total Produtos</span></div>
+          <div class="ped-stat-value" id="pedStatProdutos">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="aguardando">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(245,185,66,0.15); color:#f5b942;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="ped-stat-label">Aguard. Pagamento</span></div>
+          <div class="ped-stat-value" id="pedStatAguardando">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="pago">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(22,199,132,0.15); color:#16c784;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><span class="ped-stat-label">Pagos</span></div>
+          <div class="ped-stat-value" id="pedStatPago">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="enviado">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(91,141,239,0.15); color:#5b8def;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><span class="ped-stat-label">Enviados</span></div>
+          <div class="ped-stat-value" id="pedStatEnviado">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="entregue">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(22,199,132,0.15); color:#16c784;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></span><span class="ped-stat-label">Entregues</span></div>
+          <div class="ped-stat-value" id="pedStatEntregue">0</div>
+        </div>
+        <div class="ped-stat-card" data-status="cancelado">
+          <div class="ped-stat-top"><span class="ped-stat-ic" style="background:rgba(230,80,80,0.15); color:#ff6b6b;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></span><span class="ped-stat-label">Cancelados</span></div>
+          <div class="ped-stat-value" id="pedStatCancelado">0</div>
+        </div>
+      </div>
+
+      <div class="ped-filters">
+        <div class="ped-search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="pedSearchInput" placeholder="Buscar por número do pedido ou cliente...">
+        </div>
+        <select class="ped-select" id="pedStatusSelect">
+          <option>Todos status</option>
+          <option>Aguardando pagamento</option>
+          <option>Pago</option>
+          <option>Enviado</option>
+          <option>Entregue</option>
+          <option>Cancelado</option>
+        </select>
+        <select class="ped-select" id="pedChannelSelect">
+          <option>Todos canais</option>
+          <option>Mercado Livre</option>
+          <option>Shopee</option>
+        </select>
+        <select class="ped-select" id="pedShipSelect">
+          <option>Todos canais de envio</option>
+          <option>Correios</option>
+          <option>Transportadora</option>
+        </select>
+        <input type="text" class="ped-date-input" id="pedDateFrom" placeholder="dd/mm/aaaa">
+        <input type="text" class="ped-date-input" id="pedDateTo" placeholder="dd/mm/aaaa">
+        <span class="ped-count" id="pedCount">0 pedidos</span>
+      </div>
+
+      <div class="ped-table-wrap">
+        <div class="ped-empty" id="pedEmptyState">Nenhum pedido encontrado.</div>
+      </div>
+    </div>
+
     <!-- Integrações -->
     <div class="content" id="page-integracoes" style="display:none;">
       <div class="page-head">
@@ -4922,6 +5025,7 @@
   const pageCatalogo = document.getElementById('page-catalogo');
   const pageImportadores = document.getElementById('page-importadores');
   const pageFornecedores = document.getElementById('page-fornecedores');
+  const pagePedidos = document.getElementById('page-pedidos');
   const pageIntegracoes = document.getElementById('page-integracoes');
   const pageChamados = document.getElementById('page-chamados');
   const pageAfiliados = document.getElementById('page-afiliados');
@@ -4944,6 +5048,7 @@
     pageCatalogo.style.display = 'none';
     pageImportadores.style.display = 'none';
     pageFornecedores.style.display = 'none';
+    pagePedidos.style.display = 'none';
     pageIntegracoes.style.display = 'none';
     pageChamados.style.display = 'none';
     pageAfiliados.style.display = 'none';
@@ -4966,6 +5071,8 @@
       pageFornecedores.style.display = '';
       const el = document.getElementById('supProductCount');
       if (el) el.textContent = products.filter(p => p.cadastrado).length;
+    } else if (key === 'pedidos') {
+      pagePedidos.style.display = '';
     } else if (key === 'integracoes') {
       pageIntegracoes.style.display = '';
     } else if (key === 'chamados') {
@@ -5572,6 +5679,22 @@
   });
 
   renderTrendGrid();
+
+  // ── Pedidos ──
+  document.querySelectorAll('.ped-stat-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.ped-stat-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+  (function initPedidosDates() {
+    const today = new Date();
+    const fmt = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+    const from = document.getElementById('pedDateFrom');
+    const to = document.getElementById('pedDateTo');
+    if (from) from.value = fmt;
+    if (to) to.value = fmt;
+  })();
 
   // Dashboard overview chart (Faturamento e Performance)
   function renderDashChart(range) {
