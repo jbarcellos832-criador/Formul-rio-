@@ -47,12 +47,13 @@ function respond(body: string, status: number) {
   return new Response(body, { status, headers: CORS_HEADERS });
 }
 
-// TODO: confirm these status strings against a real Applyfy payload
-// (check the logs after a test purchase/test webhook) and adjust.
+// Confirmed against a real Applyfy test payload (event: "TRANSACTION_PAID",
+// transaction.status: "COMPLETED"). Fallbacks kept for other possible shapes.
 const APPROVED_STATUSES = new Set([
+  "transaction_paid",
+  "completed",
   "approved",
   "paid",
-  "completed",
   "aprovada",
   "aprovado",
   "pago",
@@ -144,41 +145,52 @@ Deno.serve(async (req) => {
   // and confirm the real field names Applyfy sends.
   console.log("Applyfy webhook payload:", JSON.stringify(payload));
 
-  const customer = (payload.customer ?? payload.cliente ?? payload.buyer ??
-    {}) as Record<string, unknown>;
+  const client = (payload.client ?? payload.customer ?? payload.cliente ??
+    payload.buyer ?? {}) as Record<string, unknown>;
+  const transaction = (payload.transaction ?? {}) as Record<string, unknown>;
+  const orderItems = (payload.orderItems ?? []) as Array<
+    Record<string, unknown>
+  >;
+  const firstProduct = (orderItems[0]?.product ?? {}) as Record<
+    string,
+    unknown
+  >;
 
-  // TODO: confirm these field names against a real Applyfy payload.
   const status = String(
-    payload.status ??
-      payload.event ??
+    payload.event ??
+      transaction.status ??
+      payload.status ??
       payload.sale_status ??
       payload.statusPagamento ??
       "",
   ).toLowerCase();
   const email = String(
-    payload.email ??
+    client.email ??
+      payload.email ??
       payload.customer_email ??
       payload.cliente_email ??
-      customer.email ??
       "",
   ).trim().toLowerCase();
   const name = String(
-    payload.name ??
+    client.name ??
+      payload.name ??
       payload.customer_name ??
       payload.cliente_nome ??
-      customer.name ??
-      customer.full_name ??
+      client.full_name ??
       "",
   ).trim();
   const orderId = String(
-    payload.order_id ??
+    payload.orderId ??
+      transaction.id ??
+      payload.order_id ??
       payload.transaction_id ??
       payload.id ??
       payload.transacao ??
       crypto.randomUUID(),
   );
   const plan = String(
-    payload.product_name ?? payload.produto ?? payload.plan ?? "",
+    firstProduct.name ?? payload.product_name ?? payload.produto ??
+      payload.plan ?? "",
   );
 
   if (!email) {
