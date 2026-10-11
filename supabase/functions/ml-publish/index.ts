@@ -20,7 +20,9 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SERVICE_ROLE_KEY")!;
-const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+// Same publishable key the painel's front-end uses to create its
+// supabaseClient (not secret — safe to use here to validate the user's JWT).
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_LaOl_e8lqm7OGBMQ8zW4Dg_LUrYfZJe";
 const ML_CLIENT_ID = Deno.env.get("ML_CLIENT_ID")!;
 const ML_CLIENT_SECRET = Deno.env.get("ML_CLIENT_SECRET")!;
 
@@ -38,7 +40,7 @@ async function getUserFromAuthHeader(req: Request) {
   const token = authHeader.replace("Bearer ", "");
   if (!token) return null;
 
-  const anonClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const anonClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   const { data, error } = await anonClient.auth.getUser(token);
   if (error || !data.user) return null;
   return data.user;
