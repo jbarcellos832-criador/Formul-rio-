@@ -112,18 +112,17 @@
   .mod-card {
     position: relative;
     background: #0d0d0d;
-    border: 1px solid rgba(255,212,0,0.45);
+    border: 1px solid rgba(255,212,0,0.35);
     border-radius: 18px;
     padding: 16px 14px 18px;
     cursor: pointer;
     transition: border-color 0.15s ease, transform 0.15s ease;
     text-align: center;
-    box-shadow: 0 0 22px -10px rgba(255,212,0,0.35);
   }
   .mod-card:hover { border-color: #ffd400; transform: translateY(-2px); box-shadow: 0 10px 28px -14px rgba(255,212,0,0.6); }
   .mod-card.selected { border-color: #ffd400; box-shadow: 0 0 0 1px rgba(255,212,0,0.3), 0 0 22px -10px rgba(255,212,0,0.5); }
-  .mod-card.locked { cursor: default; border-color: rgba(255,212,0,0.45); box-shadow: 0 0 22px -10px rgba(255,212,0,0.35); }
-  .mod-card.locked:hover { border-color: rgba(255,212,0,0.45); transform: none; box-shadow: 0 0 22px -10px rgba(255,212,0,0.35); }
+  .mod-card.locked { cursor: default; border-color: rgba(255,212,0,0.35); }
+  .mod-card.locked:hover { border-color: rgba(255,212,0,0.35); transform: none; box-shadow: none; }
 
   .mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
   .mod-menu svg { width: 16px; height: 16px; }
@@ -139,7 +138,7 @@
     margin: 22px 0 16px;
   }
   .mod-icon svg { width: 50%; height: 50%; }
-  .mod-card.locked .mod-icon { background: linear-gradient(160deg, #232312, #0d0d0d 70%); border: 1px solid rgba(255,212,0,0.25); border-style: dashed; color: #8a8a7a; }
+  .mod-card.locked .mod-icon { background: #161616; border: 1px dashed rgba(255,212,0,0.3); color: #8a8a7a; }
   .mod-card.extra .mod-icon { background: #161616; color: #ffd400; }
 
   .mod-badge {
