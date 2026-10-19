@@ -51,7 +51,7 @@
     flex-shrink: 0;
   }
   .brand .dot svg { width: 18px; height: 18px; }
-  .brand-accent { color: #ffd400; font-weight: 800; }
+  .brand-accent { color: #2f6bff; font-weight: 800; }
   .brand .dot svg { width: 17px; height: 17px; }
   .nav { display: flex; flex-direction: column; gap: 3px; flex: 1; }
   .nav-item {
@@ -67,7 +67,7 @@
   .nav-item .ic { width: 18px; height: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
   .nav-item .ic svg { width: 17px; height: 17px; }
   .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-  .nav-item.active { background: rgba(255,212,0,0.1); color: #ffd400; border: 1px solid rgba(255,212,0,0.25); }
+  .nav-item.active { background: rgba(47,107,255,0.1); color: #2f6bff; border: 1px solid rgba(47,107,255,0.25); }
   .nav-footer { padding-top: 16px; border-top: 1px solid #1c1c1c; margin-top: 10px; font-size: 12px; color: #6b6b6b; }
 
   /* ───── MAIN ───── */
@@ -82,12 +82,12 @@
     padding: 30px 28px;
     margin-bottom: 20px;
   }
-  .hero-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; margin-bottom: 12px; text-transform: uppercase; }
+  .hero-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: #2f6bff; margin-bottom: 12px; text-transform: uppercase; }
   .hero-title { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
   .hero-sub { font-size: 14.5px; color: #b8b8b8; line-height: 1.6; max-width: 600px; margin-bottom: 22px; }
   .hero-btn {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #ffd400;
+    background: #2f6bff;
     color: #0a0a0a;
     font-weight: 800;
     font-size: 14px;
@@ -101,7 +101,7 @@
   .progress-top { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; color: #9a9a9a; margin-bottom: 10px; text-transform: uppercase; }
   .progress-top span:last-child { color: #fff; text-transform: none; letter-spacing: 0; font-weight: 700; }
   .progress-bar { height: 6px; border-radius: 4px; background: #262626; overflow: hidden; margin-bottom: 8px; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, #ffd400, #ffb800); transition: width 0.3s ease; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #2f6bff, #1d4fd8); transition: width 0.3s ease; }
   .progress-pct { font-size: 12px; color: #9a9a9a; }
 
   .modules-label { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
@@ -119,8 +119,8 @@
     transition: border-color 0.15s ease, transform 0.15s ease;
     text-align: center;
   }
-  .mod-card:hover { border-color: rgba(255,212,0,0.35); transform: translateY(-2px); }
-  .mod-card.selected { border-color: #ffd400; }
+  .mod-card:hover { border-color: rgba(47,107,255,0.35); transform: translateY(-2px); }
+  .mod-card.selected { border-color: #2f6bff; }
   .mod-card.locked { cursor: default; }
   .mod-card.locked:hover { border-color: #1c1c1c; transform: none; }
 
@@ -132,14 +132,14 @@
     aspect-ratio: 1 / 0.95;
     border-radius: 16px;
     background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
-    border: 1px solid rgba(255,212,0,0.2);
-    color: #ffd400;
+    border: 1px solid rgba(47,107,255,0.2);
+    color: #2f6bff;
     display: flex; align-items: center; justify-content: center;
     margin: 22px 0 16px;
   }
   .mod-icon svg { width: 40%; height: 40%; }
   .mod-card.locked .mod-icon { background: #141414; border-color: #232323; border-style: dashed; color: #6a6a6a; }
-  .mod-card.extra .mod-icon { background: linear-gradient(160deg, #2b2308, #0d0d0d 70%); color: #ffd400; }
+  .mod-card.extra .mod-icon { background: linear-gradient(160deg, #2b2308, #0d0d0d 70%); color: #2f6bff; }
 
   .mod-badge {
     display: inline-block;
@@ -148,18 +148,18 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #0a0a0a;
-    background: #ffd400;
+    background: #2f6bff;
     padding: 4px 10px;
     border-radius: 6px;
     margin-bottom: 10px;
   }
-  .mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); }
-  .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #ffd400, #ffb800); }
+  .mod-badge.soon { color: #2f6bff; background: transparent; border: 1px solid rgba(47,107,255,0.4); }
+  .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #2f6bff, #1d4fd8); }
 
   .mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; }
   .mod-card.locked .mod-card-title { color: #9a9a9a; }
   .mod-card-sub { font-size: 11.5px; color: #7a7a7a; line-height: 1.4; }
-  .mod-card-open { font-size: 11.5px; color: #ffd400; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .mod-card-open { font-size: 11.5px; color: #2f6bff; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
   .modules { display: none; flex-direction: column; }
   .modules.open { display: flex; }
@@ -182,8 +182,8 @@
     width: 56px; height: 56px;
     border-radius: 15px;
     background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
-    border: 1px solid rgba(255,212,0,0.3);
-    color: #ffd400;
+    border: 1px solid rgba(47,107,255,0.3);
+    color: #2f6bff;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
@@ -198,8 +198,8 @@
     border-radius: 16px;
     transition: border-color 0.15s ease;
   }
-  .lesson:hover { border-color: rgba(255,212,0,0.25); }
-  .lesson.expanded { border-color: #ffd400; }
+  .lesson:hover { border-color: rgba(47,107,255,0.25); }
+  .lesson.expanded { border-color: #2f6bff; }
   .lesson-row {
     display: flex; align-items: center; gap: 18px;
     padding: 14px 18px;
@@ -230,13 +230,13 @@
   }
 
   .lesson-body { flex: 1; min-width: 0; }
-  .lesson-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #ffd400; text-transform: uppercase; margin-bottom: 5px; }
+  .lesson-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; color: #2f6bff; text-transform: uppercase; margin-bottom: 5px; }
   .lesson-title { font-size: 15px; font-weight: 800; margin-bottom: 5px; }
   .lesson-status { font-size: 12.5px; color: #d99a1f; }
-  .lesson.done .lesson-status { color: #ffd400; }
+  .lesson.done .lesson-status { color: #2f6bff; }
 
   .lesson-chevron { color: #6a6a6a; flex-shrink: 0; transition: transform 0.2s ease; }
-  .lesson.expanded .lesson-chevron { transform: rotate(90deg); color: #ffd400; }
+  .lesson.expanded .lesson-chevron { transform: rotate(90deg); color: #2f6bff; }
 
   .lesson-detail { max-width: 780px; }
   .lesson-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
@@ -266,7 +266,7 @@
   .lesson-watch-label {
     position: absolute; bottom: 14px; left: 14px;
     background: rgba(10,10,10,0.85);
-    color: #ffd400;
+    color: #2f6bff;
     font-size: 12.5px;
     font-weight: 700;
     padding: 7px 12px;
@@ -285,7 +285,7 @@
   }
   .mark-watched-btn {
     display: block; width: 100%;
-    background: #ffd400;
+    background: #2f6bff;
     color: #0a0a0a;
     font-weight: 800;
     font-size: 14.5px;
@@ -307,7 +307,7 @@
     width: 42px; height: 42px;
     border-radius: 50%;
     background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
-    border: 1px solid rgba(255,212,0,0.3);
+    border: 1px solid rgba(47,107,255,0.3);
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
     flex-shrink: 0;
@@ -337,7 +337,7 @@
     aspect-ratio: 4/5;
     background: linear-gradient(160deg, #1c2410, #0d0d0d 70%);
     display: flex; align-items: center; justify-content: center;
-    color: #ffd400;
+    color: #2f6bff;
   }
   .wa-media img { width: 100%; height: auto; display: block; }
   .wa-media svg { width: 34%; height: 34%; }
@@ -347,9 +347,9 @@
   /* ───── GRUPO DE AVISOS ───── */
   .avisos-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(255,212,0,0.1);
-    border: 1px solid rgba(255,212,0,0.3);
-    color: #ffd400;
+    background: rgba(47,107,255,0.1);
+    border: 1px solid rgba(47,107,255,0.3);
+    color: #2f6bff;
     font-size: 13px;
     font-weight: 700;
     padding: 8px 16px;
@@ -363,23 +363,23 @@
   .avisos-card {
     max-width: 640px;
     background: #0d0d0d;
-    border: 1px solid rgba(255,212,0,0.25);
+    border: 1px solid rgba(47,107,255,0.25);
     border-radius: 18px;
     padding: 26px;
     margin-bottom: 20px;
-    box-shadow: 0 0 40px rgba(255,212,0,0.06);
+    box-shadow: 0 0 40px rgba(47,107,255,0.06);
   }
   .avisos-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
   .avisos-official-badge {
     font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-    color: #0a0a0a; background: #ffd400; padding: 5px 11px; border-radius: 6px;
+    color: #0a0a0a; background: #2f6bff; padding: 5px 11px; border-radius: 6px;
   }
   .avisos-icon {
     width: 44px; height: 44px;
     border-radius: 13px;
-    background: rgba(255,212,0,0.1);
-    border: 1px solid rgba(255,212,0,0.3);
-    color: #ffd400;
+    background: rgba(47,107,255,0.1);
+    border: 1px solid rgba(47,107,255,0.3);
+    color: #2f6bff;
     display: flex; align-items: center; justify-content: center;
   }
   .avisos-icon svg { width: 22px; height: 22px; }
@@ -388,7 +388,7 @@
   .avisos-btn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%;
-    background: #ffd400;
+    background: #2f6bff;
     color: #0a0a0a;
     font-weight: 800;
     font-size: 15px;
@@ -405,11 +405,11 @@
     padding: 24px 26px;
   }
   .avisos-rules-title { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; margin-bottom: 16px; }
-  .avisos-rules-title svg { width: 19px; height: 19px; color: #ffd400; }
+  .avisos-rules-title svg { width: 19px; height: 19px; color: #2f6bff; }
   .avisos-rules-text { font-size: 14px; color: #b8b8b8; line-height: 1.7; margin-bottom: 14px; }
   .avisos-rules-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
   .avisos-rules-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #d0d0d0; }
-  .avisos-rules-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #ffd400; flex-shrink: 0; }
+  .avisos-rules-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #2f6bff; flex-shrink: 0; }
 
   .mobile-menu-btn { display: none; }
   .mobile-backdrop { display: none; }
@@ -480,7 +480,7 @@
     flex-shrink: 0;
   }
   .login-brand .dot svg { width: 17px; height: 17px; }
-  .login-brand-accent { color: #ffd400; font-weight: 800; }
+  .login-brand-accent { color: #2f6bff; font-weight: 800; }
   .login-title { font-size: 21px; font-weight: 800; margin-bottom: 6px; }
   .login-sub { font-size: 13.5px; color: #9a9a9a; margin-bottom: 24px; }
   .login-field { margin-bottom: 14px; }
@@ -495,7 +495,7 @@
     font-size: 14.5px;
     font-family: inherit;
   }
-  .login-field input:focus { outline: none; border-color: #ffd400; }
+  .login-field input:focus { outline: none; border-color: #2f6bff; }
   .login-error {
     display: none;
     font-size: 13px;
@@ -509,7 +509,7 @@
   .login-error.show { display: block; }
   .login-btn {
     width: 100%;
-    background: #ffd400;
+    background: #2f6bff;
     color: #0a0a0a;
     font-weight: 800;
     font-size: 14.5px;
