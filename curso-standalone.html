@@ -130,14 +130,26 @@
   .mod-icon {
     width: 100%;
     aspect-ratio: 1 / 0.95;
-    border-radius: 16px;
-    background: #161616;
-    border: none;
+    border-radius: 20px;
+    background: linear-gradient(160deg, #262626, #121212 65%);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.12), inset 0 -8px 14px rgba(0,0,0,0.5), 0 6px 16px -8px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
     color: #ffd400;
     display: flex; align-items: center; justify-content: center;
     margin: 22px 0 16px;
   }
-  .mod-icon svg { width: 50%; height: 50%; }
+  .mod-icon::before {
+    content: '';
+    position: absolute;
+    top: -40%; left: -60%;
+    width: 90%; height: 60%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 70%);
+    transform: rotate(-20deg);
+    pointer-events: none;
+  }
+  .mod-icon svg { width: 52%; height: 52%; position: relative; z-index: 1; }
   .mod-card.locked .mod-icon { background: #161616; border: 1px dashed rgba(255,212,0,0.3); color: #8a8a7a; }
   .mod-card.extra .mod-icon { background: #161616; color: #ffd400; }
 
@@ -147,15 +159,15 @@
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #fff;
-    background: linear-gradient(90deg, #ffd400, #ffb800);
-    padding: 4px 10px;
-    border-radius: 6px;
+    color: #ffd400;
+    background: transparent;
+    border: 1px solid rgba(255,212,0,0.55);
+    padding: 4px 12px;
+    border-radius: 99px;
     margin-bottom: 10px;
-    box-shadow: 0 4px 14px -6px rgba(255,212,0,0.6);
   }
   .mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); box-shadow: none; }
-  .mod-badge.extra { color: #fff; background: linear-gradient(90deg, #ffd400, #ffb800); }
+  .mod-badge.extra { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.55); }
 
   .mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; }
   .mod-card.locked .mod-card-title { color: #9a9a9a; }
@@ -686,7 +698,7 @@
 
 <script>
 const modIcons = [
-  '<svg viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9z" fill="#ff8a3d"/><rect x="4" y="9" width="16" height="2" fill="#ffb27a"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9H5z" fill="#f4f4f4"/><rect x="9.5" y="14" width="5" height="7" fill="#2a2a2a"/><rect x="9.5" y="14" width="5" height="1.4" fill="#ff8a3d"/></svg>',
+  '<svg viewBox="0 0 24 24"><path d="M3 10 L4.3 5 H19.7 L21 10 Z" fill="#ffb13d"/><path d="M3 10q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 L21 10 H3 Z" fill="#ff8a1f"/><rect x="4.3" y="5.4" width="3.1" height="4.3" fill="#ffd79a"/><rect x="10.5" y="5.4" width="3" height="4.3" fill="#ffd79a"/><rect x="16.7" y="5.4" width="3" height="4.3" fill="#ffd79a"/><path d="M4.5 11h15v8.3a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z" fill="#e7e9ec"/><path d="M4.5 11h15v1.4h-15z" fill="#cfd3d8"/><path d="M9.6 14.3h4.8v6h-4.8z" fill="#5a5a5a"/></svg>',
   '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="3" fill="#c9ccd1"/><rect x="5" y="10.3" width="14" height="8.5" rx="1.5" fill="#1b1b1b"/><circle cx="9.3" cy="14.5" r="1.4" fill="#ffd400"/><circle cx="14.7" cy="14.5" r="1.4" fill="#ffd400"/><path d="M8 8V6a4 4 0 0 1 8 0v2" fill="none" stroke="#c9ccd1" stroke-width="1.8"/><circle cx="12" cy="4.3" r="1.1" fill="#ff8a3d"/></svg>',
   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#e6e6e6"/><circle cx="12" cy="12" r="6.2" fill="#2a2a2a"/><circle cx="12" cy="12" r="3.4" fill="#ff8a3d"/><circle cx="12" cy="12" r="1.1" fill="#1b1b1b"/><path d="M12 12 L19 5" stroke="#ff8a3d" stroke-width="1.8" stroke-linecap="round"/><path d="M19 5 L15.5 5.3 M19 5 L18.7 8.5" stroke="#ff8a3d" stroke-width="1.8" stroke-linecap="round"/></svg>',
 ];
