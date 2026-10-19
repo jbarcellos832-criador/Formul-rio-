@@ -112,17 +112,18 @@
   .mod-card {
     position: relative;
     background: #0d0d0d;
-    border: 1px solid #1c1c1c;
+    border: 1px solid rgba(255,212,0,0.45);
     border-radius: 18px;
     padding: 16px 14px 18px;
     cursor: pointer;
     transition: border-color 0.15s ease, transform 0.15s ease;
     text-align: center;
+    box-shadow: 0 0 22px -10px rgba(255,212,0,0.35);
   }
-  .mod-card:hover { border-color: rgba(255,212,0,0.4); transform: translateY(-2px); box-shadow: 0 10px 28px -14px rgba(255,212,0,0.45); }
-  .mod-card.selected { border-color: #ffd400; box-shadow: 0 0 0 1px rgba(255,212,0,0.3); }
-  .mod-card.locked { cursor: default; }
-  .mod-card.locked:hover { border-color: #1c1c1c; transform: none; box-shadow: none; }
+  .mod-card:hover { border-color: #ffd400; transform: translateY(-2px); box-shadow: 0 10px 28px -14px rgba(255,212,0,0.6); }
+  .mod-card.selected { border-color: #ffd400; box-shadow: 0 0 0 1px rgba(255,212,0,0.3), 0 0 22px -10px rgba(255,212,0,0.5); }
+  .mod-card.locked { cursor: default; border-color: rgba(255,212,0,0.45); box-shadow: 0 0 22px -10px rgba(255,212,0,0.35); }
+  .mod-card.locked:hover { border-color: rgba(255,212,0,0.45); transform: none; box-shadow: 0 0 22px -10px rgba(255,212,0,0.35); }
 
   .mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
   .mod-menu svg { width: 16px; height: 16px; }
