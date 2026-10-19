@@ -356,6 +356,9 @@
   .wa-media svg { width: 34%; height: 34%; }
   .wa-caption { font-size: 13.5px; color: #e9edef; padding: 8px 6px 2px; line-height: 1.5; }
   .wa-time { font-size: 11px; color: #8a99a0; padding: 0 6px 4px; text-align: right; }
+  .wa-highlight { background: #0b141a; border-radius: 0 0 10px 10px; padding: 10px 10px 12px; margin-top: -2px; }
+  .wa-highlight-name { color: #ffd400; font-weight: 800; font-size: 13.5px; }
+  .wa-highlight-text { color: #ffd400; font-size: 13px; line-height: 1.5; opacity: 0.92; }
 
   /* ───── GRUPO DE AVISOS ───── */
   .avisos-badge {
@@ -1003,6 +1006,8 @@ const provasData = [
     img: 'assets/provas/prova-08.jpg',
     caption: 'Aluno mandando print dos pedidos no Fornecefy e da compra feita no Mercado Livre.',
     time: '09:50',
+    highlightName: 'Miranda',
+    highlightText: 'vendendo em 8 dias de loja criada. o projeto ajudou ela 100%',
   },
   {
     img: 'assets/provas/prova-09.jpg',
@@ -1034,6 +1039,7 @@ function renderProvas() {
         <div class="wa-media${p.img ? '' : ' placeholder'}">${p.img ? `<img src="${p.img}" alt="">` : p.icon}</div>
         <div class="wa-caption">${p.caption}</div>
         <div class="wa-time">${p.time} ✓✓</div>
+        ${p.highlightName ? `<div class="wa-highlight"><span class="wa-highlight-name">${p.highlightName}</span><div class="wa-highlight-text">${p.highlightText || ''}</div></div>` : ''}
       </div>
     </div>`).join('');
   document.getElementById('provasCount').textContent = provasData.length + ' prints';
