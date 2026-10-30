@@ -112,17 +112,17 @@
   .mod-card {
     position: relative;
     background: #0d0d0d;
-    border: 1px solid #1c1c1c;
+    border: 1px solid rgba(255,212,0,0.35);
     border-radius: 18px;
     padding: 16px 14px 18px;
     cursor: pointer;
     transition: border-color 0.15s ease, transform 0.15s ease;
     text-align: center;
   }
-  .mod-card:hover { border-color: rgba(255,212,0,0.35); transform: translateY(-2px); }
-  .mod-card.selected { border-color: #ffd400; }
-  .mod-card.locked { cursor: default; }
-  .mod-card.locked:hover { border-color: #1c1c1c; transform: none; }
+  .mod-card:hover { border-color: #ffd400; transform: translateY(-2px); box-shadow: 0 10px 28px -14px rgba(255,212,0,0.6); }
+  .mod-card.selected { border-color: #ffd400; box-shadow: 0 0 0 1px rgba(255,212,0,0.3), 0 0 22px -10px rgba(255,212,0,0.5); }
+  .mod-card.locked { cursor: default; border-color: rgba(255,212,0,0.35); }
+  .mod-card.locked:hover { border-color: rgba(255,212,0,0.35); transform: none; box-shadow: none; }
 
   .mod-menu { position: absolute; top: 14px; left: 14px; color: #4a4a4a; }
   .mod-menu svg { width: 16px; height: 16px; }
@@ -130,16 +130,28 @@
   .mod-icon {
     width: 100%;
     aspect-ratio: 1 / 0.95;
-    border-radius: 16px;
-    background: linear-gradient(160deg, #2b2308, #0d0d0d 70%);
-    border: 1px solid rgba(255,212,0,0.2);
+    border-radius: 20px;
+    background: linear-gradient(160deg, #262626, #121212 65%);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.12), inset 0 -8px 14px rgba(0,0,0,0.5), 0 6px 16px -8px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
     color: #ffd400;
     display: flex; align-items: center; justify-content: center;
     margin: 22px 0 16px;
   }
-  .mod-icon svg { width: 40%; height: 40%; }
-  .mod-card.locked .mod-icon { background: #141414; border-color: #232323; border-style: dashed; color: #6a6a6a; }
-  .mod-card.extra .mod-icon { background: linear-gradient(160deg, #2b2308, #0d0d0d 70%); color: #ffd400; }
+  .mod-icon::before {
+    content: '';
+    position: absolute;
+    top: -40%; left: -60%;
+    width: 90%; height: 60%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 70%);
+    transform: rotate(-20deg);
+    pointer-events: none;
+  }
+  .mod-icon svg { width: 52%; height: 52%; position: relative; z-index: 1; }
+  .mod-card.locked .mod-icon { background: #161616; border: 1px dashed rgba(255,212,0,0.3); color: #8a8a7a; }
+  .mod-card.extra .mod-icon { background: #161616; color: #ffd400; }
 
   .mod-badge {
     display: inline-block;
@@ -147,14 +159,15 @@
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #0a0a0a;
-    background: #ffd400;
-    padding: 4px 10px;
-    border-radius: 6px;
+    color: #ffd400;
+    background: transparent;
+    border: 1px solid rgba(255,212,0,0.55);
+    padding: 4px 12px;
+    border-radius: 99px;
     margin-bottom: 10px;
   }
-  .mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); }
-  .mod-badge.extra { color: #0a0a0a; background: linear-gradient(90deg, #ffd400, #ffb800); }
+  .mod-badge.soon { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.4); box-shadow: none; }
+  .mod-badge.extra { color: #ffd400; background: transparent; border: 1px solid rgba(255,212,0,0.55); }
 
   .mod-card-title { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; line-height: 1.3; }
   .mod-card.locked .mod-card-title { color: #9a9a9a; }
@@ -343,6 +356,9 @@
   .wa-media svg { width: 34%; height: 34%; }
   .wa-caption { font-size: 13.5px; color: #e9edef; padding: 8px 6px 2px; line-height: 1.5; }
   .wa-time { font-size: 11px; color: #8a99a0; padding: 0 6px 4px; text-align: right; }
+  .wa-highlight { background: #0b141a; border-radius: 0 0 10px 10px; padding: 10px 10px 12px; margin-top: -2px; }
+  .wa-highlight-name { color: #ffd400; font-weight: 800; font-size: 13.5px; }
+  .wa-highlight-text { color: #ffd400; font-size: 13px; line-height: 1.5; opacity: 0.92; }
 
   /* ───── GRUPO DE AVISOS ───── */
   .avisos-badge {
@@ -565,10 +581,6 @@
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
         Módulos
       </button>
-      <button type="button" class="nav-item">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-        Meu progresso
-      </button>
       <button type="button" class="nav-item" data-page="avisos">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
         Grupo de avisos
@@ -685,9 +697,9 @@
 
 <script>
 const modIcons = [
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 21v-6h6v6"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="1.5"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>',
+  '<svg viewBox="0 0 24 24"><path d="M3 10 L4.3 5 H19.7 L21 10 Z" fill="#ffb13d"/><path d="M3 10q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 q1.4 2 2.8 0 L21 10 H3 Z" fill="#ff8a1f"/><rect x="4.3" y="5.4" width="3.1" height="4.3" fill="#ffd79a"/><rect x="10.5" y="5.4" width="3" height="4.3" fill="#ffd79a"/><rect x="16.7" y="5.4" width="3" height="4.3" fill="#ffd79a"/><path d="M4.5 11h15v8.3a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z" fill="#e7e9ec"/><path d="M4.5 11h15v1.4h-15z" fill="#cfd3d8"/><path d="M9.6 14.3h4.8v6h-4.8z" fill="#5a5a5a"/></svg>',
+  '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="3" fill="#c9ccd1"/><rect x="5" y="10.3" width="14" height="8.5" rx="1.5" fill="#1b1b1b"/><circle cx="9.3" cy="14.5" r="1.4" fill="#ffd400"/><circle cx="14.7" cy="14.5" r="1.4" fill="#ffd400"/><path d="M8 8V6a4 4 0 0 1 8 0v2" fill="none" stroke="#c9ccd1" stroke-width="1.8"/><circle cx="12" cy="4.3" r="1.1" fill="#ff8a3d"/></svg>',
+  '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#e6e6e6"/><circle cx="12" cy="12" r="6.2" fill="#2a2a2a"/><circle cx="12" cy="12" r="3.4" fill="#ff8a3d"/><circle cx="12" cy="12" r="1.1" fill="#1b1b1b"/><path d="M12 12 L19 5" stroke="#ff8a3d" stroke-width="1.8" stroke-linecap="round"/><path d="M19 5 L15.5 5.3 M19 5 L18.7 8.5" stroke="#ff8a3d" stroke-width="1.8" stroke-linecap="round"/></svg>',
 ];
 
 const soonIcons = [
@@ -990,6 +1002,8 @@ const provasData = [
     img: 'assets/provas/prova-08.jpg',
     caption: 'Aluno mandando print dos pedidos no Fornecefy e da compra feita no Mercado Livre.',
     time: '09:50',
+    highlightName: 'Miranda',
+    highlightText: 'vendendo em 8 dias de loja criada. o projeto ajudou ela 100%',
   },
   {
     img: 'assets/provas/prova-09.jpg',
@@ -1011,6 +1025,28 @@ const provasData = [
     caption: 'Detalhe de uma venda com o custo de vender e de cobrar já calculados certinho.',
     time: '14:59',
   },
+  {
+    img: 'assets/provas/prova-13.jpg',
+    caption: 'Aluno gravando um vídeo mostrando a notificação de venda do Mercado Livre chegando na tela.',
+    time: 'agora',
+  },
+  {
+    img: 'assets/provas/prova-14.jpg',
+    caption: 'Print dos anúncios cadastrados já gerando impressão.',
+    time: '11:36',
+  },
+  {
+    img: 'assets/provas/prova-15.jpg',
+    caption: 'Mesmos anúncios, agora com visitas entrando.',
+    time: '11:37',
+  },
+  {
+    img: 'assets/provas/prova-16.jpg',
+    caption: 'Aluna mandando print da primeira venda confirmada no Mercado Livre.',
+    time: '15:20',
+    highlightName: 'Maria',
+    highlightText: 'primeira vendaa!!',
+  },
 ];
 
 function renderProvas() {
@@ -1021,6 +1057,7 @@ function renderProvas() {
         <div class="wa-media${p.img ? '' : ' placeholder'}">${p.img ? `<img src="${p.img}" alt="">` : p.icon}</div>
         <div class="wa-caption">${p.caption}</div>
         <div class="wa-time">${p.time} ✓✓</div>
+        ${p.highlightName ? `<div class="wa-highlight"><span class="wa-highlight-name">${p.highlightName}</span><div class="wa-highlight-text">${p.highlightText || ''}</div></div>` : ''}
       </div>
     </div>`).join('');
   document.getElementById('provasCount').textContent = provasData.length + ' prints';
@@ -1063,7 +1100,7 @@ renderModules();
 renderProvas();
 
 const VALID_EMAIL = 'projetoml@gmail.com';
-const VALID_PASSWORD = '2kfaturamento';
+const VALID_PASSWORD = '123456';
 
 function showApp() {
   document.getElementById('loginScreen').style.display = 'none';

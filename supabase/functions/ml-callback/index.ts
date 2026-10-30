@@ -42,14 +42,21 @@ function redirectTo(url: string) {
 Deno.serve(async (req) => {
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
-  const userId = url.searchParams.get("state");
+  const rawState = url.searchParams.get("state");
   const mlError = url.searchParams.get("error");
 
   if (mlError) {
     return redirectTo(`${APP_PANEL_URL}?ml=error&reason=${encodeURIComponent(mlError)}`);
   }
-  if (!code || !userId) {
+  if (!code || !rawState) {
     return redirectTo(`${APP_PANEL_URL}?ml=error&reason=missing_code_or_state`);
+  }
+
+  // state is "<userId>::<codeVerifier>" (PKCE), set by the "Conectar
+  // Mercado Livre" button before redirecting the browser here.
+  const [userId, codeVerifier] = rawState.split("::");
+  if (!userId || !codeVerifier) {
+    return redirectTo(`${APP_PANEL_URL}?ml=error&reason=invalid_state`);
   }
 
   // Exchange the authorization code for an access + refresh token.
@@ -65,6 +72,7 @@ Deno.serve(async (req) => {
       client_secret: ML_CLIENT_SECRET,
       code,
       redirect_uri: ML_REDIRECT_URI,
+      code_verifier: codeVerifier,
     }),
   });
 
